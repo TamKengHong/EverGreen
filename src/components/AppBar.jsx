@@ -1,8 +1,10 @@
 import {
-  Flex, Spacer, Center, Link, Input, InputGroup, InputLeftAddon
+  Flex, Spacer, Center, Link, Input, InputGroup, InputLeftAddon, IconButton, Square
 } from '@chakra-ui/react';
 import { BiUserCircle, BiSearch } from 'react-icons/bi'
 import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const SearchBar = () => {
@@ -28,6 +30,7 @@ const SearchBar = () => {
 }
 
 const AppBar = () => {
+  const navigate = useNavigate();
   return (
     <Flex w="100%" alignItems="center" position="static" bg="gray.200" >
       <Center w="100px" h="50px" bg="green" color="white">
@@ -38,7 +41,13 @@ const AppBar = () => {
       <Spacer />
       <SearchBar />
       <Spacer />
-      <BiUserCircle size="50" />
+      <IconButton
+        onClick={() => navigate('../login')}
+        bg="gray.200"
+        aria-label="Log in"
+        size="lg"
+        icon={<BiUserCircle size="35" />}
+      />
     </Flex>
   )
 }
