@@ -30,19 +30,30 @@ class CustomUserManager(BaseUserManager):
         return user
 
 #summary,profile,country are not necessary
-#todo: incorporate Permissions and CustomUserManager
-class CustomUser(AbstractBaseUser):
+#PermissionsMixin includes Django’s permission framework into the CustomUser class
+class CustomUser(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(verbose_name = "email address", max_length=225,unique=True)
     username = models.CharField(max_length=225,unique=True)
     #summary should not contain more than 1000 characters
     summary = models.TextField(max_length=1000,blank=True,null=True) 
     profilePicture = models.ImageField(blank=True, null=True)
-    country = models.CharField(blank=True,null=True)
+    country = models.CharField(max_length=225,blank=True,null=True)
+    # Set number of total likes and dislikes to 0 by default
+    totalLikes = models.BigIntegerField(default=0)
+    totalDislikes = models.BigIntegerField(default=0)
+    # CustomUsers are managed by CustomUserManager
+    objects = CustomUserManager()
+    # login with email, and make username mandatory during registration
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
     def __str__(self):
         return self.username
+    @property
+    def getEmail(self):
+        return "%s" % self.email
+
 
 class Post(models.Model):
-    postID = models.BigIntegerField(primary_key=True)
     author = models.ForeignKey(CustomUser,on_delete=models.CASCADE) 
     postTitle = models.CharField(max_length=255)
     postContent = models.TextField()
