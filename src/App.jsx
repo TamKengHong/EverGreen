@@ -2,6 +2,8 @@ import React from 'react';
 import { Box, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import AppBar from './components/AppBar';
+import PostRequest from './requests/PostRequest';
+import GetRequest from './requests/GetRequest';
 
 // The Home Page.
 
@@ -23,7 +25,8 @@ function App() {
       <Box h="300px" bg="gray.200" >
         <Text ml="3" fontSize="30">Trending News:</Text>
       </Box>
-
+      <PostRequest />
+      <GetRequest />
     </>
   );
 }
