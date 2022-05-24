@@ -1,17 +1,17 @@
-import { Flex, Button, Heading, Input, Link } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom'
-import AppBar from '../components/AppBar';
-import { useState } from 'react';
+import { Flex, Button, Heading, Input, Link, Box } from '@chakra-ui/react'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import AppBar from '../components/AppBar'
+import { useState } from 'react'
 
 const SignUp = () => {
   const [email, setEmail] = useState()
-  const handleEmail = (e) => setEmail(e.target.value)
   const [newPassword, setNewPassword] = useState()
-  const handleNewPassword = (e) => setNewPassword(e.target.value)
   const [confirmPassword, setConfirmPassword] = useState()
-  const handleConfirmPassword = (e) => setConfirmPassword(e.target.value)
+  const obj = { "email": email, "newPassword": newPassword, "confirmPassword": confirmPassword }
+  const navigate = useNavigate()
+
   return (
-    <>
+    <Box height="100%" bg="gray.300">
       <AppBar />
       <Flex height="85vh" alignItems="center" justifyContent="center">
         <Flex direction="column" background="gray.100" p={12} rounded={6}>
@@ -23,7 +23,7 @@ const SignUp = () => {
             variant="filled"
             mb={3}
             type="email"
-            onChange={handleEmail}
+            onChange={e => setEmail(e.target.value)}
           />
           <Input
             border="1px"
@@ -32,7 +32,7 @@ const SignUp = () => {
             variant="filled"
             mb={3}
             type="password"
-            onChange={handleNewPassword}
+            onChange={e => setNewPassword(e.target.value)}
           />
           <Input
             border="1px"
@@ -41,14 +41,15 @@ const SignUp = () => {
             variant="filled"
             mb={9}
             type="password"
-            onChange={handleConfirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
           />
           <Button colorScheme="blue" mb={3}
-            onClick={() => console.log(email + newPassword + confirmPassword)}>Sign Up</Button>
+            onClick={() => navigate(-1)}>Sign Up</Button>
           <Link fontSize="s" as={RouterLink} to='../login'>Back</Link>
         </Flex>
       </Flex>
-    </>
+      <Box h="8.7vh"></Box>
+    </Box>
   )
 }
 
