@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 function GetRequest() {
   const [totalReactPackages, setTotalReactPackages] = useState(null)
@@ -8,15 +8,6 @@ function GetRequest() {
       .then(response => response.json())
       .then(data => setTotalReactPackages(data.total))
   }, [])
-
-  return (
-    <div className="card text-center m-3">
-      <h5 className="card-header">GET Request with React Hooks</h5>
-      <div className="card-body">
-        Total react packages: {totalReactPackages}
-      </div>
-    </div>
-  )
 }
 
 export default GetRequest

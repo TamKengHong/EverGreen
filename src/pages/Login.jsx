@@ -3,13 +3,13 @@ import { Link as RouterLink } from 'react-router-dom'
 import AppBar from '../components/AppBar'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PostRequest from '../requests/PostRequest'
 
 const Login = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const obj = { "email": email, "password": password } // for http requests next time.
+  const loginInfo = { "email": email, "password": password }
   const navigate = useNavigate()
-
 
   return (
     <Box height="100%" bg="gray.300">
@@ -36,7 +36,8 @@ const Login = () => {
             onChange={e => setPassword(e.target.value)}
           />
           <Button colorScheme="teal" mb={3}
-            onClick={() => navigate('../user', { state: { name: email } })}>Log in</Button>
+            onClick={() => navigate('../user',
+              { state: { name: email ? email : "" } })}>Log in</Button>
           <Link fontSize="s" >Forgot your password?</Link>
           <Link fontSize="s" as={RouterLink} to='../signup'>Sign Up</Link>
         </Flex>

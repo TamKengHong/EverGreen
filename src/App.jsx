@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom'
 import AppBar from './components/AppBar'
 import NewsBar from './components/NewsBar'
 import PostBar from './components/PostBar'
+import PostRequest from './requests/PostRequest'
 
 // The Home Page.
-
-//TODO: NewsBar
 
 function App() {
   return (
@@ -33,6 +32,7 @@ function App() {
         </Flex>
         <PostBar />
       </Box>
+      <PostRequest />
     </>
   )
 }
