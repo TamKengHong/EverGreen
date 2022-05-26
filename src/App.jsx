@@ -16,7 +16,8 @@ function App() {
         <Text fontSize="70" mt="30vh">EverGreen.</Text>
         <Box fontSize="25">
           <Link to='/login'>Login</Link> |{" "}
-          <Link to='/signup'>Signup</Link>
+          <Link to='/signup'>Signup</Link> |{" "}
+          <Link to='/stock'>Stocks</Link>
         </Box>
       </VStack>
 
