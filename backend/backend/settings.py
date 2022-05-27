@@ -21,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # import config to anonymise secret key
-SECRET_KEY = config("SECRET_KEY")
+#SECRET_KEY = config("SECRET_KEY")
+# Quick-start development settings - unsuitable for production
+SECRET_KEY = 'django-insecure-&#^^poq@8&n%%y_ht=v7szf9s)wk!=m@_ul1mq!qzs@&ko3h+@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
