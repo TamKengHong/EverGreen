@@ -22,9 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # import config to anonymise secret key
-#SECRET_KEY = config("SECRET_KEY")
-with open("secretkey.txt","r") as f:
-    SECRET_KEY = f.readline().rstrip('\n')
+SECRET_KEY = config("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
