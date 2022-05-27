@@ -17,7 +17,7 @@ function App() {
         <Box fontSize="25">
           <Link to='/login'>Login</Link> |{" "}
           <Link to='/signup'>Signup</Link> |{" "}
-          <Link to='/stock'>Stocks</Link>
+          <Link to='/stock/AAPL'>Stocks</Link>
         </Box>
       </VStack>
 

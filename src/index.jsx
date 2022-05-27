@@ -20,7 +20,7 @@ root.render(
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/user' element={<UserPage />} />
-          <Route path='/stock' element={<StockPage />} />
+          <Route path='/stock/:ticker' element={<StockPage />} />
         </Routes>
       </ChakraProvider>
     </BrowserRouter>

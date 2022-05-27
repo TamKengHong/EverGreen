@@ -3,7 +3,7 @@ import { Square, Flex, Spacer } from '@chakra-ui/react'
 
 const NewsBar = () => {
   return (
-    <Flex>
+    <Flex wrap="wrap">
       <Square size="30vh" bg="red.300"></Square>
       <Spacer />
       <Square size="30vh" bg="blue.300"></Square>
