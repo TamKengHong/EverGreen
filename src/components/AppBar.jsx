@@ -12,7 +12,7 @@ const SearchBar = () => {
   const [ticker, setTicker] = useState()
   function handleKeyPress(e) {
     if (e.key === "Enter") {
-      navigate(`/stock/${ticker}`)
+      navigate(`/stock/${ticker.toUpperCase()}`)
     }
   }
   return (

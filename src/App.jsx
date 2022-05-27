@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import AppBar from './components/AppBar'
 import NewsBar from './components/NewsBar'
 import PostBar from './components/PostBar'
-import PostRequest from './requests/PostRequest'
 
 // The Home Page.
 
@@ -21,19 +20,20 @@ function App() {
         </Box>
       </VStack>
 
-      <Box h="400px" bg="gray.200" >
+      <Box bg="gray.200" >
         <Text ml="3" mb="5" fontSize="30">Trending News:</Text>
         <NewsBar />
+        <Box h="10"></Box>
       </Box>
-      <Box h="400px" bg="gray.100" >
+      <Box bg="gray.100" >
         <Flex mb="5">
           <Text ml="3" fontSize="30">Trending Posts:</Text>
           <Spacer />
           <Text alignSelf="right" mr="20vw" fontSize="30"> Filter by:</Text>
         </Flex>
         <PostBar />
+        <Box h="10"></Box>
       </Box>
-      <PostRequest />
     </>
   )
 }
