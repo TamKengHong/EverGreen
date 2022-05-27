@@ -69,3 +69,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 
 List of bugs for front end:
+
+Backend notes:
+
+Set buildpack of Heroku to Python; otherwise Heroku will run the frontend instead.
+$ heroku buildpacks:set heroku/python
