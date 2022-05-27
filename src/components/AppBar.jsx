@@ -16,7 +16,7 @@ const SearchBar = () => {
     }
   }
   return (
-    <InputGroup size='lg' w="75%" >
+    <InputGroup size='lg' w="85%" >
       <InputLeftAddon
         border="1px"
         borderColor="gray.400"
@@ -26,7 +26,7 @@ const SearchBar = () => {
       <Input
         border="1px"
         borderColor="gray.400"
-        placeholder='Search'
+        placeholder='Search Ticker'
         bg="white"
         mr={5}
         onChange={e => { setTicker(e.target.value) }}

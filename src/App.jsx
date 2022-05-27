@@ -1,18 +1,30 @@
 import React from 'react'
 import { Box, Text, VStack, Flex, Spacer } from '@chakra-ui/react'
+import { TickerTape } from 'react-tradingview-embed'
 import { Link } from 'react-router-dom'
 import AppBar from './components/AppBar'
 import NewsBar from './components/NewsBar'
 import PostBar from './components/PostBar'
 
 // The Home Page.
+const tickerList = [
+  { "title": "S&P 500", "proName": "FOREXCOM:SPXUSD" },
+  { "title": "Invesco Nasdaq 100 ETF", "proName": "NASDAQ:QQQ" },
+  { "title": "Apple Inc.", "proName": "NASDAQ:AAPL" },
+  { "title": "Tesla", "proName": "NASDAQ:TSLA" },
+  { "title": "Vanguard World ETF", "proName": "AMEX:VT" },
+  { "title": "USD/SGD", "proName": "OANDA:USDSGD" }
+]
 
 function App() {
   return (
     <>
       <AppBar />
-      <VStack h="95vh" bg="gray.100" alignItems="center">
-        <Text fontSize="70" mt="30vh">EverGreen.</Text>
+      <Box bg="gray.100" border="1px" borderColor="gray.400">
+        <TickerTape widgetProps={{ colorTheme: "light", symbols: tickerList, isTransparent: true }} />
+      </Box>
+      <VStack h="88vh" bg="gray.100" alignItems="center">
+        <Text fontSize="70" mt="28vh">EverGreen.</Text>
         <Box fontSize="25">
           <Link to='/login'>Login</Link> |{" "}
           <Link to='/signup'>Signup</Link> |{" "}
