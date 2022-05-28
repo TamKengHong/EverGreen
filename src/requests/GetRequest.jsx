@@ -4,9 +4,9 @@ function GetRequest() {
   const [totalReactPackages, setTotalReactPackages] = useState(null)
 
   useEffect(() => {
-    fetch('https://api.npms.io/v2/search?q=react')
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/')
       .then(response => response.json())
-      .then(data => setTotalReactPackages(data.total))
+      .then(data => console.log(data))
   }, [])
 }
 

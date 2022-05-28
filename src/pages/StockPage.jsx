@@ -6,19 +6,29 @@ import { useParams } from "react-router-dom"
 const StockPage = () => {
   let { ticker } = useParams()
   return (
-    <Box bg="gray.300">
+    <Box bg="gray.300" >
       <AppBar />
       <Box margin="auto" w="90%">
         <Box h="5"></Box>
-        <SymbolInfo widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        <Box boxShadow="lg">
+          <SymbolInfo widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        </Box>
         <Box h="5"></Box>
-        <AdvancedChart widgetProps={{ symbol: ticker, theme: "light" }} />
+        <Box boxShadow="lg">
+          <AdvancedChart widgetProps={{ symbol: ticker, theme: "light" }} />
+        </Box>
         <Box h="5"></Box>
-        <CompanyProfile widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        <Box boxShadow="lg">
+          <CompanyProfile widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        </Box>
         <Box h="5"></Box>
-        <TechnicalAnalysis widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        <Box boxShadow="lg">
+          <TechnicalAnalysis widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        </Box>
         <Box h="5"></Box>
-        <FundamentalData widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        <Box boxShadow="lg">
+          <FundamentalData widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
+        </Box>
         <Box h="5"></Box>
       </Box>
     </Box>

@@ -14,8 +14,8 @@ const Login = () => {
   return (
     <Box height="100%" bg="gray.300">
       <AppBar />
-      <Flex height="85vh" alignItems="center" justifyContent="center">
-        <Flex direction="column" background="gray.100" p={12} rounded={6}>
+      <Flex height="85vh" alignItems="center" justifyContent="center" >
+        <Flex direction="column" background="gray.100" p={12} rounded={6} boxShadow="lg">
           <Heading mb={9} alignSelf="center">Log in</Heading>
           <Input
             border="1px"

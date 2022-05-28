@@ -1,10 +1,10 @@
 import React from 'react'
 import { Box, Text, VStack, Flex, Spacer } from '@chakra-ui/react'
-import { TickerTape } from 'react-tradingview-embed'
+import { TickerTape, Timeline } from 'react-tradingview-embed'
 import { Link } from 'react-router-dom'
 import AppBar from './components/AppBar'
-import NewsBar from './components/NewsBar'
 import PostBar from './components/PostBar'
+import GetRequest from './requests/GetRequest'
 
 // The Home Page.
 const tickerList = [
@@ -24,7 +24,7 @@ function App() {
         <TickerTape widgetProps={{ colorTheme: "light", symbols: tickerList, isTransparent: true }} />
       </Box>
       <VStack h="88vh" bg="gray.100" alignItems="center">
-        <Text fontSize="70" mt="28vh">EverGreen.</Text>
+        <Text fontSize="70" mt="28vh">EverGreen🚀</Text>
         <Box fontSize="25">
           <Link to='/login'>Login</Link> |{" "}
           <Link to='/signup'>Signup</Link> |{" "}
@@ -34,7 +34,9 @@ function App() {
 
       <Box bg="gray.200" >
         <Text ml="3" mb="5" fontSize="30">Trending News:</Text>
-        <NewsBar />
+        <Box margin="auto" w="90%" boxShadow="md">
+          <Timeline widgetProps={{ colorTheme: "light", width: "100%", height: "500" }} />
+        </Box>
         <Box h="10"></Box>
       </Box>
       <Box bg="gray.100" >
@@ -46,6 +48,7 @@ function App() {
         <PostBar />
         <Box h="10"></Box>
       </Box>
+      <GetRequest />
     </>
   )
 }

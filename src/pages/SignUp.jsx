@@ -14,7 +14,7 @@ const SignUp = () => {
     <Box height="100%" bg="gray.300">
       <AppBar />
       <Flex height="85vh" alignItems="center" justifyContent="center">
-        <Flex direction="column" background="gray.100" p={12} rounded={6}>
+        <Flex direction="column" bg="gray.100" p={12} rounded={6} boxShadow="lg">
           <Heading alignSelf="center" mb={9}>Sign Up</Heading>
           <Input
             border="1px"
