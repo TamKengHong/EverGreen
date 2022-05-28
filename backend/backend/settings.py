@@ -131,4 +131,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Informs Django to perform authentication using the CustomUser model
 AUTH_USER_MODEL = "stockmarket.CustomUser"
 # default configuration for deployment to Heroku
+import django_heroku
 django_heroku.settings(locals())
