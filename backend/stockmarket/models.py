@@ -44,6 +44,8 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     # CustomUsers are managed by CustomUserManager
     objects = CustomUserManager()
     # login with email, and make username mandatory during registration
+    # REQUIRED_FIELDS is a list of the field names that will be prompted for when creating a user via the create_superuser command. 
+    # REQUIRED_FIELDS must contain all required fields on your user model, but should not contain the USERNAME_FIELD or password as these fields will always be prompted for.
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
     def __str__(self):
@@ -54,9 +56,21 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(CustomUser,on_delete=models.CASCADE) 
+    author = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username") 
     postTitle = models.CharField(max_length=255)
     postContent = models.TextField()
     postDate = models.DateTimeField(default=timezone.now)
+    likes = models.BigIntegerField(default=0)
+    dislikes = models.BigIntegerField(default=0)
     def __str__(self):
         return "%s : %s" % (self.postTitle,self.postContent)
+
+class Comment(models.Model):
+    commenter = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username")
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    commentContent = models.TextField()
+    commentDate = models.DateTimeField(default=timezone.now)
+    likes = models.BigIntegerField(default=0)
+    dislikes = models.BigIntegerField(default=0)
+    def __str__(self):
+        return "%s : %s" % (self.commenter,self.commentContent)
