@@ -36,8 +36,7 @@ const Login = () => {
             onChange={e => setPassword(e.target.value)}
           />
           <Button colorScheme="teal" mb={3}
-            onClick={() => navigate('../user',
-              { state: { name: email ? email : "" } })}>Log in</Button>
+            onClick={() => navigate(`../user/${email.split("@")[0]}`)}>Log in</Button>
           <Link fontSize="s" >Forgot your password?</Link>
           <Link fontSize="s" as={RouterLink} to='../signup'>Sign Up</Link>
         </Flex>

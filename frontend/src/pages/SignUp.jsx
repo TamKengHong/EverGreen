@@ -4,10 +4,11 @@ import AppBar from '../components/AppBar'
 import { useState } from 'react'
 
 const SignUp = () => {
+  const [username, setUsername] = useState()
   const [email, setEmail] = useState()
-  const [newPassword, setNewPassword] = useState()
+  const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
-  const obj = { "email": email, "newPassword": newPassword, "confirmPassword": confirmPassword }
+  const obj = { "email": email, "Password": password, "confirmPassword": confirmPassword }
   const navigate = useNavigate()
 
   return (
@@ -19,7 +20,16 @@ const SignUp = () => {
           <Input
             border="1px"
             borderColor="gray.400"
-            placeholder="New Email"
+            placeholder="Username"
+            variant="filled"
+            mb={3}
+            type="text"
+            onChange={e => setUsername(e.target.value)}
+          />
+          <Input
+            border="1px"
+            borderColor="gray.400"
+            placeholder="Email"
             variant="filled"
             mb={3}
             type="email"
@@ -28,11 +38,11 @@ const SignUp = () => {
           <Input
             border="1px"
             borderColor="gray.400"
-            placeholder="New Password"
+            placeholder="Password"
             variant="filled"
             mb={3}
             type="password"
-            onChange={e => setNewPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
           />
           <Input
             border="1px"
