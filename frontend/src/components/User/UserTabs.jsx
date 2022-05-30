@@ -7,7 +7,7 @@ const UserTabs = () => {
       <TabList mb='1em' border="1px" borderColor="gray.400">
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Settings</Tab>
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Watchlist</Tab>
-        <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Posts & Comments</Tab>
+        <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Posts</Tab>
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Calendar</Tab>
       </TabList>
       <TabPanels border="1px" borderColor="gray.400">
