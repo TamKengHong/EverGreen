@@ -1,23 +1,21 @@
 import AppBar from '../components/AppBar'
 import { Box, Text, VStack } from '@chakra-ui/react'
-import { useLocation } from 'react-router-dom'
-
+import { useParams } from 'react-router-dom'
+import UserTabs from '../components/User/UserTabs'
 
 const UserPage = () => {
-  const location = useLocation()
-  const data = location.state
+  let { email } = useParams()
 
   return (
-    <>
+    <Box bg="gray.300">
       <AppBar />
-      <VStack h="500px" bg="gray.100" alignItems="center">
-        <Text fontSize="70" mt="150px">Welcome {data.name.split("@")[0]}!</Text>
+      <VStack h="500px" alignItems="center">
+        <Text fontSize="70" mt="150px">Welcome {email}!</Text>
       </VStack>
 
-      <Box h="300px" bg="gray.200">
-        <Text ml="3" fontSize="30">Settings:</Text>
-      </Box>
-    </>
+      <UserTabs bg="gray.100" />
+
+    </Box>
   )
 }
 

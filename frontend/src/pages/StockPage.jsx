@@ -1,7 +1,8 @@
-import { AdvancedChart, CompanyProfile, FundamentalData, SymbolInfo, TechnicalAnalysis } from "react-tradingview-embed"
-import { Box } from '@chakra-ui/react'
+import { SymbolInfo } from "react-tradingview-embed"
+import { Box, Text } from '@chakra-ui/react'
 import AppBar from '../components/AppBar'
 import { useParams } from "react-router-dom"
+import StockTabs from '../components/StockTabs'
 
 const StockPage = () => {
   let { ticker } = useParams()
@@ -13,24 +14,11 @@ const StockPage = () => {
         <Box boxShadow="lg">
           <SymbolInfo widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
         </Box>
-        <Box h="5"></Box>
-        <Box boxShadow="lg">
-          <AdvancedChart widgetProps={{ symbol: ticker, theme: "light" }} />
-        </Box>
-        <Box h="5"></Box>
-        <Box boxShadow="lg">
-          <CompanyProfile widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
-        </Box>
-        <Box h="5"></Box>
-        <Box boxShadow="lg">
-          <TechnicalAnalysis widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
-        </Box>
-        <Box h="5"></Box>
-        <Box boxShadow="lg">
-          <FundamentalData widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
-        </Box>
-        <Box h="5"></Box>
       </Box>
+      <Box h="10"></Box>
+      <StockTabs props={ticker} />
+      <Box h="5"></Box>
+      <Text fontSize="50" alignSelf="center">Posts & Comments Section</Text>
     </Box>
   )
 }
