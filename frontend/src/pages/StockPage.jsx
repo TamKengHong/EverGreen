@@ -16,7 +16,7 @@ const StockPage = () => {
         </Box>
       </Box>
       <Box h="10"></Box>
-      <StockTabs props={ticker} />
+      <StockTabs />
       <Box h="5"></Box>
       <Text fontSize="50" alignSelf="center">Posts & Comments Section</Text>
     </Box>
