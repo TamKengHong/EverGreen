@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
@@ -14,12 +15,9 @@ class CustomUserManager(BaseUserManager):
         # email is compulsory for all users
         if not email: 
             raise ValueError("Users must have an email address")
-        # password must be at least 15 characters
-        if len(password) < 10: 
-            raise ValueError("Password must be at least 10 characters")
         #normalize_email normalizes email addresses by lowercasing the domain portion of the email address.
         user = self.model(email = self.normalize_email(email),username=name)
-        user.set_password(password)
+        user.set_password(password) # sets and hashes password
         user.save(using=self._db)
         return user
 

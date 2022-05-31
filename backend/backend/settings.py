@@ -88,9 +88,10 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+# note that validators aren’t applied at the model level, for example in User.objects.create_user() and create_superuser(), 
+# because it is assumed that developers, not users, interact with Django at that level and also because model validation doesn’t automatically run as part of creating models.
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -98,6 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 16} #check if password is at least 16 characters
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
