@@ -21,7 +21,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         email = validated_data["email"]
         username = validated_data["username"]
         password = validated_data["password"]
-        isPasswordLongEnough(password) #validation test for password
+        IsPasswordLongEnough(password) #validation test for password
         return CustomUser.objects.create_user(email,username,password)
     
     def update(self,instance,validated_data):
