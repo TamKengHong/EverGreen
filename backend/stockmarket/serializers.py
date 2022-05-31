@@ -15,7 +15,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     #validated_data is in the form of a JSON object
     #note: validation for email is carried by EmailField
     def create(self,validated_data):
-        def isPasswordLongEnough(password):
+        def IsPasswordLongEnough(password):
             if len(password) < 16:
                 raise serializers.ValidationError("Password must have at least 16 characters")
         email = validated_data["email"]
