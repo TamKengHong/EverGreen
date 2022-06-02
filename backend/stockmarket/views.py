@@ -4,10 +4,11 @@ from rest_framework import viewsets,filters,permissions
 from rest_framework.authentication import TokenAuthentication
 
 #default authentication class for all viewsets is TokenAuthentication, as shown in settings.py
-class CustomUserViewset(viewsets.ModelViewSet):
+class CustomUserViewSet(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all() #retrieve all CustomUsers from database
-    permission_classes = [permissions.IsAuthenticated]
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes = [permissions.IsAuthenticated]
     # Allow users to search/filter other users by their names or email by making queries such as http://example.com/api/users?search=russell
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'email']
