@@ -7,8 +7,8 @@ from rest_framework.authentication import TokenAuthentication
 class CustomUserViewSet(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all() #retrieve all CustomUsers from database
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [permissions.IsAuthenticated]
-    # Allow users to search/filter other users by their names or email by making queries such as http://example.com/api/users?search=russell
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    # Allow users to search/filter other users by their usernames or email by making queries such as http://example.com/api/users?search=russell
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', 'email']
