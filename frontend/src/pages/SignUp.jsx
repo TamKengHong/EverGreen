@@ -1,20 +1,35 @@
-import { Flex, Button, Heading, Input, Link, Box } from '@chakra-ui/react'
+import {
+  Flex, Button, Heading, Input, Link, Box,
+  FormControl, FormErrorMessage
+} from '@chakra-ui/react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import AppBar from '../components/AppBar'
 import { useState } from 'react'
 
 const SignUp = () => {
-  const [username, setUsername] = useState()
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [confirmPassword, setConfirmPassword] = useState()
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const obj = { "email": email, "Password": password, "confirmPassword": confirmPassword }
   const navigate = useNavigate()
 
+  const isValidEmail = email === '' || email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+
+  const pwMismatch = password !== confirmPassword
+  const pwTooShort = confirmPassword !== '' && confirmPassword.length < 8
+  const pwError = pwMismatch || pwTooShort
+
+  function handleClick() {
+    if (!(pwError || !isValidEmail || email === '||' || password === '' || confirmPassword === '' || username === '')) {
+      navigate(-1)
+    }
+  }
+
   return (
-    <Box height="100%" bg="gray.300">
+    <Box h="100%" bg="gray.300">
       <AppBar />
-      <Flex height="85vh" alignItems="center" justifyContent="center">
+      <Flex h="85vh" alignItems="center" justifyContent="center">
         <Flex direction="column" bg="gray.100" p={12} rounded={6} boxShadow="lg">
           <Heading alignSelf="center" mb={9}>Sign Up</Heading>
           <Input
@@ -26,35 +41,43 @@ const SignUp = () => {
             type="text"
             onChange={e => setUsername(e.target.value)}
           />
-          <Input
-            border="1px"
-            borderColor="gray.400"
-            placeholder="Email"
-            variant="filled"
-            mb={3}
-            type="email"
-            onChange={e => setEmail(e.target.value)}
-          />
+          <FormControl isInvalid={!isValidEmail}>
+            <Input
+              border="1px"
+              borderColor="gray.400"
+              placeholder="Email"
+              variant="filled"
+              type="email"
+              onChange={e => setEmail(e.target.value)}
+            />
+            {!isValidEmail ? <FormErrorMessage>Invalid Email.</FormErrorMessage> : null}
+          </FormControl>
           <Input
             border="1px"
             borderColor="gray.400"
             placeholder="Password"
             variant="filled"
             mb={3}
+            mt={3}
             type="password"
             onChange={e => setPassword(e.target.value)}
           />
-          <Input
-            border="1px"
-            borderColor="gray.400"
-            placeholder="Confirm Password"
-            variant="filled"
-            mb={9}
-            type="password"
-            onChange={e => setConfirmPassword(e.target.value)}
-          />
-          <Button colorScheme="blue" mb={3}
-            onClick={() => navigate(-1)}>Sign Up</Button>
+          <FormControl isInvalid={pwError}>
+            <Input
+              border="1px"
+              borderColor="gray.400"
+              placeholder="Confirm Password"
+              variant="filled"
+              type="password"
+              onChange={e => setConfirmPassword(e.target.value)}
+            />
+            {pwMismatch ? <FormErrorMessage>Password Mismatch.</FormErrorMessage>
+              : pwTooShort ? <FormErrorMessage>Password must be at least 8 characters. </FormErrorMessage>
+                : null
+            }
+          </FormControl>
+          <Button colorScheme="blue" mb={3} mt={6}
+            onClick={() => handleClick()}>Sign Up</Button>
           <Link fontSize="s" as={RouterLink} to='../login'>Back</Link>
         </Flex>
       </Flex>

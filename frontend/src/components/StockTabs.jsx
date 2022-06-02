@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs, TabList, TabPanels, TabPanel, Link } from '@chakra-ui/react'
 import { AdvancedChart, CompanyProfile, FundamentalData, TechnicalAnalysis, } from 'react-tradingview-embed'
 import Timeline from './Timeline'
-import { BiLinkExternal } from 'react-icons/bi'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { useParams } from 'react-router-dom'
 
 const StockTabs = () => {
@@ -47,7 +47,7 @@ const StockTabs = () => {
         <TabPanel>
           <Timeline />
           <Link href={`https://www.google.com/search?q=${ticker}&tbm=nws`} isExternal>
-            More News <BiLinkExternal mx="2px" />
+            More News <ExternalLinkIcon mx="2px" />
           </Link>
         </TabPanel>
       </TabPanels>

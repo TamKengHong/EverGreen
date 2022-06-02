@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 function GetRequest() {
-  const [totalReactPackages, setTotalReactPackages] = useState(null)
-
   useEffect(() => {
-    fetch('https://ever-green-production.herokuapp.com/stockmarket/')
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/')
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => console.log(data[0]))
   }, [])
 }
 

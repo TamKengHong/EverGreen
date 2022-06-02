@@ -1,10 +1,12 @@
 import React from 'react'
-import { Box, Text, VStack, Flex, Spacer } from '@chakra-ui/react'
+import { Box, Text, VStack, Flex, Spacer, Link } from '@chakra-ui/react'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { TickerTape, Timeline } from 'react-tradingview-embed'
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import AppBar from './components/AppBar'
 import PostBar from './components/PostBar'
 import GetRequest from './requests/GetRequest'
+import PostRequest from './requests/PostRequest'
 
 // The Home Page.
 const tickerList = [
@@ -26,9 +28,9 @@ function App() {
       <VStack h="88vh" bg="gray.100" alignItems="center">
         <Text fontSize="70" mt="28vh">EverGreen🚀</Text>
         <Box fontSize="25">
-          <Link to='/login'>Login</Link> |{" "}
-          <Link to='/signup'>Signup</Link> |{" "}
-          <Link to='/stock/AAPL'>Stocks</Link>
+          <RouterLink to='/login'>Login</RouterLink> |{" "}
+          <RouterLink to='/signup'>Signup</RouterLink> |{" "}
+          <RouterLink to='/stock/AAPL'>Stocks</RouterLink>
         </Box>
       </VStack>
 
@@ -37,6 +39,9 @@ function App() {
         <Box margin="auto" w="90%" boxShadow="md">
           <Timeline widgetProps={{ colorTheme: "light", width: "100%", height: "500" }} />
         </Box>
+        <Link ml="5%" href={`https://www.tradingview.com/news/`} isExternal>
+          More News <ExternalLinkIcon mx="2px" />
+        </Link>
         <Box h="10"></Box>
       </Box>
       <Box bg="gray.100" >
