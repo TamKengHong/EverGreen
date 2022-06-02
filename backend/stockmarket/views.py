@@ -11,4 +11,4 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     #permission_classes = [permissions.IsAuthenticated]
     # Allow users to search/filter other users by their names or email by making queries such as http://example.com/api/users?search=russell
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'email']
+    search_fields = ['username', 'email']
