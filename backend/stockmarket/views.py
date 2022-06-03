@@ -14,10 +14,12 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     # Allow users to search/filter other users by their usernames or email by making queries such as http://example.com/api/users?search=russell
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', 'email']
-
+    
+'''
 class LoginViewSet(viewsets.ViewSet):
 	serializer_class = AuthTokenSerializer
     #ObtainAuthToken().post(request) return token key of user in request
     #For more information,go to https://github.com/encode/django-rest-framework/blob/master/rest_framework/authtoken/views.py
-	def create(self, request):
-		return ObtainAuthToken().post(request)
+	def create(self,request):
+		return ObtainAuthToken().as_view()(request=request._request)
+'''
