@@ -20,7 +20,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             if len(password) < 8:
                 raise serializers.ValidationError("Password must have at least 8 characters")
         IsPasswordLongEnough(validated_data["password"]) #validation test for password
-        user = CustomUser(email=validated_data["email"],username=validated_data["username"],password=validated_data["password"])
+        user = CustomUser(email=validated_data["email"],username=validated_data["username"])
         user.set_password(validated_data["password"])
         user.save()
         return user
