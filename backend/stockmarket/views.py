@@ -2,8 +2,8 @@ from .models import CustomUser,Post,Comment
 from .serializers import CustomUserSerializer
 from rest_framework import viewsets,filters,permissions
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.authtoken.views import ObtainAuthToken
+#from rest_framework.authtoken.serializers import AuthTokenSerializer
+#from rest_framework.authtoken.views import ObtainAuthToken
 
 #default authentication class for all viewsets is TokenAuthentication, as shown in settings.py
 class CustomUserViewSet(viewsets.ModelViewSet):
