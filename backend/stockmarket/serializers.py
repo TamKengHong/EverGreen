@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser,Post,Comment
+
 #Serializers in Django REST Framework convert objects into JSON objects. 
 #Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data. 
 #explicitly set all fields that should be serialized using the fields attribute in the meta class
