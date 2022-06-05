@@ -16,10 +16,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
     #note: validation for email is carried by EmailField
     #override create function to use set_password function that hashes the passwords
     def create(self,validated_data):
+        '''
         def IsPasswordLongEnough(password):
             if len(password) < 8:
                 raise serializers.ValidationError("Password must have at least 8 characters")
         IsPasswordLongEnough(validated_data["password"]) #validation test for password
+        '''
         user = CustomUser(email=validated_data["email"],username=validated_data["username"])
         user.set_password(validated_data["password"])
         user.save()

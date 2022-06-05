@@ -1,2 +1,2 @@
 .env
-secretkey.txt
+__pycache__/
