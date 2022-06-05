@@ -20,4 +20,5 @@ urlpatterns = [
     path('stockmarket/', include('stockmarket.urls')),
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
 ]
