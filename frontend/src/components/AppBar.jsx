@@ -1,10 +1,11 @@
 import {
-  Flex, Spacer, Center, Link, Input, InputGroup, InputLeftAddon, IconButton
+  Box, Flex, Spacer, Center, Link, Input, InputGroup, InputLeftAddon, IconButton
 } from '@chakra-ui/react'
 import { BiUserCircle, BiSearch } from 'react-icons/bi'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import background from '../assets/wood _texture3177.jpg'
 
 
 const SearchBar = () => {
@@ -39,7 +40,7 @@ const SearchBar = () => {
 const AppBar = () => {
   const navigate = useNavigate()
   return (
-    <Flex w="100%" alignItems="center" bg="gray.200" >
+    <Flex w="100%" alignItems="center" >
       <Center w="100px" h="50px" bg="green" color="white">
         <Link as={RouterLink} to='/'> EverGreen </Link>
       </Center>

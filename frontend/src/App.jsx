@@ -53,7 +53,6 @@ function App() {
         <PostBar />
         <Box h="10"></Box>
       </Box>
-      <PostRequest />
     </>
   )
 }
