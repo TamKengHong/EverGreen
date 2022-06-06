@@ -5,6 +5,4 @@ from .views import CustomUserViewSet
 
 router = routers.DefaultRouter()
 router.register("users",CustomUserViewSet)
-#specify basename for LoginViewSet since LoginViewSet does not have queryset attribute
-#router.register("auth",LoginViewSet,basename="login")
 urlpatterns = [path('', include(router.urls)),]
