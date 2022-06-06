@@ -1,7 +1,7 @@
 from unicodedata import name
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
+from django.contrib.auth.models import AbstractUser,BaseUserManager,PermissionsMixin
 
 #AbstractBaseUser only contains the authentication functionality, but no actual fields; the fields have to be supplied in the process  of subclassing.
 #on_delete = models.cascade - When the referenced object is deleted, also delete the objects that have references to it
@@ -24,12 +24,13 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self,email,name,password):
         user = self.create_user(email,name,password)
         user.is_superuser = True
+        user.is_staff = True
         user.save(using=self._db)
         return user
 
 #summary,profile,country are not necessary
 #PermissionsMixin includes Django’s permission framework into the CustomUser class
-class CustomUser(AbstractBaseUser,PermissionsMixin):
+class CustomUser(AbstractUser,PermissionsMixin):
     email = models.EmailField(verbose_name = "email address", max_length=225,unique=True)
     username = models.CharField(max_length=225,unique=True)
     #summary should not contain more than 1000 characters
