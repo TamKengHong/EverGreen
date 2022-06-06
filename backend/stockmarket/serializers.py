@@ -1,5 +1,7 @@
-from rest_framework import serializers
 from .models import CustomUser,Post,Comment
+from rest_framework import serializers
+from dj_rest_auth.registration.serializers import RegisterSerializer
+from django.db import transaction
 
 #Serializers in Django REST Framework convert objects into JSON objects. 
 #Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data. 
@@ -37,3 +39,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
                     setattr(instance,key,value)
         instance.save()
         return instance
+
+class CustomRegisterSerializer(RegisterSerializer):
+    # Define transaction.atomic to rollback the save operation in case of error
+    @transaction.atomic
+    def save(self, request):
+        user = super().save(request)
+        user.save()
+        return user
