@@ -28,7 +28,7 @@ const SignUp = () => {
   }
 
   return (
-    <Box h="100%" bgImage={pineBackground} bgSize="100% 100%">
+    <Box h="100%" bgImage={pineBackground} bgSize="cover">
       <AppBar />
       <Flex h="85vh" alignItems="center" justifyContent="center">
         <Flex direction="column" bg="gray.100" p={12} rounded={6} boxShadow="lg">
