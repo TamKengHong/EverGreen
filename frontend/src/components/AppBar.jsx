@@ -40,7 +40,7 @@ const SearchBar = () => {
 const AppBar = () => {
   const navigate = useNavigate()
   return (
-    <Flex w="100%" alignItems="center" >
+    <Flex w="100%" alignItems="center" bg="gray.200" >
       <Center w="100px" h="50px" bg="green" color="white">
         <Link as={RouterLink} to='/'> EverGreen </Link>
       </Center>
