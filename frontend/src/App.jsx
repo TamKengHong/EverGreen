@@ -7,6 +7,8 @@ import AppBar from './components/AppBar'
 import PostBar from './components/PostBar'
 import GetRequest from './requests/GetRequest'
 import PostRequest from './requests/PostRequest'
+import forestBackground from './assets/forest_wallpaper.jpg'
+import pineBackground from './assets/pine_tree_fog.jpg'
 
 // The Home Page.
 const tickerList = [
@@ -25,13 +27,15 @@ function App() {
       <Box bg="gray.100" border="1px" borderColor="gray.400">
         <TickerTape widgetProps={{ colorTheme: "light", symbols: tickerList, isTransparent: true }} />
       </Box>
-      <VStack h="88vh" bg="gray.100" alignItems="center">
+      <VStack h="88vh" bgImage={pineBackground} bgSize="100% 88vh" alignItems="center">
+        {/* <Box rounded={10} bg="gray.200"> */}
         <Text fontSize="70" mt="28vh">EverGreen🚀</Text>
-        <Box fontSize="25">
+        <Box fontSize="25" >
           <RouterLink to='/login'>Login</RouterLink> |{" "}
           <RouterLink to='/signup'>Signup</RouterLink> |{" "}
           <RouterLink to='/stock/AAPL'>Stocks</RouterLink>
         </Box>
+        {/* </Box> */}
       </VStack>
 
       <Box bg="gray.200" >
@@ -53,6 +57,7 @@ function App() {
         <PostBar />
         <Box h="10"></Box>
       </Box>
+      <PostRequest />
     </>
   )
 }

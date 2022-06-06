@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 
 // Takes in a JSON object, sends it to the server to validate login info
+// Username is set as email.
 
 const info = {
-  "username": "tamkenghong",
-  "password": "tamkenghong"
+  "username": "testaccount",
+  "email": "test@gmail.com",
+  "password": "12345678910"
 }
 
 function PostRequest() {
@@ -14,7 +16,7 @@ function PostRequest() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(info)
     }
-    fetch('https://ever-green-production.herokuapp.com/stockmarket/auth/', requestOptions)
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/', requestOptions)
       .then(response => response.json())
       .then(data => console.log(data))
   }, [])

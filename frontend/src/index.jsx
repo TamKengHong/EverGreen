@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import UserPage from './pages/UserPage'
 import StockPage from './pages/StockPage'
+import Test from './pages/Test'
 import { ChakraProvider } from '@chakra-ui/react'
 
 const container = document.getElementById('root')
@@ -21,6 +22,7 @@ root.render(
           <Route path='/signup' element={<SignUp />} />
           <Route path='/user/:email' element={<UserPage />} />
           <Route path='/stock/:ticker' element={<StockPage />} />
+          <Route path='/test' element={<Test />} />
         </Routes>
       </ChakraProvider>
     </BrowserRouter>

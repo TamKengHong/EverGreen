@@ -5,7 +5,7 @@ import { BiUserCircle, BiSearch } from 'react-icons/bi'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import background from '../assets/wood _texture3177.jpg'
+import woodBackground from '../assets/oak_wood_texture.jpg'
 
 
 const SearchBar = () => {
@@ -21,6 +21,7 @@ const SearchBar = () => {
       <InputLeftAddon
         border="1px"
         borderColor="gray.400"
+        bgColor="#e4d7c4"
         ml={5}
         children={<BiSearch size="20" />}
       />
@@ -28,7 +29,7 @@ const SearchBar = () => {
         border="1px"
         borderColor="gray.400"
         placeholder='Search Ticker'
-        bg="white"
+        bgColor="#f4efe7"
         mr={5}
         onChange={e => { setTicker(e.target.value) }}
         onKeyPress={e => handleKeyPress(e)}
@@ -40,8 +41,8 @@ const SearchBar = () => {
 const AppBar = () => {
   const navigate = useNavigate()
   return (
-    <Flex w="100%" alignItems="center" bg="gray.200" >
-      <Center w="100px" h="50px" bg="green" color="white">
+    <Flex w="100%" alignItems="center" bgImage={woodBackground} >
+      <Center w="100px" h="50px" bg="green" roundedRight={5} color="white">
         <Link as={RouterLink} to='/'> EverGreen </Link>
       </Center>
       <Spacer />
@@ -49,7 +50,7 @@ const AppBar = () => {
       <Spacer />
       <IconButton
         onClick={() => navigate('../login')}
-        bg="gray.200"
+        bg="None"
         aria-label="Log in"
         size="lg"
         icon={<BiUserCircle size="35" />}

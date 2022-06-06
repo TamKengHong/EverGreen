@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 const headers = {
-  'Authorization': 'Token ' + '8d448df75ed17ef634fc9e8accd43c92055e948b',
+  'Authorization': 'Token ' + '25140262eae033670ffbac069e03052ead6b1e35',
 };
 
 function GetRequest() {

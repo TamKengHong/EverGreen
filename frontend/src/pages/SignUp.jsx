@@ -5,6 +5,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import AppBar from '../components/AppBar'
 import { useState } from 'react'
+import pineBackground from '../assets/pine_tree_fog.jpg'
 
 const SignUp = () => {
   const [username, setUsername] = useState('')
@@ -27,7 +28,7 @@ const SignUp = () => {
   }
 
   return (
-    <Box h="100%" bg="gray.300">
+    <Box h="100%" bgImage={pineBackground} bgSize="100% 100%">
       <AppBar />
       <Flex h="85vh" alignItems="center" justifyContent="center">
         <Flex direction="column" bg="gray.100" p={12} rounded={6} boxShadow="lg">
