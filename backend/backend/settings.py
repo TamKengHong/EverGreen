@@ -50,8 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration', #registration endpoint
     'rest_framework',
-    'rest_framework.authtoken',
-    'rest_framework_swagger',   
+    'rest_framework.authtoken',  
 ]
 
 SITE_ID = 1
@@ -149,12 +148,14 @@ AUTH_USER_MODEL = "stockmarket.CustomUser"
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication',]
+    'DEFAULT_AUTHENTICATION_CLASSES': ['dj_rest_auth.jwt_auth.JWTCookieAuthentication',] #use JWT authentication
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'stockmarket.serializers.CustomRegisterSerializer',
 }
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'stockmarket-auth' #cookie name
 #allauth settings
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = True
