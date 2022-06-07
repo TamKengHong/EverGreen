@@ -6,7 +6,8 @@ from django.db import transaction
 #Serializers in Django REST Framework convert objects into JSON objects. 
 #Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data. 
 #explicitly set all fields that should be serialized using the fields attribute in the meta class
-class CustomUserSerializer(serializers.ModelSerializer):
+
+class CustomUserSerializer(serializers.ModelSerializer): 
     class Meta:
         model = CustomUser
         fields = ["email","username","summary","profilePicture","country","totalLikes","totalDislikes","id","password"]
@@ -18,6 +19,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     #validated_data is in the form of a JSON object
     #note: validation for email is carried by EmailField
     #override create function to use set_password function that hashes the passwords
+    #Note that the create feature is not used as the creation of new users is handled by the RegisterSerializer, which goes through the dj-rest-auth framework and handles validation
     def create(self,validated_data):
         '''
         def IsPasswordLongEnough(password):
@@ -29,7 +31,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
-    
+
+    #custom update is needed to be defined because the default method method does not rehash passwords, which causes issues with authentication
     def update(self,instance,validated_data):
         for key,value in validated_data.items():
             if getattr(instance,key) != value: #if there is a change in the attribute, update accordingly
@@ -48,6 +51,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.save()
         return user
 
+#modelSerializer has default update and create methods - refer to https://github.com/encode/django-rest-framework/blob/1396f6886a39acb7fe52729c7b99fe2d7d245dac/rest_framework/serializers.py#L342
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
