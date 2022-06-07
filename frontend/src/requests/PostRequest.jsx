@@ -9,7 +9,7 @@ const info = {
   "password": "12345678910"
 }
 
-function PostRequest() {
+function PostRequest(info) {
   useEffect(() => {
     const requestOptions = {
       method: 'POST',

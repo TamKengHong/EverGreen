@@ -5,8 +5,6 @@ import { TickerTape, Timeline } from 'react-tradingview-embed'
 import { Link as RouterLink } from 'react-router-dom'
 import AppBar from './components/AppBar'
 import PostBar from './components/PostBar'
-import GetRequest from './requests/GetRequest'
-import PostRequest from './requests/PostRequest'
 import pineBackground from './assets/pine_tree_fog.jpg'
 
 // The Home Page.
@@ -56,7 +54,6 @@ function App() {
         <PostBar />
         <Box h="10"></Box>
       </Box>
-      <PostRequest />
     </>
   )
 }

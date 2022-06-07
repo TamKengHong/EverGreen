@@ -21,7 +21,7 @@ const SearchBar = () => {
       <InputLeftAddon
         border="1px"
         borderColor="gray.400"
-        bgColor="#e4d7c4"
+        bgColor="#dccbb3"
         ml={5}
         children={<BiSearch size="20" />}
       />
@@ -41,8 +41,8 @@ const SearchBar = () => {
 const AppBar = () => {
   const navigate = useNavigate()
   return (
-    <Flex w="100%" alignItems="center" bgImage={woodBackground} >
-      <Center w="100px" h="50px" bg="green" roundedRight={5} color="white">
+    <Flex w="100%" alignItems="center" bgImage={woodBackground} bgPos="center">
+      <Center w="100px" h="50px" bg="green.700" roundedRight={5} color="white">
         <Link as={RouterLink} to='/'> EverGreen </Link>
       </Center>
       <Spacer />
