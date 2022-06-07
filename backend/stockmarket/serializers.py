@@ -19,7 +19,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
     #validated_data is in the form of a JSON object
     #note: validation for email is carried by EmailField
     #override create function to use set_password function that hashes the passwords
-    #Note that the create feature is not used as the creation of new users is handled by the RegisterSerializer, which goes through the dj-rest-auth framework and handles validation
+    #Note that it is possible to create a new user using a PUT request to /stockmarket/users/
+    #However, the create method is not utilised as the creation of new users is handled by the RegisterSerializer, which goes through the dj-rest-auth framework and handles validation
     def create(self,validated_data):
         '''
         def IsPasswordLongEnough(password):
