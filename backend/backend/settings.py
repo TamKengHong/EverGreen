@@ -148,14 +148,13 @@ AUTH_USER_MODEL = "stockmarket.CustomUser"
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': ['dj_rest_auth.jwt_auth.JWTCookieAuthentication',] #use JWT authentication
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication',]
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'stockmarket.serializers.CustomRegisterSerializer',
 }
-REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'stockmarket-auth' #cookie name
+
 #allauth settings
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = True
