@@ -41,7 +41,10 @@ const SearchBar = () => {
 const AppBar = () => {
   const navigate = useNavigate()
   return (
-    <Flex w="100%" alignItems="center" bgImage={woodBackground} bgPos="center">
+    <Flex w="100%" alignItems="center"
+      bgImage={woodBackground} bgPos="center"
+      boxShadow="lg"
+    >
       <Center w="100px" h="50px" bg="green.700" roundedRight={5} color="white">
         <Link as={RouterLink} to='/'> EverGreen </Link>
       </Center>

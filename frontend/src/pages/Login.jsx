@@ -1,39 +1,48 @@
 import {
   Flex, Button, Heading, Input, Link, Box,
-  FormControl, FormErrorMessage
+  FormControl, FormErrorMessage, Alert, AlertIcon,
+  AlertDescription
 } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom'
 import AppBar from '../components/AppBar'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import pineBackground from '../assets/pine_tree_fog.jpg'
-
-function PostRequest(info) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(info)
-  }
-  fetch('https://ever-green-production.herokuapp.com/dj-rest-auth/login/', requestOptions)
-    .then(response => response.json())
-    .then(data => console.log(data))
-}
+import UserContext from '../context/UserContext'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [requestData, setRequestData] = useState('')
+  //const [context, setContext] = useContext(UserContext)
   const loginInfo = { "email": email, "password": password }
   const navigate = useNavigate()
 
   const isValidEmail = email === '' || email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
   const fieldsEmpty = email === '' || password === ''
 
+  if (requestData.key) {
+    navigate(`../user/${email.split("@")[0]}`)
+  }
+
+  const firstKey = Object.keys(requestData)[0]
+  const errorMessage = requestData[firstKey]
+
   function handleClick() {
-    if (!isValidEmail || fieldsEmpty) {
-      // do nothing or show error
-    } else {
+    if (!(!isValidEmail || fieldsEmpty)) {
       PostRequest(loginInfo)
     }
+  }
+
+  function PostRequest(info) {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(info)
+    }
+    fetch('https://ever-green-production.herokuapp.com/dj-rest-auth/login/', requestOptions)
+      .then(response => response.json())
+      .then(data => setRequestData(data))
   }
 
   return (
@@ -68,7 +77,12 @@ const Login = () => {
           <Link fontSize="s" as={RouterLink} to='../signup'>Sign Up</Link>
         </Flex>
       </Flex>
-      <Box h="8.7vh"> </Box>
+      {errorMessage ? (
+        <Alert status="error" h="8.7vh">
+          <AlertIcon />
+          <AlertDescription> {errorMessage}  </AlertDescription>
+        </Alert>
+      ) : <Box h="8.7vh"></Box>}
     </Box>
   )
 }

@@ -8,6 +8,7 @@ import UserPage from './pages/UserPage'
 import StockPage from './pages/StockPage'
 import Test from './pages/Test'
 import { ChakraProvider } from '@chakra-ui/react'
+import UserContext from './context/UserContext'
 
 const container = document.getElementById('root')
 const root = ReactDOM.createRoot(container)
@@ -16,6 +17,7 @@ root.render(
   <StrictMode>
     <BrowserRouter>
       <ChakraProvider>
+        {/* <UserContext.Provider value={"hello"}> */}
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/login' element={<Login />} />
@@ -24,6 +26,7 @@ root.render(
           <Route path='/stock/:ticker' element={<StockPage />} />
           <Route path='/test' element={<Test />} />
         </Routes>
+        {/* </UserContext.Provider> */}
       </ChakraProvider>
     </BrowserRouter>
   </StrictMode>

@@ -26,6 +26,17 @@ const SignUp = () => {
   const pwError = pwMismatch || pwTooShort
   const fieldsEmpty = email === '' || password === '' || confirmPassword === '' || username === ''
 
+  const firstKey = Object.keys(requestData)[0]
+  const errorMessage = requestData[firstKey]
+
+  if (requestData.key) { navigate('../login') }
+
+  function handleClick() {
+    if (!(pwError || !isValidEmail || fieldsEmpty)) {
+      PostRequest(obj)
+    }
+  }
+
   function PostRequest(info) {
     const requestOptions = {
       method: 'POST',
@@ -35,20 +46,6 @@ const SignUp = () => {
     fetch('https://ever-green-production.herokuapp.com/dj-rest-auth/registration/', requestOptions)
       .then(response => response.json())
       .then(data => setRequestData(data))
-  }
-  const firstKey = Object.keys(requestData)[0]
-  const errorMessage = requestData[firstKey]
-
-  if (requestData.key) {
-    navigate('../login')
-  }
-
-  function handleClick() {
-    if (pwError || !isValidEmail || fieldsEmpty) {
-      // do nothing
-    } else {
-      PostRequest(obj)
-    }
   }
 
   return (
@@ -109,7 +106,7 @@ const SignUp = () => {
       {errorMessage ? (
         <Alert status="error" h="8.7vh">
           <AlertIcon />
-          <AlertDescription> {errorMessage}  </AlertDescription>
+          <AlertDescription> {String(errorMessage).replace("CustomUser", "User")}  </AlertDescription>
         </Alert>
       ) : <Box h="8.7vh"></Box>}
     </Box>

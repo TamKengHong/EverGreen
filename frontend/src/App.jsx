@@ -6,6 +6,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import AppBar from './components/AppBar'
 import PostBar from './components/PostBar'
 import pineBackground from './assets/pine_tree_fog.jpg'
+import woodBackground from './assets/oak_wood_texture.jpg'
 
 // The Home Page.
 const tickerList = [
@@ -35,7 +36,7 @@ function App() {
         {/* </Box> */}
       </VStack>
 
-      <Box bg="gray.200" >
+      <Box bgImage={woodBackground} bgSize="cover" >
         <Text ml="3" mb="5" fontSize="30">Trending News:</Text>
         <Box margin="auto" w="90%" boxShadow="md">
           <Timeline widgetProps={{ colorTheme: "light", width: "100%", height: "500" }} />
