@@ -60,6 +60,7 @@ class Post(models.Model):
     postDate = models.DateTimeField(default=timezone.now)
     likes = models.BigIntegerField(default=0)
     dislikes = models.BigIntegerField(default=0)
+    stockTicker = models.CharField(max_length=20,null=True,blank=True) #it is ok to leave this field blank
     def __str__(self):
         return "%s : %s" % (self.postTitle,self.postContent)
 

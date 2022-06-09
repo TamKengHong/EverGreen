@@ -1,8 +1,9 @@
 from .models import CustomUser,Post,Comment
-from .serializers import CustomUserSerializer
+from .serializers import CustomUserSerializer,PostSerializer,CommentSerializer
 from rest_framework import viewsets,filters
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from .permissions import CustomUserPermissions
+from .permissions import CustomUserPermissions,PostPermissions,CommentPermissions
 
 #default authentication class for all viewsets is TokenAuthentication, as shown in settings.py
 #CustomViewSet is used to get user details
@@ -11,7 +12,25 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all() #retrieve all CustomUsers from database
     authentication_classes = [TokenAuthentication]
     permission_classes = [CustomUserPermissions] #only authenticated users can get user details
+    http_method_names = ['get','head','options'] #do not allow users to create new users using a POST request; we want new users to be created through the dj-rest-auth/registration endpoint
     # Allow users to search/filter other users by their usernames or email by making queries such as http://example.com/api/users?search=russell
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', 'email']
-    
+
+class PostViewSet(viewsets.ModelViewSet):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all() #retrieve all Posts from database
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [PostPermissions]
+    # Allow users to search for a post by the author's username, email, post title, or the associated stock ticker
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['author__username','author__email','postTitle','stockTicker']
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all() #retrieve all Comments from database
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [CommentPermissions]
+    # Allow users to search for a comment by the commenter's name or the post's associated stock ticker
+    filter_backends = [filters.SearchFilter] 
+    search_fields = ['commenter','post__stockTicker']
