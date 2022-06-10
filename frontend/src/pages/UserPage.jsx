@@ -1,20 +1,29 @@
 import AppBar from '../components/AppBar'
-import { Box, Text, VStack } from '@chakra-ui/react'
-import { useParams } from 'react-router-dom'
+import { Box, Text, VStack, Button } from '@chakra-ui/react'
+import { useParams, useNavigate } from 'react-router-dom'
 import UserTabs from '../components/User/UserTabs'
 import background from '../assets/cream_wood_texture.jpg'
-import UserContext from '../context/UserContext'
-import { useContext } from 'react'
 
 const UserPage = () => {
   const { email } = useParams()
-  // const [context, setContext] = useContext(UserContext)
+  const navigate = useNavigate()
+
+  function handleClick() {
+    localStorage.removeItem("key")
+    localStorage.removeItem("email")
+    navigate('/')
+  }
 
   return (
     <Box bgImage={background} bgSize="contain">
       <AppBar />
       <VStack h="500px" alignItems="center">
         <Text fontSize="70" mt="150px">Welcome {email}!</Text>
+        <Button size="lg"
+          colorScheme="red"
+          onClick={() => handleClick()}>
+          Log out
+        </Button>
       </VStack>
 
       <UserTabs bg="gray.100" />

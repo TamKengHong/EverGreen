@@ -3,18 +3,15 @@ import {
   FormControl, FormErrorMessage, Alert, AlertIcon,
   AlertDescription
 } from '@chakra-ui/react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import AppBar from '../components/AppBar'
-import { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import pineBackground from '../assets/pine_tree_fog.jpg'
-import UserContext from '../context/UserContext'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [requestData, setRequestData] = useState('')
-  //const [context, setContext] = useContext(UserContext)
   const loginInfo = { "email": email, "password": password }
   const navigate = useNavigate()
 
@@ -22,11 +19,13 @@ const Login = () => {
   const fieldsEmpty = email === '' || password === ''
 
   if (requestData.key) {
+    localStorage.setItem("key", requestData.key)
+    localStorage.setItem("email", email)
     navigate(`../user/${email.split("@")[0]}`)
   }
 
   const firstKey = Object.keys(requestData)[0]
-  const errorMessage = requestData[firstKey]
+  const errorMessage = firstKey === "key" ? null : requestData[firstKey]
 
   function handleClick() {
     if (!(!isValidEmail || fieldsEmpty)) {

@@ -27,7 +27,7 @@ const SignUp = () => {
   const fieldsEmpty = email === '' || password === '' || confirmPassword === '' || username === ''
 
   const firstKey = Object.keys(requestData)[0]
-  const errorMessage = requestData[firstKey]
+  const errorMessage = firstKey === "key" ? null : requestData[firstKey]
 
   if (requestData.key) { navigate('../login') }
 

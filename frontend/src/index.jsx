@@ -17,16 +17,16 @@ root.render(
   <StrictMode>
     <BrowserRouter>
       <ChakraProvider>
-        {/* <UserContext.Provider value={"hello"}> */}
-        <Routes>
-          <Route path='/' element={<App />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/user/:email' element={<UserPage />} />
-          <Route path='/stock/:ticker' element={<StockPage />} />
-          <Route path='/test' element={<Test />} />
-        </Routes>
-        {/* </UserContext.Provider> */}
+        <UserContext>
+          <Routes>
+            <Route path='/' element={<App />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/user/:email' element={<UserPage />} />
+            <Route path='/stock/:ticker' element={<StockPage />} />
+            <Route path='/test' element={<Test />} />
+          </Routes>
+        </UserContext>
       </ChakraProvider>
     </BrowserRouter>
   </StrictMode>
