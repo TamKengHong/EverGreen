@@ -12,7 +12,6 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all() #retrieve all CustomUsers from database
     authentication_classes = [TokenAuthentication]
     permission_classes = [CustomUserPermissions] #only authenticated users can get user details
-    http_method_names = ['get','head','options'] #do not allow users to create new users using a POST request; we want new users to be created through the dj-rest-auth/registration endpoint
     # Allow users to search/filter other users by their usernames or email by making queries such as http://example.com/api/users?search=russell
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', 'email']

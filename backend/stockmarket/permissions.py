@@ -8,8 +8,9 @@ class CustomUserPermissions(permissions.BasePermission):
     #change default PermissionsDenied error message to be more precise
     message = "Wrong credentials entered; try again"
     #Allow authenticated users to access endpoint
+    #Do not allow users to create new users using a POST request; we want new users to be created through the dj-rest-auth/registration endpoint
     def has_permission(self, request, view):
-        return True if request.user.is_authenticated or request.user.is_superuser else False
+        return True if request.method != "POST" and (request.user.is_authenticated or request.user.is_superuser) else False
 
 	# Allows anyone to get data if its a safe HTTP request (GET, OPTIONS, HEAD)
     def has_object_permission(self, request, view, obj):
