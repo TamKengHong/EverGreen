@@ -8,7 +8,7 @@ const StockTabs = () => {
   let { ticker } = useParams()
 
   return (
-    <Tabs margin="auto" w="92%" isFitted variant="enclosed" bg="gray.200" isLazy="true" lazyBehavior="keepMounted" >
+    <Tabs margin="auto" w="95%" isFitted variant="enclosed" bg="gray.200" isLazy="true" lazyBehavior="keepMounted" >
       <TabList mb='1em' border="1px" borderColor="gray.400">
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Chart</Tab>
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Company Profile</Tab>
