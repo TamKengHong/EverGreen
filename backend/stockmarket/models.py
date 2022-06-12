@@ -52,9 +52,9 @@ class CustomUser(AbstractUser,PermissionsMixin):
     def getEmail(self):
         return "%s" % self.email
 
-
+#related_name is the name to use for the relation from the related object back to the current object
 class Post(models.Model):
-    author = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username") 
+    author = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="posts") 
     postTitle = models.CharField(max_length=255)
     postContent = models.TextField()
     postDate = models.DateTimeField(default=timezone.now)
@@ -65,8 +65,8 @@ class Post(models.Model):
         return "%s | %s" % (self.postTitle,self.postContent)
 
 class Comment(models.Model):
-    commenter = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username")
-    post = models.ForeignKey(Post,on_delete=models.CASCADE) #default to_field is the auto generated primary key of Post
+    commenter = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="comments")
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name="comments") #default to_field is the auto generated primary key of Post
     commentContent = models.TextField()
     commentDate = models.DateTimeField(default=timezone.now)
     likes = models.BigIntegerField(default=0)

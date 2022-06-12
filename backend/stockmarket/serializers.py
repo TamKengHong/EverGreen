@@ -53,12 +53,14 @@ class CustomRegisterSerializer(RegisterSerializer):
         return user
 
 #modelSerializer has default update and create methods - refer to https://github.com/encode/django-rest-framework/blob/1396f6886a39acb7fe52729c7b99fe2d7d245dac/rest_framework/serializers.py#L342
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = '__all__' 
-
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
+        fields = '__all__' 
+
+class PostSerializer(serializers.ModelSerializer):
+    #allow for the comments for each post to be displayed in API endpoint
+    comments = CommentSerializer(many=True, read_only=True) 
+    class Meta:
+        model = Post
         fields = '__all__' 
