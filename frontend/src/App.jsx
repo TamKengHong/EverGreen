@@ -7,6 +7,7 @@ import AppBar from './components/AppBar'
 import PostBar from './components/PostBar'
 import pineBackground from './assets/pine_tree_fog.jpg'
 import woodBackground from './assets/oak_wood_texture.jpg'
+import darkWoodBackground from './assets/dark_wood_texture.jpg'
 
 // The Home Page.
 const tickerList = [
@@ -46,11 +47,11 @@ function App() {
         </Link>
         <Box h="10"></Box>
       </Box>
-      <Box bg="gray.100" >
+      <Box bgImage={darkWoodBackground} bgSize="cover" >
         <Flex mb="5">
-          <Text ml="3" fontSize="30">Trending Posts:</Text>
+          <Text ml="3" fontSize="30" color="gray.50">Trending Posts:</Text>
           <Spacer />
-          <Text alignSelf="right" mr="20vw" fontSize="30"> Filter by:</Text>
+          <Text alignSelf="right" mr="20vw" color="gray.50" fontSize="30"> Filter by:</Text>
         </Flex>
         <PostBar />
         <Box h="10"></Box>

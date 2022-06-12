@@ -14,11 +14,11 @@ const StockPage = () => {
       <AppBar />
       <Box margin="auto" w="95%">
         <Box h="5"></Box>
-        <Flex boxShadow="lg">
+        <Flex boxShadow="lg" bg="white">
           <Box w="calc(100% - 40px)">
             <SymbolInfo widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
           </Box>
-          <Box bg="white" w="40px">
+          <Box w="40px">
             <IconButton
               ml="7px"
               position="bottom"
@@ -33,7 +33,7 @@ const StockPage = () => {
       <StockTabs />
       <Box h="5"></Box>
       <Text fontSize="50" >Posts & Comments Section</Text>
-      <Posts></Posts>
+      <Posts />
     </Box>
   )
 }
