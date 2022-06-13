@@ -2,8 +2,9 @@ import { SymbolInfo } from 'react-tradingview-embed'
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react'
 import AppBar from '../components/AppBar'
 import { useParams } from 'react-router-dom'
-import StockTabs from '../components/StockTabs'
-import Posts from '../components/Posts'
+import StockTabs from '../components/Stocks/StockTabs'
+import Posts from '../components/Posts/Posts'
+import AddPost from '../components/Posts/AddPost'
 import background from '../assets/oak_wood_texture.jpg'
 import { BiBookmark } from 'react-icons/bi'
 
@@ -33,6 +34,7 @@ const StockPage = () => {
       <StockTabs />
       <Box h="5"></Box>
       <Text fontSize="50" >Posts & Comments Section</Text>
+      <AddPost />
       <Posts />
     </Box>
   )

@@ -61,7 +61,19 @@ const samplePostArray = [
   }
 ]
 
+function getRequest() {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Authorization': 'Token ' + "21a5047a6173730e9452fe3767bddd57e66ded31" }
+  }
+  fetch('https://ever-green-production.herokuapp.com/stockmarket/posts/', requestOptions)
+    .then(response => response.json())
+    .then(data => console.log(data))
+}
+
 const Posts = () => {
+  // const postArr = getRequest()
+  // console.log(postArr)
   return (
     <Box w="95%" margin="auto">
       {samplePostArray.map(obj => <Card {...obj} />)}
