@@ -1,3 +1,5 @@
+from tokenize import Name
+from unicodedata import name
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser,BaseUserManager,PermissionsMixin
@@ -54,22 +56,24 @@ class CustomUser(AbstractUser,PermissionsMixin):
 
 #related_name is the name to use for the relation from the related object back to the current object
 class Post(models.Model):
-    author = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="posts") 
-    postTitle = models.CharField(max_length=255)
-    postContent = models.TextField()
-    postDate = models.DateTimeField(default=timezone.now)
+    name = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="posts") 
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    date = models.DateTimeField(default=timezone.now)
     likes = models.BigIntegerField(default=0)
     dislikes = models.BigIntegerField(default=0)
     stockTicker = models.CharField(max_length=20,null=True,blank=True) #it is ok to leave this field blank
     def __str__(self):
-        return "%s | %s" % (self.postTitle,self.postContent)
+        return "%s | %s" % (self.title,self.content)
 
 class Comment(models.Model):
-    commenter = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="comments")
+    name = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="comments")
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name="comments") #default to_field is the auto generated primary key of Post
-    commentContent = models.TextField()
-    commentDate = models.DateTimeField(default=timezone.now)
+    #allow for threaded comments; if parent of a comment is null, the comment is a reply to the post
+    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE) 
+    content = models.TextField()
+    date = models.DateTimeField(default=timezone.now)
     likes = models.BigIntegerField(default=0)
     dislikes = models.BigIntegerField(default=0)
     def __str__(self):
-        return "%s | %s" % (self.commenter,self.commentContent)
+        return "%s | %s" % (self.name,self.content)
