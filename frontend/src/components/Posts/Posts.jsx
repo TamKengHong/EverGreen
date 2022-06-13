@@ -3,61 +3,61 @@ import Card from './Card'
 
 const sampleChildrenArray = [ // props.children
   {
-    username: "test",
+    name: "test",
     date: "1 Jan 2022",
     image: "image",
     likes: 5,
     dislikes: 1,
-    text: "Hello this is my first comment",
+    content: "Hello this is my first comment",
     children: false
   },
   {
-    username: "test",
+    name: "test",
     date: "1 Jan 2022",
     image: "image",
     likes: 5,
     dislikes: 1,
-    text: "Hello this is my second comment",
+    content: "Hello this is my second comment",
     children: false
   },
   {
-    username: "test",
+    name: "test",
     date: "1 Jan 2022",
     image: "image",
     likes: 5,
     dislikes: 1,
-    text: "Hello this is my third comment",
+    content: "Hello this is my third comment",
     children: false
   }
 ]
 
 const samplePostArray = [
   {
-    username: "test",
+    name: "test",
     date: "1 Jan 2022",
     image: "image",
     likes: 5,
     dislikes: 1,
-    text: "Hello this is my first post",
-    children: sampleChildrenArray
+    content: "Hello this is my first post",
+    comments: sampleChildrenArray
   },
   {
-    username: "test",
+    name: "test",
     date: "1 Jan 2022",
     image: "image",
     likes: 5,
     dislikes: 1,
-    text: "Hello this is my second post",
-    children: false
+    content: "Hello this is my second post",
+    comments: false
   },
   {
-    username: "test",
+    name: "test",
     date: "1 Jan 2022",
     image: "image",
     likes: 5,
     dislikes: 1,
-    text: "Hello this is my third post",
-    children: sampleChildrenArray
+    content: "Hello this is my third post",
+    comments: sampleChildrenArray
   }
 ]
 
