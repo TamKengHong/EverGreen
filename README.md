@@ -74,3 +74,6 @@ Backend notes:
 
 Set buildpack of Heroku to Python; otherwise Heroku will run the frontend instead.
 $ heroku buildpacks:set heroku/python
+
+After changing database settings in settings.py, run the following command to ensure the settings are applied in Heroku as well
+heroku run python backend/manage.py migrate
