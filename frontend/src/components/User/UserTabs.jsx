@@ -1,4 +1,5 @@
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from '@chakra-ui/react'
+import UserSettings from './UserSettings'
 
 
 const UserTabs = () => {
@@ -12,7 +13,7 @@ const UserTabs = () => {
       </TabList>
       <TabPanels border="1px" borderColor="gray.400">
         <TabPanel>
-          <p>Settings</p>
+          <UserSettings />
         </TabPanel>
         <TabPanel>
           <p>Watchlist</p>

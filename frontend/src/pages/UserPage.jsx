@@ -27,7 +27,7 @@ const UserPage = () => {
       </VStack>
 
       <UserTabs bg="gray.100" />
-
+      <Box h="10" />
     </Box>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Text, VStack, Flex, Spacer, Link } from '@chakra-ui/react'
+import { Box, Text, VStack, Flex, Spacer, Link, Center } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { TickerTape, Timeline } from 'react-tradingview-embed'
 import { Link as RouterLink } from 'react-router-dom'
@@ -27,14 +27,12 @@ function App() {
         <TickerTape widgetProps={{ colorTheme: "light", symbols: tickerList, isTransparent: true }} />
       </Box>
       <VStack h="88vh" bgImage={pineBackground} bgSize="cover" alignItems="center">
-        {/* <Box rounded={10} bg="gray.200"> */}
-        <Text fontSize="70" mt="28vh">EverGreen🚀</Text>
-        <Box fontSize="25" >
+        <Text fontSize="70" mt="28vh" bg="whiteAlpha.500">EverGreen🚀</Text>
+        <Box fontSize="25" bg="whiteAlpha.500">
           <RouterLink to='/login'>Login</RouterLink> |{" "}
           <RouterLink to='/signup'>Signup</RouterLink> |{" "}
           <RouterLink to='/stock/AAPL'>Stocks</RouterLink>
         </Box>
-        {/* </Box> */}
       </VStack>
 
       <Box bgImage={woodBackground} bgSize="cover" >

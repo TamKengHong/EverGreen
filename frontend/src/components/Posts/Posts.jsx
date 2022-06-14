@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 import Card from './Card'
 
 const sampleChildrenArray = [ // props.children
@@ -61,22 +62,22 @@ const samplePostArray = [
   }
 ]
 
-function getRequest() {
-  const requestOptions = {
-    method: 'GET',
-    headers: { 'Authorization': 'Token ' + "21a5047a6173730e9452fe3767bddd57e66ded31" }
-  }
-  fetch('https://ever-green-production.herokuapp.com/stockmarket/posts/', requestOptions)
-    .then(response => response.json())
-    .then(data => console.log(data))
-}
 
-const Posts = () => {
-  // const postArr = getRequest()
-  // console.log(postArr)
+const Posts = (props) => {
+  const [postArr, setPostArr] = useState([])
+  useEffect(() => { // call fetch only once.
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Authorization': 'Token ' + "ecc0d3db5ace35df3e1d32f0ba80ff85e81a0832" }
+    }
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/posts/', requestOptions)
+      .then(response => response.json())
+      .then(data => setPostArr(data))
+  }, [])
+  console.log(postArr)
   return (
     <Box w="95%" margin="auto">
-      {samplePostArray.map(obj => <Card {...obj} />)}
+      {postArr ? postArr.map(obj => <Card {...obj} />) : null}
       <Box h="5vh"></Box>
     </Box>
   )
