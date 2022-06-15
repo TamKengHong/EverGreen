@@ -1,12 +1,14 @@
-import { Box, Text, Flex, Square, IconButton, Link } from '@chakra-ui/react'
+import { Box, Flex, Square, IconButton, Link } from '@chakra-ui/react'
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from 'react-icons/ai'
 import { useState } from 'react'
-import AddPost from './AddPost'
+import AddReply from './AddReply'
 
 const Card = (props) => {
   const [isLikeActive, setIsLikeActive] = useState(false)
   const [isDislikeActive, setIsDislikeActive] = useState(false)
   const [isReplyActive, setIsReplyActive] = useState(false)
+  const isComment = props.post
+  const isCommentReply = isComment && props.parent != null
 
   return (
     <>
@@ -15,7 +17,12 @@ const Card = (props) => {
           <Square size="60px" bg="gray.300" mt="5px" ml="10px"> image </Square>
         </Box>
         <Box w="calc(100% - 80px)">
-          <Box bg="green.300"> {props.name}, {props.date} </Box>
+          <Box bg="green.300">
+            {props.name},
+            {" " + props.date},
+            {(isComment ? " Comment id: " : " Post id: ") + props.id}
+            {isCommentReply ? " Replying to: " + props.parent : null}
+          </Box>
           <Box h="200" bg="blue.100"> {props.content}</Box>
           <Box bg="red.100">
             {isLikeActive ? props.likes + 1 : props.likes}
@@ -43,7 +50,7 @@ const Card = (props) => {
               }}
             />
             <Link onClick={() => { setIsReplyActive(!isReplyActive) }}>Reply</Link>
-            {isReplyActive ? <AddPost /> : null}
+            {isReplyActive ? <AddReply {...props} /> : null}
           </Box>
         </Box>
       </Flex>
