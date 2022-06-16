@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Square, Link, Textarea, Button, Input } from '@chakra-ui/react'
+import { Box, Flex, Square, Textarea, Button, Input } from '@chakra-ui/react'
 import { useState } from 'react'
 
 const AddPost = () => {
@@ -26,11 +26,11 @@ const AddPost = () => {
 
   return (
     <Box w="95%" margin="auto">
-      <Flex border="1px">
-        <Box w="80px" bg="gray.100" >
-          <Square size="60px" bg="gray.300" mt="5px" ml="10px"> User</Square>
+      <Flex border="1px" bg="gray.50">
+        <Box w="70px" borderRight="1px" borderColor="gray.400">
+          <Square size="60px" bg="gray.300" mt="5px" ml="5px"> User</Square>
         </Box>
-        <Box w="calc(100% - 80px - 80px)">
+        <Box w="calc(100% - 70px - 80px)">
           <Input
             bg="gray.200"
             placeholder="Add Post Title"
@@ -38,8 +38,7 @@ const AddPost = () => {
             onChange={e => setTitle(e.target.value)}
           />
           <Textarea
-            h="200"
-            bg="blue.100"
+            h="150"
             placeholder="Write something here"
             onChange={e => setContent(e.target.value)}
           />

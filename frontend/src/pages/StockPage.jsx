@@ -47,7 +47,7 @@ const StockPage = () => {
       <Box h="10"></Box>
       <StockTabs />
       <Box h="5"></Box>
-      <Text fontSize="50" >Posts & Comments Section</Text>
+      <Text fontSize="50" >Posts & Comments: </Text>
       <AddPost />
       <Posts />
     </Box>

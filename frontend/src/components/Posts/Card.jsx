@@ -1,4 +1,4 @@
-import { Box, Flex, Square, IconButton, Link } from '@chakra-ui/react'
+import { Box, Flex, Square, IconButton, Link, Text } from '@chakra-ui/react'
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from 'react-icons/ai'
 import { useState } from 'react'
 import AddReply from './AddReply'
@@ -8,23 +8,28 @@ const Card = (props) => {
   const [isDislikeActive, setIsDislikeActive] = useState(false)
   const [isReplyActive, setIsReplyActive] = useState(false)
   const isComment = props.post
+  const isPost = !isComment
   const isCommentReply = isComment && props.parent != null
+  console.log(props.content)
 
   return (
     <>
-      <Flex border="1px">
-        <Box w="80px" bg="gray.100" >
-          <Square size="60px" bg="gray.300" mt="5px" ml="10px"> image </Square>
+      <Flex border="1px" bg="whiteAlpha.900">
+        <Box w="70px" >
+          <Square size="60px" bg="gray.300" mt="5px" ml="5px"> image </Square>
         </Box>
-        <Box w="calc(100% - 80px)">
-          <Box bg="green.300">
+        <Box w="calc(100% - 70px)" >
+          <Box borderBottom="1px" borderColor="gray.400">
             {props.name},
-            {" " + props.date},
+            {" " + new Date(props.date).toLocaleDateString()},
             {(isComment ? " Comment id: " : " Post id: ") + props.id}
-            {isCommentReply ? " Replying to: " + props.parent : null}
+            {isCommentReply ? " | Replying to comment id: " + props.parent : null}
           </Box>
-          <Box h="200" bg="blue.100"> {props.content}</Box>
-          <Box bg="red.100">
+          <Box minH="120" >
+            <Text as="b" fontSize="xl">{isPost ? "Title: " + props.title + " " : null}</Text>
+            <pre >{props.content}</pre>
+          </Box>
+          <Box borderTop="1px" borderColor="gray.400">
             {isLikeActive ? props.likes + 1 : props.likes}
             <IconButton
               _focus={{ outline: "none" }}
@@ -55,7 +60,7 @@ const Card = (props) => {
         </Box>
       </Flex>
       <Flex>
-        <Box bg="blackAlpha.700" w="30px"></Box>
+        <Box w="30px"></Box>
         <Box w="calc(100% - 30px)">
           {props.comments ? props.comments.map(obj => <Card {...obj} />) : null}
         </Box>
