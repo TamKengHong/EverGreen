@@ -77,3 +77,10 @@ class Comment(models.Model):
     dislikes = models.BigIntegerField(default=0)
     def __str__(self):
         return "%s | %s" % (self.name,self.content)
+
+#whenever a stock is bookmarked, it is added to the watchlist of the user
+class Bookmark(models.Model):
+    name = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="bookmarks")
+    stockTicker = models.CharField(max_length=20,null=True,blank=True)
+    def __str__(self):
+        return "User: %s | Stock: %s" % (self.name,self.stockTicker)

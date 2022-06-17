@@ -1,4 +1,4 @@
-from .models import CustomUser,Post,Comment
+from .models import CustomUser,Post,Comment,Bookmark
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.db import transaction
@@ -6,11 +6,30 @@ from django.db import transaction
 #Serializers in Django REST Framework convert objects into JSON objects. 
 #Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data. 
 #explicitly set all fields that should be serialized using the fields attribute in the meta class
+#modelSerializer has default update and create methods - refer to https://github.com/encode/django-rest-framework/blob/1396f6886a39acb7fe52729c7b99fe2d7d245dac/rest_framework/serializers.py#L342
+class BookmarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bookmark
+        fields = '__all__'
 
-class CustomUserSerializer(serializers.ModelSerializer): 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__' 
+
+class PostSerializer(serializers.ModelSerializer):
+    #allow for the comments for each post to be displayed in /posts/ API endpoint
+    comments = CommentSerializer(many=True, read_only=True) 
+    class Meta:
+        model = Post
+        fields = '__all__' 
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    #allow for the bookmarks for each user to be displayed in /users/ API endpoint 
+    bookmarks = BookmarkSerializer(many=True,read_only=True)
     class Meta:
         model = CustomUser
-        fields = ["email","username","summary","profilePicture","country","totalLikes","totalDislikes","id","password"]
+        fields = ["email","username","summary","profilePicture","country","totalLikes","totalDislikes","id","password","bookmarks"]
         # 'write_only' ensures that the field may be used when updating or creating an instance, but is not included when serializing the representation.
 		# 'required' means that a password is required during deserialization
         # refer to https://www.django-rest-framework.org/api-guide/fields/
@@ -52,15 +71,3 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.save()
         return user
 
-#modelSerializer has default update and create methods - refer to https://github.com/encode/django-rest-framework/blob/1396f6886a39acb7fe52729c7b99fe2d7d245dac/rest_framework/serializers.py#L342
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__' 
-
-class PostSerializer(serializers.ModelSerializer):
-    #allow for the comments for each post to be displayed in API endpoint
-    comments = CommentSerializer(many=True, read_only=True) 
-    class Meta:
-        model = Post
-        fields = '__all__' 
