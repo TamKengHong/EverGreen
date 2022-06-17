@@ -26,14 +26,24 @@ function App() {
       <Box bg="#f3efe8" border="1px" borderColor="gray.400">
         <TickerTape widgetProps={{ colorTheme: "light", symbols: tickerList, isTransparent: true }} />
       </Box>
-      <VStack h="88vh" bgImage={pineBackground} bgSize="cover" alignItems="center">
-        <Text fontSize="70" mt="28vh" bg="whiteAlpha.500">EverGreen🚀</Text>
-        <Box fontSize="25" bg="whiteAlpha.500">
-          <RouterLink to='/login'>Login</RouterLink> |{" "}
-          <RouterLink to='/signup'>Signup</RouterLink> |{" "}
-          <RouterLink to='/stock/AAPL'>Stocks</RouterLink>
-        </Box>
-      </VStack>
+      <Box
+        h="88vh"
+        bgImage={pineBackground}
+        bgSize="cover">
+        <Flex
+          h="75vh"
+          alignItems="center"
+          justifyContent="center">
+          <Flex bg="whiteAlpha.500" direction="column">
+            <Text fontSize="70" alignSelf="center">EverGreen🚀</Text>
+            <Flex fontSize="25" alignItems="center" justifyContent="center">
+              <RouterLink mr="2" to='/login'>Login</RouterLink>  |{" "}
+              <RouterLink ml="2" mr="2" to='/signup'>Signup</RouterLink> |{" "}
+              <RouterLink ml="2" to='/stock/AAPL'>Stocks</RouterLink>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Box>
 
       <Box bgImage={woodBackground} bgSize="cover" >
         <Text ml="3" mb="5" fontSize="30">Trending News:</Text>

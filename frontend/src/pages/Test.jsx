@@ -1,4 +1,4 @@
-import { Box, Center, VStack, Link, Text, Flex } from '@chakra-ui/react'
+import { Box, Center, VStack, Link, Text, Flex, Spacer } from '@chakra-ui/react'
 import pineBackground from '../assets/pine_tree_fog.jpg'
 
 const Test = () => {
@@ -12,16 +12,16 @@ const Test = () => {
           <Link to='/stock/AAPL'>Stocks</Link>
         </Box>
       </VStack>
-      {/* <Center> */}
-      {/*   <Flex bg="gray.200" h="600" alignItems="center"> */}
-      {/*     <Box mt="200"> */}
-      {/*       <Text fontSize="70">Hello 1st text</Text> */}
-      {/*     </Box> */}
-      {/*     <Box> */}
-      {/*       <Text fontSize="70">Hello 2nd text ajosd</Text> */}
-      {/*     </Box> */}
-      {/*   </Flex> */}
-      {/* </Center> */}
+      <Flex alignItems="center" justifyContent="center">
+        <Flex bg="gray.200" direction="column">
+          <Text fontSize="70" alignSelf="center">EverGreen🚀</Text>
+          <Flex fontSize="25" bg="whiteAlpha.500" alignItems="center" justifyContent="center">
+            <Link mr="2" to='/login'>Login</Link>  |{" "}
+            <Link ml="2" mr="2" to='/signup'>Signup</Link> |{" "}
+            <Link ml="2" to='/stock/AAPL'>Stocks</Link>
+          </Flex>
+        </Flex>
+      </Flex>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Input, Text } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const UserInfo = () => {
   return <Box>
@@ -13,6 +13,27 @@ const UserSettings = () => {
   const [newUsername, setNewUsername] = useState('')
   const [newEmail, setNewEmail] = useState('')
   const [newPassword, setNewPassword] = useState('')
+  const [userObj, setUserObj] = useState('')
+
+  useEffect(() => { // call fetch only once.
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
+    }
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
+      + localStorage.getItem('email'), requestOptions)
+      .then(response => response.json())
+      .then(data => setUserObj(data))
+  }, [])
+
+  console.log(userObj[0])
+
+  if (userObj && localStorage.getItem('email') === userObj[0].email) {
+    // You are accessing your own userpage.
+    localStorage.setItem('username', userObj[0].username)
+  }
+
+
   return (
     <Box>
       <UserInfo />

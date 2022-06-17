@@ -27,7 +27,7 @@ const Card = (props) => {
           </Box>
           <Box minH="120" >
             <Text as="b" fontSize="xl">{isPost ? "Title: " + props.title + " " : null}</Text>
-            <pre >{props.content}</pre>
+            <Text whiteSpace="pre-wrap">{props.content}</Text>
           </Box>
           <Box borderTop="1px" borderColor="gray.400">
             {isLikeActive ? props.likes + 1 : props.likes}
