@@ -1,19 +1,25 @@
-import { Box, Button, Flex, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Input, Text, Textarea } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
-const UserInfo = () => {
+const UserInfo = (props) => {
   return <Box>
     <Text as='u' fontSize="20">User Info:</Text>
-    <Text>Username: {localStorage.getItem('username')} </Text>
-    <Text> Email: {localStorage.getItem('email')} </Text>
+    <Text> Username: {props.username} </Text>
+    <Text> Email: {props.email} </Text>
+    <Text> Country: {props.country} </Text>
+    <Text> User Id: {props.id} </Text>
+    <Text> Profile Summary: {props.summary} </Text>
+    <Text> Total Likes: {props.totalLikes} </Text>
+    <Text> Total Dislikes: {props.totalDislikes} </Text>
   </Box>
 }
 
 const UserSettings = () => {
-  const [newUsername, setNewUsername] = useState('')
-  const [newEmail, setNewEmail] = useState('')
-  const [newPassword, setNewPassword] = useState('')
   const [userObj, setUserObj] = useState('')
+  const [country, setCountry] = useState('')
+  const [summary, setSummary] = useState('')
+  const { username } = useParams() // we use this to search for username
 
   useEffect(() => { // call fetch only once.
     const requestOptions = {
@@ -21,58 +27,55 @@ const UserSettings = () => {
       headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
-      + localStorage.getItem('email'), requestOptions)
+      + username, requestOptions)
       .then(response => response.json())
-      .then(data => setUserObj(data))
+      .then(data => setUserObj(data[0]))
   }, [])
 
-  console.log(userObj[0])
+  console.log(userObj)
 
-  if (userObj && localStorage.getItem('email') === userObj[0].email) {
+  if (userObj && localStorage.getItem('email') === userObj.email) {
     // You are accessing your own userpage.
-    localStorage.setItem('username', userObj[0].username)
+    localStorage.setItem('username', userObj.username)
   }
-
 
   return (
     <Box>
-      <UserInfo />
-      <Flex>
+      <UserInfo {...userObj} />
+      <Flex mt="5" mb="5">
         <Input
           border="1px"
           borderColor="gray.400"
-          placeholder="Change username"
-          type="text"
+          placeholder="Change Country"
           variant="filled"
-          onChange={e => setNewUsername(e.target.value)}
+          onChange={e => setCountry(e.target.value)}
         />
-        <Button size='md' colorScheme="teal">Submit</Button>
+        <Button
+          size='md'
+          colorScheme="teal"
+          onClick={() => console.log(country)}
+        >Submit</Button>
       </Flex>
-      <Box h="5"></Box>
-      <Flex>
-        <Input
+      <Flex bg="gray.50">
+        <Textarea
+          h="150"
+          bg="gray.100"
           border="1px"
           borderColor="gray.400"
-          placeholder="Change email"
-          type="email"
-          variant="filled"
-          onChange={e => setNewEmail(e.target.value)}
+          placeholder="Edit Profile Summary"
+          onChange={e => setSummary(e.target.value)}
         />
-        <Button size='md' colorScheme="teal">Submit</Button>
-      </Flex>
-      <Box h="5" ></Box >
-      <Flex>
-        <Input
-          border="1px"
-          borderColor="gray.400"
-          placeholder="Change password"
-          type="password"
-          variant="filled"
-          onChange={e => setNewPassword(e.target.value)}
-        />
-        <Button size='md' colorScheme="teal">Submit</Button>
-      </Flex>
-      <Box h="5" ></Box >
+        <Box w="80px">
+          <Button
+            colorScheme="teal"
+            w="100%"
+            h="100%"
+            onClick={() => console.log(summary)}
+          >
+            Submit
+          </Button>
+        </Box>
+      </Flex >
     </Box >
   )
 }

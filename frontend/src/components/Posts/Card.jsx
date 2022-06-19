@@ -14,7 +14,7 @@ const Card = (props) => {
 
   return (
     <>
-      <Flex border="1px" bg="whiteAlpha.900">
+      <Flex border="1px" bg="whiteAlpha.900" mb="1">
         <Box w="70px" >
           <Square size="60px" bg="gray.300" mt="5px" ml="5px"> image </Square>
         </Box>

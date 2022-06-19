@@ -22,7 +22,7 @@ root.render(
             <Route path='/' element={<App />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<SignUp />} />
-            <Route path='/user/:email' element={<UserPage />} />
+            <Route path='/user/:username' element={<UserPage />} />
             <Route path='/stock/:ticker' element={<StockPage />} />
             <Route path='/test' element={<Test />} />
           </Routes>

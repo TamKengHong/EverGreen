@@ -41,13 +41,25 @@ const SearchBar = () => {
 const AppBar = () => {
   const navigate = useNavigate()
   return (
-    <Flex w="100%" alignItems="center"
-      bgImage={woodBackground} bgPos="center"
+    <Flex
+      w="100%"
+      alignItems="center"
+      bgImage={woodBackground}
+      bgPos="center"
       boxShadow="lg"
     >
-      <Center w="100px" h="50px" bg="green.700" roundedRight={5} color="white">
-        <Link as={RouterLink} to='/'> EverGreen </Link>
-      </Center>
+      <Link
+        padding="13px"
+        roundedRight={5}
+        bg="green.700"
+        color="white"
+        textAlign="center"
+        as={RouterLink} to='/'
+        display="block"
+        _hover={{ backgroundColor: "green.600" }}
+      >
+        EverGreen
+      </Link>
       <Spacer />
       <SearchBar />
       <Spacer />
@@ -57,8 +69,9 @@ const AppBar = () => {
         aria-label="Log in"
         size="lg"
         icon={<BiUserCircle size="35" />}
+        _hover={{ backgroundColor: "whiteAlpha.500" }}
       />
-    </Flex>
+    </Flex >
   )
 }
 
