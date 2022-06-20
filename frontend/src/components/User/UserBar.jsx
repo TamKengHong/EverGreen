@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 const UserBar = () => {
   const navigate = useNavigate()
-  const { email } = useParams()
+  const { username } = useParams()
 
   function handleClick() {
     localStorage.removeItem("key")
@@ -13,11 +13,11 @@ const UserBar = () => {
   return (
     <Flex h="500px" alignItems="center" justifyContent="center">
       <Flex direction="column">
-        <Text fontSize="70">Welcome {email}!</Text>
+        <Text fontSize="70">Welcome {username}!</Text>
         <Button
           alignSelf="center"
           size="lg"
-          w="50%"
+          w="250px"
           colorScheme="red"
           onClick={() => handleClick()}>
           Log out

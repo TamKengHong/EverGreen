@@ -1,10 +1,12 @@
-import { Box, Button, Flex, Input, Text, Textarea } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
+import { Spacer, Box, Button, Flex, Text, Textarea } from '@chakra-ui/react'
+import { Select } from "chakra-react-select";
+import countryList from 'react-select-country-list'
+import { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 const UserInfo = (props) => {
   return <Box>
-    <Text as='u' fontSize="20">User Info:</Text>
+    <Text as='u' fontSize="xl">User Info:</Text>
     <Text> Username: {props.username} </Text>
     <Text> Email: {props.email} </Text>
     <Text> Country: {props.country} </Text>
@@ -20,6 +22,11 @@ const UserSettings = () => {
   const [country, setCountry] = useState('')
   const [summary, setSummary] = useState('')
   const { username } = useParams() // we use this to search for username
+  const options = useMemo(() => countryList().getData(), [])
+  const editedInfo = {
+    country: country,
+    summary: summary
+  }
 
   useEffect(() => { // call fetch only once.
     const requestOptions = {
@@ -32,6 +39,20 @@ const UserSettings = () => {
       .then(data => setUserObj(data[0]))
   }, [])
 
+  function PutRequest(info) {
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('key')
+      },
+      body: JSON.stringify(info)
+    }
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id, requestOptions)
+      .then(response => response.json())
+      .then(data => console.log(data))
+  }
+
   console.log(userObj)
 
   if (userObj && localStorage.getItem('email') === userObj.email) {
@@ -42,40 +63,41 @@ const UserSettings = () => {
   return (
     <Box>
       <UserInfo {...userObj} />
-      <Flex mt="5" mb="5">
-        <Input
-          border="1px"
-          borderColor="gray.400"
-          placeholder="Change Country"
-          variant="filled"
-          onChange={e => setCountry(e.target.value)}
-        />
-        <Button
-          size='md'
-          colorScheme="teal"
-          onClick={() => console.log(country)}
-        >Submit</Button>
-      </Flex>
-      <Flex bg="gray.50">
+      <Text mt="5" fontSize="xl">Edit Country:</Text>
+      <Box bg="gray.100" border="1px" borderColor="gray.400" rounded="5">
+        <Select
+          options={options}
+          value={country}
+          onChange={v => setCountry(v)} />
+      </Box>
+      <Text mt="5" fontSize="xl">Edit Profile Summary:</Text>
+      <Flex mb="5" bg="gray.50">
         <Textarea
           h="150"
           bg="gray.100"
           border="1px"
           borderColor="gray.400"
-          placeholder="Edit Profile Summary"
+          placeholder="Write something here"
           onChange={e => setSummary(e.target.value)}
         />
-        <Box w="80px">
-          <Button
-            colorScheme="teal"
-            w="100%"
-            h="100%"
-            onClick={() => console.log(summary)}
-          >
-            Submit
-          </Button>
-        </Box>
       </Flex >
+      <Box>
+        <input type="file" onChange={e => console.log(e.target.files[0])} />
+      </Box>
+      <Flex>
+        <Spacer />
+        <Button
+          mt="5"
+          alignSelf="right"
+          colorScheme="teal"
+          w="200px"
+          h="50px"
+          onClick={() => PutRequest(editedInfo)}
+        >
+          Submit
+        </Button>
+        <Spacer />
+      </Flex>
     </Box >
   )
 }
