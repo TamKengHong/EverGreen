@@ -5,7 +5,13 @@ import { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 const UserInfo = (props) => {
-  return <Box>
+  return <Flex
+    p="5"
+    rounded="5"
+    bg="gray.100"
+    direction="column"
+    alignItems="center"
+    justifyContent="center">
     <Text as='u' fontSize="xl">User Info:</Text>
     <Text> User Id: {props.id} </Text>
     <Text> Username: {props.username} </Text>
@@ -14,7 +20,7 @@ const UserInfo = (props) => {
     <Text> Total Likes: {props.totalLikes}, Total Dislikes: {props.totalDislikes} </Text>
     <Text as='u' fontSize="xl"> Profile Summary:  </Text>
     <Text whiteSpace="pre-wrap">{props.summary}</Text>
-  </Box>
+  </Flex>
 }
 
 const UserSettings = () => {
@@ -63,7 +69,9 @@ const UserSettings = () => {
 
   return (
     <Box>
-      <UserInfo {...userObj} />
+      <Flex alignItems="center" justifyContent="center">
+        <UserInfo {...userObj} />
+      </Flex>
       <Text mt="5" fontSize="xl">Edit Country:</Text>
       <Box bg="gray.100" border="1px" borderColor="gray.400" rounded="5">
         <Select
@@ -73,13 +81,14 @@ const UserSettings = () => {
       </Box>
       <Text mt="5" fontSize="xl">Edit Profile Summary:</Text>
       <Textarea
+        h="150px"
         bg="gray.100"
         border="1px"
         borderColor="gray.400"
         placeholder="Write something here"
         onChange={e => setSummary(e.target.value)}
       />
-      <Box>
+      <Box mt="5">
         <input
           type="file"
           accept="image/*"
