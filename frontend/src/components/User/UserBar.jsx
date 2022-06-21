@@ -8,10 +8,11 @@ const UserBar = () => {
   function handleClick() {
     localStorage.removeItem("key")
     localStorage.removeItem("email")
+    localStorage.removeItem("username")
     navigate('/')
   }
   return (
-    <Flex h="500px" alignItems="center" justifyContent="center">
+    <Flex h="400px" alignItems="center" justifyContent="center">
       <Flex direction="column">
         <Text fontSize="70">Welcome {username}!</Text>
         <Button

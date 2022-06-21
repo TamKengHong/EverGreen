@@ -64,7 +64,8 @@ const AppBar = () => {
       <SearchBar />
       <Spacer />
       <IconButton
-        onClick={() => navigate('../login')}
+        onClick={() => localStorage.getItem('username') ?
+          navigate('../user/' + localStorage.getItem('username')) : navigate('../login')}
         bg="None"
         aria-label="Log in"
         size="lg"

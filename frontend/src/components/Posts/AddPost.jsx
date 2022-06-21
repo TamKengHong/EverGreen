@@ -7,7 +7,7 @@ const AddPost = () => {
   const obj = {
     "content": content,
     "title": title,
-    "name": "ryan"
+    "name": localStorage.getItem('username')
   }
 
   function PostRequest(info) {
@@ -15,7 +15,7 @@ const AddPost = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Token ' + "ecc0d3db5ace35df3e1d32f0ba80ff85e81a0832"
+        'Authorization': 'Token ' + localStorage.getItem('key')
       },
       body: JSON.stringify(info)
     }

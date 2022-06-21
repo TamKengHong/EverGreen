@@ -12,6 +12,10 @@ const Card = (props) => {
   const isCommentReply = isComment && props.parent != null
   console.log(props.content)
 
+  // function LikeRequest() {
+  //   return ligma
+  // }
+
   return (
     <>
       <Flex border="1px" bg="whiteAlpha.900" mb="1">

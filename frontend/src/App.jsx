@@ -34,11 +34,16 @@ function App() {
           h="75vh"
           alignItems="center"
           justifyContent="center">
-          <Flex bg="whiteAlpha.500" direction="column">
+          <Flex p="2" rounded={10} bg="whiteAlpha.500" direction="column">
             <Text fontSize="70" alignSelf="center">EverGreen🚀</Text>
             <Flex fontSize="25" alignItems="center" justifyContent="center">
-              <RouterLink mr="2" to='/login'>Login</RouterLink>  |{" "}
-              <RouterLink ml="2" mr="2" to='/signup'>Signup</RouterLink> |{" "}
+              <Box mr="2">
+                <RouterLink to='/login'>Login</RouterLink>  |{" "}
+              </Box>
+              <Box mr="2">
+
+                <RouterLink ml="2" mr="2" to='/signup'>Signup</RouterLink> |{" "}
+              </Box>
               <RouterLink ml="2" to='/stock/AAPL'>Stocks</RouterLink>
             </Flex>
           </Flex>

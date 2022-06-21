@@ -7,13 +7,13 @@ import { useParams } from 'react-router-dom'
 const UserInfo = (props) => {
   return <Box>
     <Text as='u' fontSize="xl">User Info:</Text>
+    <Text> User Id: {props.id} </Text>
     <Text> Username: {props.username} </Text>
     <Text> Email: {props.email} </Text>
     <Text> Country: {props.country} </Text>
-    <Text> User Id: {props.id} </Text>
-    <Text> Profile Summary: {props.summary} </Text>
-    <Text> Total Likes: {props.totalLikes} </Text>
-    <Text> Total Dislikes: {props.totalDislikes} </Text>
+    <Text> Total Likes: {props.totalLikes}, Total Dislikes: {props.totalDislikes} </Text>
+    <Text as='u' fontSize="xl"> Profile Summary:  </Text>
+    <Text whiteSpace="pre-wrap">{props.summary}</Text>
   </Box>
 }
 
@@ -21,11 +21,13 @@ const UserSettings = () => {
   const [userObj, setUserObj] = useState('')
   const [country, setCountry] = useState('')
   const [summary, setSummary] = useState('')
+  const [image, setImage] = useState('') // this works!
   const { username } = useParams() // we use this to search for username
   const options = useMemo(() => countryList().getData(), [])
   const editedInfo = {
-    country: country,
-    summary: summary
+    country: country.label,
+    summary: summary,
+    // profilePicture: image
   }
 
   useEffect(() => { // call fetch only once.
@@ -37,23 +39,22 @@ const UserSettings = () => {
       + username, requestOptions)
       .then(response => response.json())
       .then(data => setUserObj(data[0]))
+      .then(() => setSummary(userObj.summary))
   }, [])
 
-  function PutRequest(info) {
+  function PatchRequest(info) {
     const requestOptions = {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': "application/json",
         'Authorization': 'Token ' + localStorage.getItem('key')
       },
       body: JSON.stringify(info)
     }
-    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id, requestOptions)
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id + "/", requestOptions)
       .then(response => response.json())
       .then(data => console.log(data))
   }
-
-  console.log(userObj)
 
   if (userObj && localStorage.getItem('email') === userObj.email) {
     // You are accessing your own userpage.
@@ -71,18 +72,19 @@ const UserSettings = () => {
           onChange={v => setCountry(v)} />
       </Box>
       <Text mt="5" fontSize="xl">Edit Profile Summary:</Text>
-      <Flex mb="5" bg="gray.50">
-        <Textarea
-          h="150"
-          bg="gray.100"
-          border="1px"
-          borderColor="gray.400"
-          placeholder="Write something here"
-          onChange={e => setSummary(e.target.value)}
-        />
-      </Flex >
+      <Textarea
+        bg="gray.100"
+        border="1px"
+        borderColor="gray.400"
+        placeholder="Write something here"
+        onChange={e => setSummary(e.target.value)}
+      />
       <Box>
-        <input type="file" onChange={e => console.log(e.target.files[0])} />
+        <input
+          type="file"
+          accept="image/*"
+          name="image"
+          onChange={e => setImage(e.target.files[0])} />
       </Box>
       <Flex>
         <Spacer />
@@ -92,7 +94,10 @@ const UserSettings = () => {
           colorScheme="teal"
           w="200px"
           h="50px"
-          onClick={() => PutRequest(editedInfo)}
+          onClick={() => {
+            PatchRequest(editedInfo)
+            window.location.reload(false);  // refresh the page to update
+          }}
         >
           Submit
         </Button>
