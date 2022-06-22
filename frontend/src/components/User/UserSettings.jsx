@@ -5,6 +5,16 @@ import { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 const UserInfo = (props) => {
+  const [img, setImg] = useState()
+  const imageUrl = props.profilePicture
+  const fetchImage = async () => {
+    const res = await fetch(imageUrl)
+    const imageBlob = await res.blob()
+    const imageObjectURL = URL.createObjectURL(imageBlob)
+    setImg(imageObjectURL)
+  }
+  useEffect(() => { fetchImage() }, [])
+
   return <Flex
     p="5"
     rounded="5"
@@ -20,6 +30,10 @@ const UserInfo = (props) => {
     <Text> Total Likes: {props.totalLikes}, Total Dislikes: {props.totalDislikes} </Text>
     <Text as='u' fontSize="xl"> Profile Summary:  </Text>
     <Text whiteSpace="pre-wrap">{props.summary}</Text>
+    <Text as='u' fontSize="xl"> Profile Picture: </Text>
+    <Box>
+      <img src={img} alt="icons" />
+    </Box>
   </Flex>
 }
 
@@ -27,14 +41,9 @@ const UserSettings = () => {
   const [userObj, setUserObj] = useState('')
   const [country, setCountry] = useState('')
   const [summary, setSummary] = useState('')
-  const [image, setImage] = useState('') // this works!
-  const { username } = useParams() // we use this to search for username
+  const [image, setImage] = useState('')
+  const { username } = useParams()
   const options = useMemo(() => countryList().getData(), [])
-  const editedInfo = {
-    country: country.label,
-    summary: summary,
-    // profilePicture: image
-  }
 
   useEffect(() => { // call fetch only once.
     const requestOptions = {
@@ -45,17 +54,20 @@ const UserSettings = () => {
       + username, requestOptions)
       .then(response => response.json())
       .then(data => setUserObj(data[0]))
-      .then(() => setSummary(userObj.summary))
   }, [])
 
-  function PatchRequest(info) {
+  function PatchRequest() {
+    let formData = new FormData()
+    console.log(image)
+    if (image) formData.append('profilePicture', image)
+    if (country) formData.append('country', country.label)
+    if (summary) formData.append('summary', summary)
     const requestOptions = {
       method: 'PATCH',
       headers: {
-        'Content-Type': "application/json",
         'Authorization': 'Token ' + localStorage.getItem('key')
       },
-      body: JSON.stringify(info)
+      body: formData
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id + "/", requestOptions)
       .then(response => response.json())
@@ -74,10 +86,7 @@ const UserSettings = () => {
       </Flex>
       <Text mt="5" fontSize="xl">Edit Country:</Text>
       <Box bg="gray.100" border="1px" borderColor="gray.400" rounded="5">
-        <Select
-          options={options}
-          value={country}
-          onChange={v => setCountry(v)} />
+        <Select options={options} value={country} onChange={v => setCountry(v)} />
       </Box>
       <Text mt="5" fontSize="xl">Edit Profile Summary:</Text>
       <Textarea
@@ -104,8 +113,8 @@ const UserSettings = () => {
           w="200px"
           h="50px"
           onClick={() => {
-            PatchRequest(editedInfo)
-            window.location.reload(false);  // refresh the page to update
+            PatchRequest()
+            // window.location.reload(false)  // refresh the page to update
           }}
         >
           Submit

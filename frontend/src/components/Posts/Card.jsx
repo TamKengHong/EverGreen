@@ -10,7 +10,6 @@ const Card = (props) => {
   const isComment = props.post
   const isPost = !isComment
   const isCommentReply = isComment && props.parent != null
-  console.log(props.content)
 
   // function LikeRequest() {
   //   return ligma

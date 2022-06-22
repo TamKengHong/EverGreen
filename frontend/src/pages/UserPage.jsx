@@ -15,14 +15,14 @@ const UserPage = () => {
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
       + localStorage.getItem('email'), requestOptions)
       .then(response => response.json())
-      .then(data => setUserObj(data))
+      .then(data => setUserObj(data[0]))
   }, [])
 
-  console.log(userObj[0])
+  console.log(userObj)
 
-  if (userObj && localStorage.getItem('email') === userObj[0].email) {
+  if (userObj && (localStorage.getItem('email') === userObj.email)) {
     // You are accessing your own userpage.
-    localStorage.setItem('username', userObj[0].username)
+    localStorage.setItem('username', userObj.username)
   }
 
 

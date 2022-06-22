@@ -1,5 +1,5 @@
 import {
-  Box, Flex, Spacer, Center, Link, Input, InputGroup, InputLeftAddon, IconButton
+  Flex, Spacer, Link, Input, InputGroup, InputLeftAddon, IconButton
 } from '@chakra-ui/react'
 import { BiUserCircle, BiSearch } from 'react-icons/bi'
 import { useState } from 'react'
