@@ -17,7 +17,7 @@ from django.shortcuts import redirect
 from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
-from django.conf.urls import static
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', lambda req: redirect('stockmarket/')),  # redirects the index URL to API root
