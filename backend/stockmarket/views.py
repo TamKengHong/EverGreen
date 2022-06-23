@@ -23,7 +23,7 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [PostPermissions]
     # Allow users to search for a post by the author's username, email, post title, or the associated stock ticker
     filter_backends = [filters.SearchFilter]
-    search_fields = ['author__username','author__email','title','stockTicker']
+    search_fields = ['name__username','name__email','title','stockTicker']
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
