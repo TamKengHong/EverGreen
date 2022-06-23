@@ -9,7 +9,7 @@ const Posts = () => {
   useEffect(() => { // call fetch only once.
     const requestOptions = {
       method: 'GET',
-      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
+      headers: { 'Authorization': 'Token ' + "ecc0d3db5ace35df3e1d32f0ba80ff85e81a0832" } //localstorage will break
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/posts/?search=' +
       ticker, requestOptions)
