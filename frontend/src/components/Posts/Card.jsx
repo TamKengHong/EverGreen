@@ -1,6 +1,6 @@
-import { Box, Flex, Square, IconButton, Link, Text } from '@chakra-ui/react'
+import { Image, Box, Flex, IconButton, Link, Text } from '@chakra-ui/react'
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from 'react-icons/ai'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AddReply from './AddReply'
 
 const Card = (props) => {
@@ -11,15 +11,27 @@ const Card = (props) => {
   const isPost = !isComment
   const isCommentReply = isComment && props.parent != null
 
-  // function LikeRequest() {
-  //   return ligma
-  // }
+  const [userObj, setUserObj] = useState('')
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
+    }
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
+      + props.name, requestOptions)
+      .then(response => response.json())
+      .then(data => setUserObj(data[0]))
+  }, [])
+
+  const profileUrl = userObj.profilePicture ?
+    userObj.profilePicture :
+    "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
 
   return (
     <>
       <Flex border="1px" bg="whiteAlpha.900" mb="1">
         <Box w="70px" >
-          <Square size="60px" bg="gray.300" mt="5px" ml="5px"> image </Square>
+          <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} />
         </Box>
         <Box w="calc(100% - 70px)" >
           <Box borderBottom="1px" borderColor="gray.400">
@@ -65,7 +77,7 @@ const Card = (props) => {
       <Flex>
         <Box w="30px"></Box>
         <Box w="calc(100% - 30px)">
-          {props.comments ? props.comments.map(obj => <Card {...obj} />) : null}
+          {props.comments ? props.comments.map(obj => <Card {...obj} key={obj.id} />) : null}
         </Box>
       </Flex>
     </>

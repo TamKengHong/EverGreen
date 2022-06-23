@@ -21,7 +21,7 @@ const Timeline = (props) => {
         "isTransparent": false,
         "displayMode": "regular",
         "width": "100%",
-        "height": 830,
+        "height": 500,
         "locale": "en",
         "feedmode": "symbol",
         "symbol": ticker,

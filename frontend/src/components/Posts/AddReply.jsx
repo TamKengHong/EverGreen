@@ -1,4 +1,4 @@
-import { Box, Flex, Square, Textarea, Button } from '@chakra-ui/react'
+import { Image, Box, Flex, Textarea, Button } from '@chakra-ui/react'
 import { useState } from 'react'
 
 const AddReply = (props) => {
@@ -23,7 +23,6 @@ const AddReply = (props) => {
     }
   }
 
-
   function PostRequest(info) {
     const requestOptions = {
       method: 'POST',
@@ -38,11 +37,15 @@ const AddReply = (props) => {
       .then(data => console.log(data))
   }
 
+  const profileUrl = localStorage.getItem('profilePicture') ?
+    localStorage.getItem('profilePicture') :
+    "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
+
   return (
     <Box w="95%" margin="auto">
       <Flex border="1px" bg="gray.50" >
-        <Box w="70px" borderRight="1px" borderColor="gray.400" >
-          <Square size="60px" bg="gray.300" mt="5px" ml="5px"> User</Square>
+        <Box w="70px" >
+          <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} />
         </Box>
         <Box w="calc(100% - 70px - 80px)">
           <Textarea

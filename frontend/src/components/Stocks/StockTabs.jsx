@@ -18,14 +18,15 @@ const StockTabs = () => {
       <TabPanels border="1px" borderColor="gray.400">
         <TabPanel>
           <Box boxShadow="lg">
-            <AdvancedChart widgetProps={{ symbol: ticker, theme: "light" }} />
+            <AdvancedChart widgetProps={{ symbol: ticker, theme: "light", height: "600px" }} />
           </Box>
         </TabPanel>
         <TabPanel>
           <Box boxShadow="lg">
             <CompanyProfile widgetProps={{
               symbol: ticker,
-              colorTheme: "light", width: "100%"
+              colorTheme: "light",
+              width: "100%"
             }} />
           </Box>
         </TabPanel>
@@ -33,7 +34,8 @@ const StockTabs = () => {
           <Box boxShadow="lg">
             <TechnicalAnalysis widgetProps={{
               symbol: ticker,
-              colorTheme: "light", width: "100%"
+              colorTheme: "light",
+              width: "100%",
             }} />
           </Box>
           <Box h="5"></Box>

@@ -9,6 +9,7 @@ const UserBar = () => {
     localStorage.removeItem("key")
     localStorage.removeItem("email")
     localStorage.removeItem("username")
+    localStorage.removeItem("profilePicture")
     navigate('/')
   }
   return (

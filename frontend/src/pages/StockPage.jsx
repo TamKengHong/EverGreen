@@ -10,17 +10,6 @@ import background from '../assets/oak_wood_texture.jpg'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
 const StockPage = () => {
-
-  // function getRequest() {
-  //   const requestOptions = {
-  //     method: 'GET',
-  //     headers: { 'Authorization': 'Token ' + "ecc0d3db5ace35df3e1d32f0ba80ff85e81a0832" }
-  //   }
-  //   fetch('https://ever-green-production.herokuapp.com/stockmarket/posts/', requestOptions)
-  //     .then(response => response.json())
-  //     .then(data => console.log(data))
-  // }
-
   const { ticker } = useParams()
   const [isBookmarked, setIsBookmarked] = useState(false)
   return (

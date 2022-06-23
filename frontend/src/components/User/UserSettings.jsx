@@ -1,19 +1,13 @@
-import { Spacer, Box, Button, Flex, Text, Textarea } from '@chakra-ui/react'
+import { Image, Spacer, Box, Button, Flex, Text, Textarea } from '@chakra-ui/react'
 import { Select } from "chakra-react-select";
 import countryList from 'react-select-country-list'
 import { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 const UserInfo = (props) => {
-  const [img, setImg] = useState()
-  const imageUrl = props.profilePicture
-  const fetchImage = async () => {
-    const res = await fetch(imageUrl)
-    const imageBlob = await res.blob()
-    const imageObjectURL = URL.createObjectURL(imageBlob)
-    setImg(imageObjectURL)
-  }
-  useEffect(() => { fetchImage() }, [])
+  const profileUrl = props.profilePicture ?
+    props.profilePicture :
+    "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
 
   return <Flex
     p="5"
@@ -31,9 +25,7 @@ const UserInfo = (props) => {
     <Text as='u' fontSize="xl"> Profile Summary:  </Text>
     <Text whiteSpace="pre-wrap">{props.summary}</Text>
     <Text as='u' fontSize="xl"> Profile Picture: </Text>
-    <Box>
-      <img src={img} alt="icons" />
-    </Box>
+    <Image w="60px" h="60px" src={profileUrl} />
   </Flex>
 }
 
@@ -72,11 +64,13 @@ const UserSettings = () => {
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id + "/", requestOptions)
       .then(response => response.json())
       .then(data => console.log(data))
+      .then(window.location.reload(false)) //refresh the page to update 
   }
 
   if (userObj && localStorage.getItem('email') === userObj.email) {
     // You are accessing your own userpage.
     localStorage.setItem('username', userObj.username)
+    if (userObj.profilePicture) localStorage.setItem('profilePicture', userObj.profilePicture)
   }
 
   return (
@@ -114,7 +108,6 @@ const UserSettings = () => {
           h="50px"
           onClick={() => {
             PatchRequest()
-            // window.location.reload(false)  // refresh the page to update
           }}
         >
           Submit

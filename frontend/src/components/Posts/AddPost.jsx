@@ -1,13 +1,16 @@
-import { Box, Flex, Square, Textarea, Button, Input } from '@chakra-ui/react'
+import { Image, Box, Flex, Textarea, Button, Input } from '@chakra-ui/react'
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 const AddPost = () => {
+  const { ticker } = useParams()
   const [content, setContent] = useState('')
   const [title, setTitle] = useState('')
   const obj = {
     "content": content,
     "title": title,
-    "name": localStorage.getItem('username')
+    "name": localStorage.getItem('username'),
+    "stockTicker": ticker
   }
 
   function PostRequest(info) {
@@ -23,12 +26,15 @@ const AddPost = () => {
       .then(response => response.json())
       .then(data => console.log(data))
   }
+  const profileUrl = localStorage.getItem('profilePicture') ?
+    localStorage.getItem('profilePicture') :
+    "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
 
   return (
     <Box w="95%" margin="auto">
       <Flex border="1px" bg="gray.50">
-        <Box w="70px" borderRight="1px" borderColor="gray.400">
-          <Square size="60px" bg="gray.300" mt="5px" ml="5px"> User</Square>
+        <Box w="70px" >
+          <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} />
         </Box>
         <Box w="calc(100% - 70px - 80px)">
           <Input
