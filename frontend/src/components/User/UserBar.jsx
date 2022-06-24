@@ -14,9 +14,10 @@ const UserBar = () => {
   }
   return (
     <Flex h="400px" alignItems="center" justifyContent="center">
-      <Flex direction="column">
-        <Text fontSize="70">Welcome {username}!</Text>
+      <Flex direction="column" bg="rgba(237,242,247,0.8)" p="10" rounded="10" boxShadow="2xl">
+        <Text fontSize="6xl">Welcome {username}!</Text>
         <Button
+          mt="3"
           alignSelf="center"
           size="lg"
           w="250px"

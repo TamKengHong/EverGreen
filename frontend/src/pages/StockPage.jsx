@@ -1,6 +1,6 @@
 import { SymbolInfo } from 'react-tradingview-embed'
 import { useState } from 'react'
-import { Box, Flex, IconButton, Text } from '@chakra-ui/react'
+import { Box, Flex, IconButton, Spacer, Text } from '@chakra-ui/react'
 import AppBar from '../components/AppBar'
 import { useParams } from 'react-router-dom'
 import StockTabs from '../components/Stocks/StockTabs'
@@ -36,9 +36,29 @@ const StockPage = () => {
       <Box h="10"></Box>
       <StockTabs />
       <Box h="5"></Box>
-      <Text fontSize="50" >Posts & Comments: </Text>
-      <AddPost />
-      <Posts />
+      <Flex mt="10" mb="5">
+        <Text
+          p="2"
+          bg="green.600"
+          roundedRight="20"
+          fontSize="4xl"
+          color="white"
+          boxShadow="xl"
+          fontWeight="thin"
+        >
+          Posts & Comments:
+        </Text>
+      </Flex>
+      {localStorage.getItem('key') ?
+        <AddPost /> :
+        <Flex >
+          <Spacer />
+          <Text mb="10" bg="whiteAlpha.700" p="2" rounded="5" fontSize="4xl" color="red">
+            ***Please log in to add / view posts & comments.***
+          </Text>
+          <Spacer />
+        </Flex>}
+      {localStorage.getItem('key') ? <Posts /> : null}
     </Box>
   )
 }

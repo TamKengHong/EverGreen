@@ -4,7 +4,7 @@ import UserSettings from './UserSettings'
 
 const UserTabs = () => {
   return (
-    <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="gray.200" minH="400" >
+    <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="rgba(237,242,247,0.9)" minH="400" >
       <TabList mb='1em' border="1px" borderColor="gray.400">
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Settings</Tab>
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Posts</Tab>

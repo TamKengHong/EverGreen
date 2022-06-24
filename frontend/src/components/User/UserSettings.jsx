@@ -9,24 +9,27 @@ const UserInfo = (props) => {
     props.profilePicture :
     "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
 
-  return <Flex
+  return <Box
     p="5"
     rounded="5"
-    bg="gray.100"
+    border="1px"
+    borderColor="gray.600"
     direction="column"
-    alignItems="center"
-    justifyContent="center">
+    alignItems="left"
+    justifyContent="left">
     <Text as='u' fontSize="xl">User Info:</Text>
-    <Text> User Id: {props.id} </Text>
-    <Text> Username: {props.username} </Text>
-    <Text> Email: {props.email} </Text>
-    <Text> Country: {props.country} </Text>
-    <Text> Total Likes: {props.totalLikes}, Total Dislikes: {props.totalDislikes} </Text>
+    <Box ml="3">
+      <Text> User Id: {props.id} </Text>
+      <Text> Username: {props.username} </Text>
+      <Text> Email: {props.email} </Text>
+      <Text> Country: {props.country} </Text>
+      <Text> Total Likes: {props.totalLikes}, Total Dislikes: {props.totalDislikes} </Text>
+    </Box>
     <Text as='u' fontSize="xl"> Profile Summary:  </Text>
-    <Text whiteSpace="pre-wrap">{props.summary}</Text>
+    <Text ml="3" whiteSpace="pre-wrap">{props.summary}</Text>
     <Text as='u' fontSize="xl"> Profile Picture: </Text>
-    <Image w="60px" h="60px" src={profileUrl} />
-  </Flex>
+    <Image ml="3" w="60px" h="60px" src={profileUrl} />
+  </Box>
 }
 
 const UserSettings = () => {
@@ -46,7 +49,7 @@ const UserSettings = () => {
       + username, requestOptions)
       .then(response => response.json())
       .then(data => setUserObj(data[0]))
-  }, [])
+  }, [username])
 
   function PatchRequest() {
     let formData = new FormData()
@@ -74,10 +77,8 @@ const UserSettings = () => {
   }
 
   return (
-    <Box>
-      <Flex alignItems="center" justifyContent="center">
-        <UserInfo {...userObj} />
-      </Flex>
+    <Box w="90%" margin="auto">
+      <UserInfo {...userObj} />
       <Text mt="5" fontSize="xl">Edit Country:</Text>
       <Box bg="gray.100" border="1px" borderColor="gray.400" rounded="5">
         <Select options={options} value={country} onChange={v => setCountry(v)} />

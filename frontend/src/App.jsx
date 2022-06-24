@@ -62,7 +62,7 @@ function App() {
       </Box>
       <Box bgImage={darkWoodBackground} bgSize="cover" >
         <Flex mb="5">
-          <Text ml="3" fontSize="30" color="gray.50">Trending Posts:</Text>
+          <Text ml="3" fontSize="30" color="gray.50">Trending Stocks:</Text>
           <Spacer />
           <Text alignSelf="right" mr="20vw" color="gray.50" fontSize="30"> Filter by:</Text>
         </Flex>
