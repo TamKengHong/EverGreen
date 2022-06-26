@@ -61,6 +61,7 @@ const AddReply = (props) => {
             h="100%"
             onClick={() => {
               PostRequest(obj)
+              window.location.reload(false)
             }}
           >
             Submit

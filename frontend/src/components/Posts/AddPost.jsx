@@ -54,7 +54,10 @@ const AddPost = () => {
             colorScheme="teal"
             w="100%"
             h="100%"
-            onClick={() => PostRequest(obj)}>
+            onClick={() => {
+              PostRequest(obj)
+              window.location.reload(false)
+            }}>
             Submit
           </Button>
         </Box>

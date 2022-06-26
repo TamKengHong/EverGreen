@@ -12,7 +12,7 @@ const Posts = () => {
       headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/posts/?search=' +
-      ticker, requestOptions)
+      ticker + "&stockTicker_only=yes", requestOptions)
       .then(response => response.json())
       .then(data => setPostArr(data))
   }, [ticker])
