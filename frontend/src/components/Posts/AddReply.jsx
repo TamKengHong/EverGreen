@@ -10,14 +10,14 @@ const AddReply = (props) => {
 
   if (isComment) {
     obj = {
-      "name": "ryan",
+      "name": localStorage.getItem('username'),
       "content": content,
       "post": props.post, // this is the parent post.
       "parent": props.id // this is the parent comment
     }
   } else {
     obj = {
-      "name": "ryan",
+      "name": localStorage.getItem('username'),
       "content": content,
       "post": props.id // this replies to the post id.
     }
