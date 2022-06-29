@@ -24,7 +24,6 @@ const AddPost = () => {
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/posts/', requestOptions)
       .then(response => response.json())
-      .then(data => console.log(data))
       .then(() => window.location.reload(false))
   }
   const profileUrl = localStorage.getItem('profilePicture') ?

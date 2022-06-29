@@ -1,27 +1,67 @@
-import { Image, Box, Flex, IconButton, Link, Text } from '@chakra-ui/react'
-import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from 'react-icons/ai'
+import {
+  Image, Box, Flex, IconButton, Link, Text, Spacer, Textarea,
+  Button
+} from '@chakra-ui/react'
+import {
+  AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike, AiFillEdit,
+  AiOutlineEdit, AiOutlineDelete, AiOutlineCheckSquare, AiOutlineCloseSquare
+} from 'react-icons/ai'
 import { useState, useEffect } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import AddReply from './AddReply'
 
+//TODO: abstract out the functions and components.
 const Card = (props) => {
   const [isLikeActive, setIsLikeActive] = useState(false)
   const [isDislikeActive, setIsDislikeActive] = useState(false)
   const [isReplyActive, setIsReplyActive] = useState(false)
+  const [isEditActive, setIsEditActive] = useState(false)
+  const [isDeleteActive, setIsDeleteActive] = useState(false)
+  const [editedContent, setEditedContent] = useState('')
   const isComment = props.post
   const isPost = !isComment
   const isCommentReply = isComment && props.parent != null
+  const url = isPost ?
+    'https://ever-green-production.herokuapp.com/stockmarket/posts/' + props.id + '/' :
+    'https://ever-green-production.herokuapp.com/stockmarket/comments/' + props.id + '/'
 
   const [userObj, setUserObj] = useState('')
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') } // localStorage will break
+      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
       + props.name, requestOptions)
       .then(response => response.json())
       .then(data => setUserObj(data[0]))
   }, [])
+
+  const DeleteRequest = () => {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
+    }
+    fetch(url, requestOptions)
+      .then(response => {
+        response.json()
+        window.location.reload(false) // solves the double-click reload problem
+      })
+  }
+
+  const PatchRequest = () => {
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('key')
+      },
+      body: JSON.stringify({ "content": editedContent })
+    }
+    fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(() => window.location.reload(false))
+  }
 
   const profileUrl = userObj.profilePicture ?
     userObj.profilePicture :
@@ -34,21 +74,97 @@ const Card = (props) => {
           <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} />
         </Box>
         <Box w="calc(100% - 70px)" >
-          <Box borderBottom="1px" borderColor="gray.400">
-            {props.name},
+          <Flex borderBottom="1px" borderColor="gray.400" alignItems="center">
+            <Link
+              as={RouterLink}
+              to={'/user/' + props.name}
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              {props.name}
+            </Link>,
             {" " + new Date(props.date).toLocaleDateString()},
             {(isComment ? " Comment id: " : " Post id: ") + props.id}
             {isCommentReply ? " | Replying to comment id: " + props.parent : null}
-          </Box>
+            <Spacer />
+            {localStorage.getItem('username') === props.name ?
+              <>
+                <IconButton
+                  _focus={{ outline: "none" }}
+                  bg="none"
+                  size="sm"
+                  aria-label="Delete"
+                  icon={isEditActive ? <AiFillEdit size="25" /> : <AiOutlineEdit size="25" />}
+                  onClick={() => {
+                    setIsEditActive(!isEditActive)
+                  }}
+                />
+                {isDeleteActive ?
+                  <>
+                    Confirm Delete:
+                    <IconButton
+                      _focus={{ outline: "none" }}
+                      bg="none"
+                      size="sm"
+                      aria-label="Confirm"
+                      icon={<AiOutlineCheckSquare size="25" />}
+                      onClick={() => { DeleteRequest() }}
+                    />
+                    <IconButton
+                      _focus={{ outline: "none" }}
+                      bg="none"
+                      size="sm"
+                      aria-label="Deny"
+                      icon={<AiOutlineCloseSquare size="25" />}
+                      onClick={() => { setIsDeleteActive(false) }}
+                    />
+                  </>
+                  :
+                  <IconButton
+                    _focus={{ outline: "none" }}
+                    bg="none"
+                    size="sm"
+                    aria-label="Delete"
+                    icon={<AiOutlineDelete size="25" />}
+                    onClick={() => { setIsDeleteActive(true) }}
+                  />
+                }
+              </>
+              : null
+            }
+          </Flex>
           <Box minH="120" >
-            <Text as="b" fontSize="xl">{isPost ? "Title: " + props.title + " " : null}</Text>
-            <Text whiteSpace="pre-wrap">{props.content}</Text>
+            {isEditActive ?
+              <Flex>
+                <Box w="calc(100% - 70px)" >
+                  <Textarea
+                    h="120"
+                    bg="gray.100"
+                    placeholder="Edit Content"
+                    onChange={e => setEditedContent(e.target.value)}
+                  />
+                </Box>
+                <Box w="70px">
+                  <Button
+                    colorScheme="teal"
+                    w="100%"
+                    h="100%"
+                    onClick={() => { PatchRequest() }}>
+                    Submit
+                  </Button>
+                </Box>
+              </Flex>
+              :
+              <>
+                <Text as="b" fontSize="xl">{isPost ? "Title: " + props.title + " " : null}</Text>
+                <Text whiteSpace="pre-wrap">{props.content}</Text>
+              </>
+            }
           </Box>
           <Box borderTop="1px" borderColor="gray.400">
             {isLikeActive ? props.likes + 1 : props.likes}
             <IconButton
               _focus={{ outline: "none" }}
-              bg="None"
+              bg="none"
               aria-label="Likes"
               size="sm"
               icon={!isLikeActive ? <AiOutlineLike size="22" /> : <AiFillLike size="22" />}
@@ -60,7 +176,7 @@ const Card = (props) => {
             {isDislikeActive ? props.dislikes + 1 : props.dislikes}
             <IconButton
               _focus={{ outline: "none" }}
-              bg="None"
+              bg="none"
               aria-label="Dislikes"
               size="sm"
               icon={!isDislikeActive ? <AiOutlineDislike size="22" /> : <AiFillDislike size="22" />}
@@ -73,7 +189,7 @@ const Card = (props) => {
             {isReplyActive ? <AddReply {...props} /> : null}
           </Box>
         </Box>
-      </Flex>
+      </Flex >
       <Flex>
         <Box w="30px"></Box>
         <Box w="calc(100% - 30px)">
