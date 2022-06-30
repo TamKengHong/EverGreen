@@ -144,7 +144,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 MEDIA_URL = '/images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media_folder")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 #This combines automatic compression with the caching behaviour provided by Django’s ManifestStaticFilesStorage backend. 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
