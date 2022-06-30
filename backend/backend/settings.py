@@ -171,5 +171,5 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'none' 
 # default configuration for deployment to Heroku
-import django_heroku
-django_heroku.settings(locals(),staticfiles=False) #prevent overriding of staticfiles URL
+#import django_heroku
+#django_heroku.settings(locals(),staticfiles=False) #prevent overriding of staticfiles URL
