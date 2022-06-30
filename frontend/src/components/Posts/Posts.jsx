@@ -16,6 +16,7 @@ const Posts = () => {
       .then(response => response.json())
       .then(data => setPostArr(data))
   }, [ticker])
+  postArr.sort((a, b) => a.id - b.id)
   return (
     <Box w="95%" margin="auto">
       {postArr ? postArr.map(obj => <Card {...obj} key={obj.id} />) : null}

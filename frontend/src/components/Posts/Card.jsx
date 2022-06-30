@@ -35,7 +35,7 @@ const Card = (props) => {
       + props.name, requestOptions)
       .then(response => response.json())
       .then(data => setUserObj(data[0]))
-  }, [])
+  }, [props.name])
 
   const DeleteRequest = () => {
     const requestOptions = {
@@ -49,19 +49,27 @@ const Card = (props) => {
       })
   }
 
-  const PatchRequest = () => {
+  const EditContentRequest = () => {
     const requestOptions = {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Token ' + localStorage.getItem('key')
       },
-      body: JSON.stringify({ "content": editedContent })
+      body: JSON.stringify({
+        "content": editedContent + "\n\n*Edited on: " + new Date().toLocaleString().replace(",", "")
+      })
     }
     fetch(url, requestOptions)
       .then(response => response.json())
       .then(() => window.location.reload(false))
   }
+
+  // function handleLikeClick(isLikeActive, isDislikeActive) {
+  //   const obj = {
+  //     
+  //   } 
+  // } 
 
   const profileUrl = userObj.profilePicture ?
     userObj.profilePicture :
@@ -82,7 +90,7 @@ const Card = (props) => {
             >
               {props.name}
             </Link>,
-            {" " + new Date(props.date).toLocaleDateString()},
+            {" " + new Date(props.date).toLocaleString().replace(",", "")},
             {(isComment ? " Comment id: " : " Post id: ") + props.id}
             {isCommentReply ? " | Replying to comment id: " + props.parent : null}
             <Spacer />
@@ -148,7 +156,7 @@ const Card = (props) => {
                     colorScheme="teal"
                     w="100%"
                     h="100%"
-                    onClick={() => { PatchRequest() }}>
+                    onClick={() => { EditContentRequest() }}>
                     Submit
                   </Button>
                 </Box>

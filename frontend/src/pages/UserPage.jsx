@@ -1,5 +1,5 @@
 import AppBar from '../components/AppBar'
-import { Box } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import UserTabs from '../components/User/UserTabs'
@@ -16,7 +16,7 @@ const UserPage = () => {
       headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
-      + localStorage.getItem('email'), requestOptions)
+      + username, requestOptions)
       .then(response => response.json())
       .then(data => setUserObj(data[0]))
   }, [username])
@@ -26,14 +26,13 @@ const UserPage = () => {
     // You are accessing your own userpage.
     localStorage.setItem('username', userObj.username)
     if (isOwnPage === false) setIsOwnPage(true)
-  } else {
-    if (isOwnPage === true) setIsOwnPage(false) // workarounds, there has to be a better way.
   }
+
   return (
-    <Box bgImage={background} bgSize="contain">
+    <Box bgImage={background} minH="100vh" bgSize="contain">
       <AppBar />
-      {isOwnPage ? <UserBar /> : <Box h="100" />}
-      <UserTabs bg="gray.100" />
+      <UserBar />
+      <UserTabs {...userObj} />
       <Box h="10" />
     </Box>
   )
