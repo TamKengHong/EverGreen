@@ -27,12 +27,12 @@ const Card = (props) => {
 
   const [userObj, setUserObj] = useState('')
   useEffect(() => {
+    const userUrl = 'https://ever-green-production.herokuapp.com/stockmarket/users/?search=' + props.name
     const requestOptions = {
       method: 'GET',
       headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
     }
-    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
-      + props.name, requestOptions)
+    fetch(userUrl, requestOptions)
       .then(response => response.json())
       .then(data => setUserObj(data[0]))
   }, [props.name])
@@ -65,21 +65,77 @@ const Card = (props) => {
       .then(() => window.location.reload(false))
   }
 
-  // function handleLikeClick(isLikeActive, isDislikeActive) {
-  //   const obj = {
-  //     
-  //   } 
-  // } 
+  function handleLikeClick() { // Also needs to track whether the user has liked, in memory.
+    const userIdUrl = 'https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id + "/"
 
-  const profileUrl = userObj.profilePicture ?
-    userObj.profilePicture :
-    "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('key')
+      },
+      body: JSON.stringify({
+        "likes": isLikeActive ? props.likes : props.likes + 1,
+        // the number of dislikes must always be the original that you see. 
+        "dislikes": props.dislikes
+      })
+    }
+    fetch(url, requestOptions).then(response => response.json()).then(data => console.log(data))
+
+    const requestOptions2 = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('key')
+      },
+      body: JSON.stringify({
+        "totalLikes": isLikeActive ? userObj.totalLikes : userObj.totalLikes + 1,
+        "totalDisLikes": userObj.totalDisLikes
+      })
+    }
+    fetch(userIdUrl, requestOptions2).then(response => response.json()).then(data => console.log(data))
+  }
+
+  function handleDislikeClick() {
+    const userIdUrl = 'https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id + "/"
+
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('key')
+      },
+      body: JSON.stringify({
+        "likes": props.likes,
+        "dislikes": isDislikeActive ? props.dislikes : props.dislikes + 1
+      })
+    }
+    fetch(url, requestOptions).then(response => response.json()).then(data => console.log(data))
+
+    const requestOptions2 = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('key')
+      },
+      body: JSON.stringify({
+        "totalLikes": userObj.totalLikes,
+        "totalDisLikes": isDislikeActive ? userObj.totalDisLikes : userObj.totalDisLikes + 1
+      })
+    }
+    fetch(userIdUrl, requestOptions2).then(response => response.json()).then(data => console.log(data))
+  }
+
+  const defaultImgUrl = "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
+  const profileUrl = userObj.profilePicture ? userObj.profilePicture : defaultImgUrl
+
+  if (props.comments) props.comments.sort((a, b) => a.id - b.id)
 
   return (
     <>
       <Flex border="1px" bg="whiteAlpha.900" mb="1">
         <Box w="70px" >
-          <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} />
+          <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} fallbackSrc={defaultImgUrl} />
         </Box>
         <Box w="calc(100% - 70px)" >
           <Flex borderBottom="1px" borderColor="gray.400" alignItems="center">
@@ -177,6 +233,7 @@ const Card = (props) => {
               size="sm"
               icon={!isLikeActive ? <AiOutlineLike size="22" /> : <AiFillLike size="22" />}
               onClick={() => {
+                handleLikeClick()
                 setIsLikeActive(!isLikeActive)
                 setIsDislikeActive(false)
               }}
@@ -189,6 +246,7 @@ const Card = (props) => {
               size="sm"
               icon={!isDislikeActive ? <AiOutlineDislike size="22" /> : <AiFillDislike size="22" />}
               onClick={() => {
+                handleDislikeClick()
                 setIsDislikeActive(!isDislikeActive)
                 setIsLikeActive(false)
               }}

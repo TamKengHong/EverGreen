@@ -4,9 +4,8 @@ import countryList from 'react-select-country-list'
 import { useState, useMemo } from 'react'
 
 const UserInfo = (props) => {
-  const profileUrl = props.profilePicture ?
-    props.profilePicture :
-    "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
+  const defaultImgUrl = "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
+  const profileUrl = props.profilePicture ? props.profilePicture : defaultImgUrl
 
   return (
     <Box
@@ -30,7 +29,7 @@ const UserInfo = (props) => {
           <Text as='u' fontSize="xl"> Profile Summary:  </Text>
           <Text ml="3" whiteSpace="pre-wrap">{props.summary}</Text>
           <Text as='u' fontSize="xl"> Profile Picture: </Text>
-          <Image ml="3" w="60px" h="60px" src={profileUrl} />
+          <Image ml="3" w="60px" h="60px" src={profileUrl} fallbackSrc={defaultImgUrl} />
         </> :
         <Text fontSize="xl">User not found.</Text>}
     </Box>

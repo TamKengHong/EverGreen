@@ -1,5 +1,5 @@
 import AppBar from '../components/AppBar'
-import { Box, Text } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import UserTabs from '../components/User/UserTabs'
@@ -25,6 +25,7 @@ const UserPage = () => {
   if (userObj && (localStorage.getItem('email') === userObj.email)) {
     // You are accessing your own userpage.
     localStorage.setItem('username', userObj.username)
+    localStorage.setItem('bookmarks', userObj.bookmarks)
     if (isOwnPage === false) setIsOwnPage(true)
   }
 

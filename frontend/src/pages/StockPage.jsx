@@ -9,9 +9,46 @@ import AddPost from '../components/Posts/AddPost'
 import background from '../assets/oak_wood_texture.jpg'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
-const StockPage = () => {
+const Bookmark = () => { // this fixes the whole page rerendering issue.
   const { ticker } = useParams()
   const [isBookmarked, setIsBookmarked] = useState(false)
+  function handleClick() {
+    const obj = {
+      "name": localStorage.getItem('username'),
+      "stockTicker": ticker
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ' + localStorage.getItem('key')
+      },
+      body: JSON.stringify(obj)
+    }
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/bookmarks/', requestOptions)
+      .then(response => response.json())
+      .then(data => console.log(data))
+  }
+
+  return (
+    <Box w="40px" >
+      <IconButton
+        ml="7px"
+        colorScheme="yellow"
+        aria-label="Bookmark"
+        size="sm"
+        icon={!isBookmarked ? <BsBookmark size="28" /> : <BsBookmarkFill size="28" />}
+        onClick={() => {
+          handleClick()
+          setIsBookmarked(!isBookmarked)
+        }}
+      />
+    </Box>
+  )
+}
+
+const StockPage = () => {
+  const { ticker } = useParams()
   return (
     <Box bgImage={background} bgSize="contain" bgPos="center" >
       <AppBar />
@@ -21,16 +58,7 @@ const StockPage = () => {
           <Box w="calc(100% - 40px)">
             <SymbolInfo widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
           </Box>
-          <Box w="40px" >
-            <IconButton
-              ml="7px"
-              colorScheme="yellow"
-              aria-label="Bookmark"
-              size="sm"
-              icon={!isBookmarked ? <BsBookmark size="28" /> : <BsBookmarkFill size="28" />}
-              onClick={() => setIsBookmarked(!isBookmarked)}
-            />
-          </Box>
+          <Bookmark />
         </Flex>
       </Box>
       <Box h="10"></Box>
