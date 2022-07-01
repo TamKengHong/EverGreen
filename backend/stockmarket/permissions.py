@@ -1,9 +1,12 @@
+from django.http import QueryDict
 from rest_framework import permissions
+from rest_framework import request
 
 #To implement a custom permission, override BasePermission and implement either, or both, of the following methods:
 #.has_permission(self, request, view)
 #.has_object_permission(self, request, view, obj)
 
+#Request attributes can be referred to at https://docs.djangoproject.com/en/4.0/ref/request-response/#django.http.QueryDict
 class CustomUserPermissions(permissions.BasePermission):
     #change default PermissionsDenied error message to be more precise
     message = "Wrong credentials entered; try again"
@@ -16,8 +19,9 @@ class CustomUserPermissions(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
+        data = QueryDict(request.body)
         #allow developers to edit the likes and dislikes of other users
-        if request.method == 'PATCH' and ('totalLikes' in request.GET or 'totalDislikes' in request.GET):
+        if request.method == 'PATCH' and ('totalLikes' in data or 'totalDislikes' in data):
             return True
 		# If it is not a safe HTTP request (e.g POST), check that the user currently
 		# authenticated in the system is the same as obj.
@@ -32,8 +36,9 @@ class PostPermissions(permissions.BasePermission):
         #allow anyone to view posts through safe HTTP request (GET, OPTIONS, HEAD)
         if request.method in permissions.SAFE_METHODS:
             return True 
+        data = QueryDict(request.body)
         #allow users to edit the likes and dislikes of other posts
-        if request.method == 'PATCH' and ('likes' in request.GET or 'dislikes' in request.GET):
+        if request.method == 'PATCH' and ('likes' in data or 'dislikes' in data):
             return True
         #allow users to edit only their own posts through POST requests by checking that the author of the post is the same as the authenticated user
         #superusers can edit and delete everyone's posts
@@ -48,8 +53,9 @@ class CommentPermissions(permissions.BasePermission):
         # Allow anyone to view comments through safe HTTP request (e.g GET, OPTIONS, HEAD)
         if request.method in permissions.SAFE_METHODS:
             return True
+        data = QueryDict(request.body)
         #allow users to edit the likes and dislikes of other comments
-        if request.method == 'PATCH' and ('likes' in request.GET or 'dislikes' in request.GET):
+        if request.method == 'PATCH' and ('likes' in data or 'dislikes' in data):
             return True
 		#allow users to edit only their own comments through POST requests by checking that the commenter is the same as the authenticated user
         #superusers can edit and delete everyone's posts
