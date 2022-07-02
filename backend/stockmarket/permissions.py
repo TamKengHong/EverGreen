@@ -16,14 +16,12 @@ class CustomUserPermissions(permissions.BasePermission):
 
 	# Allows anyone to get data if its a safe HTTP request (GET, OPTIONS, HEAD)
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS or request.method == 'PATCH':
+        if request.method in permissions.SAFE_METHODS:
             return True
-        '''
-        data = QueryDict(request.body)
+        data = QueryDict(request.body,encoding="utf-8")
         #allow developers to edit the likes and dislikes of other users
         if request.method == 'PATCH' and ('totalLikes' in data or 'totalDislikes' in data):
             return True
-        '''
 		# If it is not a safe HTTP request (e.g POST), check that the user currently
 		# authenticated in the system is the same as obj.
         return request.user.id == obj.id or request.user.is_superuser
