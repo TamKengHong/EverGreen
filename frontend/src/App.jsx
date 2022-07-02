@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Text, VStack, Flex, Spacer, Link, Center } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { Box, Text, Flex, Spacer, Link } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { TickerTape, Timeline } from 'react-tradingview-embed'
 import { Link as RouterLink } from 'react-router-dom'
@@ -20,6 +21,12 @@ const tickerList = [
 ]
 
 function App() {
+  useEffect(() => { // pings the server once to stop heroku from being slow at startup.  
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/', { method: 'GET' })
+      .then(res => res.json)
+      .then(data => console.log(data))
+  }, [])
+
   return (
     <>
       <AppBar />
