@@ -25,7 +25,7 @@ const UserPage = () => {
   if (userObj && (localStorage.getItem('email') === userObj.email)) {
     // You are accessing your own userpage.
     localStorage.setItem('username', userObj.username)
-    localStorage.setItem('bookmarks', userObj.bookmarks)
+    localStorage.setItem('bookmarks', JSON.stringify(userObj.bookmarks))
     if (isOwnPage === false) setIsOwnPage(true)
   }
 

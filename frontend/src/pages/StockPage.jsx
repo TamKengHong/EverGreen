@@ -1,5 +1,5 @@
 import { SymbolInfo } from 'react-tradingview-embed'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Flex, IconButton, Spacer, Text } from '@chakra-ui/react'
 import AppBar from '../components/AppBar'
 import { useParams } from 'react-router-dom'
@@ -11,8 +11,20 @@ import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
 const Bookmark = () => { // this fixes the whole page rerendering issue.
   const { ticker } = useParams()
-  const [isBookmarked, setIsBookmarked] = useState(false)
+  let bookmarks
+  let stock
+  let stockId
+  const [isBookmarked, setIsBookmarked] = useState(stockId)
+
+  useEffect(() => { // fixed rerendering issue.
+    bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
+    stock = bookmarks.find(x => x.stockTicker === ticker)
+    stockId = stock ? stock.id : null // fixes undefined error.
+    setIsBookmarked(stockId)
+  }, [ticker])
+
   function handleClick() {
+    const bookmarkUrl = 'https://ever-green-production.herokuapp.com/stockmarket/bookmarks/'
     const obj = {
       "name": localStorage.getItem('username'),
       "stockTicker": ticker
@@ -25,9 +37,23 @@ const Bookmark = () => { // this fixes the whole page rerendering issue.
       },
       body: JSON.stringify(obj)
     }
-    fetch('https://ever-green-production.herokuapp.com/stockmarket/bookmarks/', requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data))
+    const requestOptions2 = {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') },
+    }
+    if (!isBookmarked) {
+      fetch(bookmarkUrl, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          bookmarks.push(data)
+          localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
+        })
+    } else {
+      fetch(bookmarkUrl + stockId + '/', requestOptions2)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .then(() => localStorage.setItem('bookmarks', JSON.stringify(bookmarks.filter(x => x.id !== stockId))))
+    }
   }
 
   return (
@@ -58,7 +84,8 @@ const StockPage = () => {
           <Box w="calc(100% - 40px)">
             <SymbolInfo widgetProps={{ symbol: ticker, colorTheme: "light", width: "100%" }} />
           </Box>
-          <Bookmark />
+          {localStorage.getItem('key') ?
+            <Bookmark /> : null}
         </Flex>
       </Box>
       <Box h="10"></Box>
