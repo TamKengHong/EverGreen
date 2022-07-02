@@ -12,9 +12,9 @@ import pickle
 def create_subreddit_instance(reddit,subname):
     return reddit.subreddit(subname)
 
-#set default time limit as "today" to return all posts within the day itself
-#set default limit as None so that all posts are returned
-def track_stock_mentions_in_past_24_hours(reddit,subname,stock,time_filter="day",limit=None):
+#set time limit as "today" to return all posts within the day itself
+#set limit as None so that all posts are returned
+def track_stock_mentions_in_past_24_hours(reddit,subname,stock,time_filter,limit):
     subreddit = create_subreddit_instance(reddit,subname)
     counter = 0
     for post in subreddit.top(time_filter=time_filter,limit=limit):
@@ -28,9 +28,9 @@ def track_stock_mentions_in_past_24_hours(reddit,subname,stock,time_filter="day"
             counter += body.count(stock)
     return counter
 
-#set default time limit as "day" to return all posts within the day itself
-#set default limit as None so that all posts are returned
-def track_mentions_in_past_24_hours(reddit,subname,active_stocks,time_filter="day",limit=None):
+#set time limit as "day" to return all posts within the day itself
+#set limit as None so that all posts are returned
+def track_mentions_in_past_24_hours(reddit,subname,active_stocks,time_filter,limit):
     subreddit = create_subreddit_instance(reddit,subname)
     for post in subreddit.top(time_filter=time_filter,limit=limit):
         title = post.title.strip().split()
@@ -50,8 +50,7 @@ def track_mentions_in_past_24_hours(reddit,subname,active_stocks,time_filter="da
     return active_stocks
 
 #function for sorting dictionary of active stocks by number of mentions and returning the top pairs
-#by default, a list of the top 20 stocks is returned
-def sort_by_mentions(active_stocks,limit=20):
+def sort_by_mentions(active_stocks,limit):
     lst = [(key,value) for key,value in active_stocks.items() if value > 0]
     lst.sort(key = lambda x: x[1],reverse = True) #sort in descending order
     for i in range(len(lst)-limit):
@@ -60,18 +59,21 @@ def sort_by_mentions(active_stocks,limit=20):
 
 CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("SECRET_KEY")
 
-#create a reddit instance
-reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
-
 #read in preloaded dictionary of active stocks from .pkl file
 with open("activestocks.pkl","rb") as f:
     active_stocks = pickle.load(f)
 
 @api_view(['GET'])
 def script_runner(request):
+    #create a reddit instance
+    reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
     data = QueryDict(request.body)
-    active_stocks = track_mentions_in_past_24_hours(reddit,"wallstreetbets",active_stocks)
-    sort_by_mentions(active_stocks,limit=len(active_stocks))
+    subreddit = data.get("subreddit",default="wallstreetbets") #default subreddit is wallstreetbets
+    time_filter = data.get("time_filter",default="day") #default time filter is by day
+    post_limit = data.get("post_limit",default=None) #default limit is None
+    stock_limit = data.get("stock_limit",default=10) #by default, return the top 10 stocks
+    active_stocks = track_mentions_in_past_24_hours(reddit,subname=subreddit,active_stocks=active_stocks,time_filter=time_filter,limit=post_limit)
+    active_stocks = sort_by_mentions(active_stocks,limit=stock_limit)
 
 
 
