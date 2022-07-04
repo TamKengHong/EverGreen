@@ -18,7 +18,7 @@ class CustomUserPermissions(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
-        data = QueryDict(request.body,encoding="utf-8")
+        data = QueryDict(request.body)
         #allow developers to edit the likes and dislikes of other users
         if request.method == 'PATCH' and ('totalLikes' in data or 'totalDislikes' in data):
             return True
@@ -35,7 +35,7 @@ class PostPermissions(permissions.BasePermission):
         #allow anyone to view posts through safe HTTP request (GET, OPTIONS, HEAD)
         if request.method in permissions.SAFE_METHODS:
             return True 
-        data = QueryDict(request.body,encoding="utf-8")
+        data = QueryDict(request.body)
         #allow users to edit the likes and dislikes of other posts
         if request.method == 'PATCH' and ('likes' in data or 'dislikes' in data):
             return True
@@ -52,7 +52,7 @@ class CommentPermissions(permissions.BasePermission):
         # Allow anyone to view comments through safe HTTP request (e.g GET, OPTIONS, HEAD)
         if request.method in permissions.SAFE_METHODS:
             return True
-        data = QueryDict(request.body,encoding="utf-8")
+        data = QueryDict(request.body)
         #allow users to edit the likes and dislikes of other comments
         if request.method == 'PATCH' and ('likes' in data or 'dislikes' in data):
             return True

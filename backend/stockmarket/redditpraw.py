@@ -2,6 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import QueryDict
 from decouple import config
+from django.conf import settings
+import os
 import praw
 import pickle
 #import datetime as dt
@@ -55,16 +57,17 @@ def sort_by_mentions(active_stocks,limit):
     lst.sort(key = lambda x: x[1],reverse = True) #sort in descending order
     for i in range(len(lst)-limit):
         lst.pop()
-    return lst
+    results = [{key: value} for key,value in lst] #return list of key value pairs in dictionary form
+    return results
 
 CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("SECRET_KEY")
 
-#read in preloaded dictionary of active stocks from .pkl file
-with open("activestocks.pkl","rb") as f:
-    active_stocks = pickle.load(f)
-
 @api_view(['GET'])
 def script_runner(request):
+    #read in preloaded dictionary of active stocks from .pkl file
+    file_path = os.path.join(settings.BASE_DIR,'stockmarket','activestocks.pkl')
+    with open(file_path,"rb") as f:
+        active_stocks = pickle.load(f)
     #create a reddit instance
     reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
     data = QueryDict(request.body)
@@ -74,7 +77,7 @@ def script_runner(request):
     stock_limit = data.get("stock_limit",default=10) #by default, return the top 10 stocks
     active_stocks = track_mentions_in_past_24_hours(reddit,subname=subreddit,active_stocks=active_stocks,time_filter=time_filter,limit=post_limit)
     active_stocks = sort_by_mentions(active_stocks,limit=stock_limit)
-
+    return Response(active_stocks)
 
 
 
