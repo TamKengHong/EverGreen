@@ -19,6 +19,7 @@ class CustomUserPermissions(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         data = QueryDict(request.body)
+        print(data)
         #allow developers to edit the likes and dislikes of other users
         if request.method == 'PATCH' and ('totalLikes' in data or 'totalDislikes' in data):
             return True
