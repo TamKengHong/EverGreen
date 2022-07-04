@@ -20,7 +20,6 @@ const UserPosts = () => {
   return (
     <Box w="95%" margin="auto">
       {postArr ? postArr.map(obj => <Card {...obj} key={obj.id} />) : null}
-      <Box h="5vh"></Box>
     </Box>
   )
 }

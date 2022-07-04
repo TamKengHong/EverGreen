@@ -10,10 +10,12 @@ import background from '../assets/oak_wood_texture.jpg'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
 const Bookmark = () => { // this fixes the whole page rerendering issue.
+  // TODO: abstract this out to its own component.
   const { ticker } = useParams()
-  let bookmarks
-  let stock
-  let stockId
+  // do not remove these parts! will lead to undefined error.
+  let bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
+  let stock = bookmarks.find(x => x.stockTicker === ticker)
+  let stockId = stock ? stock.id : null // fixes undefined error.
   const [isBookmarked, setIsBookmarked] = useState(stockId)
 
   useEffect(() => { // fixed rerendering issue.

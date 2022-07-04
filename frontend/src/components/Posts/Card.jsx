@@ -71,10 +71,10 @@ const Card = (props) => {
     const requestOptions = {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Token ' + localStorage.getItem('key')
       },
-      body: JSON.stringify({
+      body: new URLSearchParams({
         "likes": isLikeActive ? props.likes : props.likes + 1,
         // the number of dislikes must always be the original that you see. 
         "dislikes": props.dislikes
@@ -85,10 +85,10 @@ const Card = (props) => {
     const requestOptions2 = {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Token ' + localStorage.getItem('key')
       },
-      body: JSON.stringify({
+      body: new URLSearchParams({
         "totalLikes": isLikeActive ? userObj.totalLikes : userObj.totalLikes + 1,
         "totalDisLikes": userObj.totalDisLikes
       })
@@ -102,10 +102,10 @@ const Card = (props) => {
     const requestOptions = {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Token ' + localStorage.getItem('key')
       },
-      body: JSON.stringify({
+      body: new URLSearchParams({
         "likes": props.likes,
         "dislikes": isDislikeActive ? props.dislikes : props.dislikes + 1
       })
@@ -115,10 +115,10 @@ const Card = (props) => {
     const requestOptions2 = {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Token ' + localStorage.getItem('key')
       },
-      body: JSON.stringify({
+      body: new URLSearchParams({
         "totalLikes": userObj.totalLikes,
         "totalDisLikes": isDislikeActive ? userObj.totalDisLikes : userObj.totalDisLikes + 1
       })

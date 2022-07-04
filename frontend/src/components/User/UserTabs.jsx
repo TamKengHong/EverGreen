@@ -1,6 +1,7 @@
 import { Tab, Tabs, TabList, TabPanels, TabPanel } from '@chakra-ui/react'
 import UserSettings from './UserSettings'
 import UserPosts from './UserPosts'
+import UserWatchlist from './UserWatchlist'
 
 
 const UserTabs = (props) => {
@@ -20,7 +21,7 @@ const UserTabs = (props) => {
           <UserPosts />
         </TabPanel>
         <TabPanel>
-          <p>Watchlist</p>
+          <UserWatchlist {...props} />
         </TabPanel>
         <TabPanel>
           <p>Calendar</p>
