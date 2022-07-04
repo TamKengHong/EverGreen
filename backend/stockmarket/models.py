@@ -81,6 +81,9 @@ class Comment(models.Model):
 #whenever a stock is bookmarked, it is added to the watchlist of the user
 class Bookmark(models.Model):
     name = models.ForeignKey(CustomUser,on_delete=models.CASCADE,to_field="username",related_name="bookmarks")
-    stockTicker = models.CharField(max_length=20,null=True,blank=True,unique=True)
+    stockTicker = models.CharField(max_length=20,null=True,blank=True)
+    # different bookmarks cannot have the same name and stockticker
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["name","stockTicker"],name="unique_bookmark")]
     def __str__(self):
         return "User: %s | Stock: %s" % (self.name,self.stockTicker)
