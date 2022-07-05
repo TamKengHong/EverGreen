@@ -2,6 +2,7 @@ import { Image, Spacer, Box, Button, Flex, Text, Textarea } from '@chakra-ui/rea
 import { Select } from "chakra-react-select";
 import countryList from 'react-select-country-list'
 import { useState, useMemo } from 'react'
+import Identicon from 'react-identicons';
 
 const UserInfo = (props) => {
   const defaultImgUrl = "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
@@ -30,6 +31,7 @@ const UserInfo = (props) => {
           <Text ml="3" whiteSpace="pre-wrap">{props.summary}</Text>
           <Text as='u' fontSize="xl"> Profile Picture: </Text>
           <Image ml="3" w="60px" h="60px" src={profileUrl} fallbackSrc={defaultImgUrl} />
+          {/* <Identicon size="60" string="randomness" bg="#FFFFFF" /> */}
         </> :
         <Text fontSize="xl">User not found.</Text>}
     </Box>
