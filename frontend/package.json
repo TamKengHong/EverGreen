@@ -13,6 +13,7 @@
         "chakra-react-select": "^4.0.3",
         "framer-motion": "^6.3.3",
         "react": "^18.1.0",
+        "react-calendar": "^3.7.0",
         "react-dom": "^18.1.0",
         "react-icons": "^3.11.0",
         "react-router-dom": "^6.3.0",

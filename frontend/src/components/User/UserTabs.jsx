@@ -3,7 +3,6 @@ import UserSettings from './UserSettings'
 import UserPosts from './UserPosts'
 import UserWatchlist from './UserWatchlist'
 
-
 const UserTabs = (props) => {
   return (
     <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="rgba(237,242,247,0.9)" minH="500" >
@@ -18,7 +17,7 @@ const UserTabs = (props) => {
           <UserSettings {...props} />
         </TabPanel>
         <TabPanel>
-          <UserPosts />
+          <UserPosts {...props} />
         </TabPanel>
         <TabPanel>
           <UserWatchlist {...props} />

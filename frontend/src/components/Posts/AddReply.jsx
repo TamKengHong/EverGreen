@@ -51,7 +51,7 @@ const AddReply = (props) => {
         <Box w="calc(100% - 70px - 80px)">
           <Textarea
             h="150"
-            placeholder="Write something here"
+            placeholder="Write something here (required)"
             onChange={e => setContent(e.target.value)}
           />
         </Box>
@@ -60,9 +60,7 @@ const AddReply = (props) => {
             colorScheme="teal"
             w="100%"
             h="100%"
-            onClick={() => {
-              PostRequest(obj)
-            }}
+            onClick={() => content ? PostRequest(obj) : null}
           >
             Submit
           </Button>

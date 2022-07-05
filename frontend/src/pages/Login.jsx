@@ -21,7 +21,14 @@ const Login = () => {
   if (requestData.key) {
     localStorage.setItem("key", requestData.key)
     localStorage.setItem("email", email)
-    navigate(`../user/${email.split("@")[0]}`)
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
+    }
+    fetch('https://ever-green-production.herokuapp.com/stockmarket/users/?search='
+      + email, requestOptions)
+      .then(response => response.json())
+      .then(data => navigate(`../user/` + data[0].username))
   }
 
   const firstKey = Object.keys(requestData)[0]

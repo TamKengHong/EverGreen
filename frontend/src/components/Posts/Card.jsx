@@ -203,7 +203,7 @@ const Card = (props) => {
                   <Textarea
                     h="120"
                     bg="gray.100"
-                    placeholder="Edit Content"
+                    placeholder="Edit Content (required)"
                     onChange={e => setEditedContent(e.target.value)}
                   />
                 </Box>
@@ -212,7 +212,7 @@ const Card = (props) => {
                     colorScheme="teal"
                     w="100%"
                     h="100%"
-                    onClick={() => { EditContentRequest() }}>
+                    onClick={() => editedContent ? EditContentRequest() : null}>
                     Submit
                   </Button>
                 </Box>

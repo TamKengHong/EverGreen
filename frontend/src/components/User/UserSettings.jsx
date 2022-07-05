@@ -43,6 +43,7 @@ const UserSettings = (props) => {
   const [isOwnPage, setIsOwnPage] = useState(false)
   const [image, setImage] = useState('')
   const options = useMemo(() => countryList().getData(), [])
+  const isEmpty = !(image || summary || country)
 
   function PatchRequest() {
     let formData = new FormData()
@@ -104,7 +105,7 @@ const UserSettings = (props) => {
               colorScheme="teal"
               w="200px"
               h="50px"
-              onClick={() => { PatchRequest() }}
+              onClick={() => isEmpty ? null : PatchRequest()}
             >
               Submit
             </Button>
