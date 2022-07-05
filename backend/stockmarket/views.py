@@ -16,7 +16,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     permission_classes = [CustomUserPermissions] #only authenticated users can get user details
     # Allow users to search/filter other users by their usernames or email by making queries such as http://example.com/api/users?search=russell
     filter_backends = [CustomUserSearchFilter]
-    search_fields = ['username', 'email']
+    search_fields = ['=username', '=email']
 
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
@@ -25,7 +25,7 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [PostPermissions]
     # Allow users to search for a post by the author's username, email, post title, or the associated stock ticker
     filter_backends = [PostSearchFilter]
-    search_fields = ['name__username','name__email','title','stockTicker']
+    search_fields = ['=name__username','=name__email','title','=stockTicker']
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
@@ -34,7 +34,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [CommentPermissions]
     # Allow users to search for a comment by the commenter's name or the post's associated stock ticker
     filter_backends = [CommentSearchFilter] 
-    search_fields = ['name__username','name__email','post__stockTicker']
+    search_fields = ['=name__username','=name__email','=post__stockTicker']
 
 class BookmarkViewSet(viewsets.ModelViewSet):
     serializer_class = BookmarkSerializer
@@ -43,4 +43,4 @@ class BookmarkViewSet(viewsets.ModelViewSet):
     permission_classes = [BookmarkPermissions]
     # Allow users to search for a comment by the commenter's name or the post's associated stock ticker
     filter_backends = [BookmarkSearchFilter] 
-    search_fields = ['name__username','post__stockTicker']
+    search_fields = ['=name__username','=post__stockTicker']
