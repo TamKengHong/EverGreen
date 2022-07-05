@@ -77,7 +77,7 @@ def script_runner(request):
     stock_limit = data.get("stock_limit",default=10) #by default, return the top 10 stocks
     active_stocks = track_mentions_in_past_24_hours(reddit,subname=subreddit,active_stocks=active_stocks,time_filter=time_filter,limit=post_limit)
     results = sort_by_mentions(active_stocks,limit=stock_limit)
-    return Response(active_stocks)
+    return Response(results)
 
 
 

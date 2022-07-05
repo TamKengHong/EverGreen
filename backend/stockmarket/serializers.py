@@ -25,11 +25,13 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__' 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    #allow for the bookmarks for each user to be displayed in /users/ API endpoint 
+    #allow for the posts, comments, and bookmarks for each user to be displayed in /users/ API endpoint 
+    posts = PostSerializer(many=True,read_only=True)
+    comments = CommentSerializer(many=True,read_only=True)
     bookmarks = BookmarkSerializer(many=True,read_only=True)
     class Meta:
         model = CustomUser
-        fields = ["email","username","summary","profilePicture","country","totalLikes","totalDislikes","id","password","bookmarks"]
+        fields = ["email","username","summary","profilePicture","country","totalLikes","totalDislikes","id","password","posts","comments","bookmarks"]
         # 'write_only' ensures that the field may be used when updating or creating an instance, but is not included when serializing the representation.
 		# 'required' means that a password is required during deserialization
         # refer to https://www.django-rest-framework.org/api-guide/fields/
