@@ -72,7 +72,9 @@ def script_runner(request):
     data = QueryDict(request.body)
     subreddit = data.get("subreddit",default="wallstreetbets") #default subreddit is wallstreetbets
     time_filter = data.get("time_filter",default="day") #default time filter is by day
-    post_limit = int(data.get("post_limit",default=None)) #default limit is None
+    post_limit = data.get("post_limit",default=None) #default limit is None
+    if post_limit != None:
+        post_limit = int(post_limit)
     stock_limit = int(data.get("stock_limit",default=10)) #by default, return the top 10 stocks
     active_stocks = track_mentions_in_past_24_hours(reddit,subname=subreddit,active_stocks=active_stocks,time_filter=time_filter,limit=post_limit)
     results = sort_by_mentions(active_stocks,limit=stock_limit)
