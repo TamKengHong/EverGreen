@@ -1,5 +1,6 @@
 import { Image, Box, Flex, Textarea, Button } from '@chakra-ui/react'
 import { useState } from 'react'
+import Identicon from 'react-identicons'
 
 const AddReply = (props) => {
   const [content, setContent] = useState('')
@@ -38,15 +39,18 @@ const AddReply = (props) => {
       .then(() => window.location.reload(false))
   }
 
-  const defaultImgUrl = "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
-  const profileUrl = localStorage.getItem('profilePicture') ?
-    localStorage.getItem('profilePicture') : defaultImgUrl
+  const profileUrl = localStorage.getItem('profilePicture')
 
   return (
     <Box w="95%" margin="auto">
       <Flex border="1px" bg="gray.50" >
         <Box w="70px" >
-          <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} fallbackSrc={defaultImgUrl} />
+          <Box ml="5px" mt="5px">
+            <Image w="60px" h="60px" src={profileUrl}
+              fallback={
+                <Identicon size="60" string={props.name} bg="#FFFFFF" />
+              } />
+          </Box>
         </Box>
         <Box w="calc(100% - 70px - 80px)">
           <Textarea

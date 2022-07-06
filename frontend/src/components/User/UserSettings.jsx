@@ -1,13 +1,11 @@
 import { Image, Spacer, Box, Button, Flex, Text, Textarea } from '@chakra-ui/react'
-import { Select } from "chakra-react-select";
+import { Select } from "chakra-react-select"
 import countryList from 'react-select-country-list'
 import { useState, useMemo } from 'react'
-import Identicon from 'react-identicons';
+import Identicon from 'react-identicons'
 
 const UserInfo = (props) => {
-  const defaultImgUrl = "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
-  const profileUrl = props.profilePicture ? props.profilePicture : defaultImgUrl
-
+  const profileUrl = props.profilePicture
   return (
     <Box
       p="5"
@@ -30,8 +28,10 @@ const UserInfo = (props) => {
           <Text as='u' fontSize="xl"> Profile Summary:  </Text>
           <Text ml="3" whiteSpace="pre-wrap">{props.summary}</Text>
           <Text as='u' fontSize="xl"> Profile Picture: </Text>
-          <Image ml="3" w="60px" h="60px" src={profileUrl} fallbackSrc={defaultImgUrl} />
-          {/* <Identicon size="60" string="randomness" bg="#FFFFFF" /> */}
+          <Image ml="3" w="60px" h="60px" src={profileUrl}
+            fallback={
+              <Identicon size="60" string={props.username} bg="#FFFFFF" />
+            } />
         </> :
         <Text fontSize="xl">User not found.</Text>}
     </Box>

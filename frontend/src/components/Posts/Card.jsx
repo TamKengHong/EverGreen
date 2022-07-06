@@ -9,6 +9,7 @@ import {
 import { useState, useEffect } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import AddReply from './AddReply'
+import Identicon from 'react-identicons'
 
 //TODO: abstract out the functions and components.
 const Card = (props) => {
@@ -126,16 +127,19 @@ const Card = (props) => {
     fetch(userIdUrl, requestOptions2).then(response => response.json()).then(data => console.log(data))
   }
 
-  const defaultImgUrl = "https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg"
-  const profileUrl = userObj.profilePicture ? userObj.profilePicture : defaultImgUrl
-
+  const profileUrl = userObj.profilePicture
   if (props.comments) props.comments.sort((a, b) => a.id - b.id)
 
   return (
     <>
       <Flex border="1px" bg="whiteAlpha.900" mb="1">
         <Box w="70px" >
-          <Image w="60px" h="60px" mt="5px" ml="5px" src={profileUrl} fallbackSrc={defaultImgUrl} />
+          <Box mt="5px" ml="5px">
+            <Image w="60px" h="60px" src={profileUrl}
+              fallback={
+                <Identicon size="60" string={props.name} bg="#FFFFFF" />
+              } />
+          </Box>
         </Box>
         <Box w="calc(100% - 70px)" >
           <Flex borderBottom="1px" borderColor="gray.400" alignItems="center">
