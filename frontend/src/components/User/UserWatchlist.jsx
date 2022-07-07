@@ -51,10 +51,10 @@ const WatchlistElement = (props) => {
           {props.stockTicker}
         </Link>
       </Td>
-      <Td borderLeft="1px" borderColor="gray.400">
+      <Td border="1px" borderColor="gray.400">
         {isLimitExceeded ? "API limit exceeded" : price}
       </Td>
-      <Td bg={priceBgColor} borderLeft="1px" borderColor="gray.400">
+      <Td bg={priceBgColor} border="1px" borderColor="gray.400">
         {isLimitExceeded ? "API limit exceeded" : null}
         <Text textColor={priceChange > 0 ? "green.500" : colors.redText}>
           {priceChange > 0 ? "+" : null}
@@ -63,7 +63,7 @@ const WatchlistElement = (props) => {
           {Math.round(pricePercentChange * 100) / 100 + "%)"}
         </Text>
       </Td>
-      <Td bg={analystScore ? analystBgColor : woodenBg} borderLeft="1px" borderColor="gray.400" >
+      <Td bg={analystScore ? analystBgColor : woodenBg} border="1px" borderColor="gray.400" >
         <Text
           textColor={analystScore < 3 ? "green.500" : colors.redText}>
           {averageAnalystRating ? averageAnalystRating : <Text textColor="black">No Rating</Text>}
