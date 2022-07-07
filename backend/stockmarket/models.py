@@ -1,3 +1,4 @@
+from datetime import datetime
 from tokenize import Name
 from unicodedata import name
 from django.db import models
@@ -87,3 +88,8 @@ class Bookmark(models.Model):
         constraints = [models.UniqueConstraint(fields=["name","stockTicker"],name="unique_bookmark")]
     def __str__(self):
         return "User: %s | Stock: %s" % (self.name,self.stockTicker)
+
+class ScrapingModel(models.Model):
+    data = models.JSONField(default=dict)
+    subreddit = models.CharField(max_length=225,unique=True)
+    datetime = models.DateTimeField(default=timezone.now)

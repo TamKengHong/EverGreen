@@ -1,5 +1,5 @@
-from .models import CustomUser,Post,Comment,Bookmark
-from .serializers import CustomUserSerializer,PostSerializer,CommentSerializer,BookmarkSerializer
+from .models import CustomUser,Post,Comment,Bookmark,ScrapingModel
+from .serializers import CustomUserSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,ScrapingModelSerializer
 from .permissions import CustomUserPermissions,PostPermissions,CommentPermissions,BookmarkPermissions
 from .filters import CustomUserSearchFilter, PostSearchFilter, CommentSearchFilter,BookmarkSearchFilter
 from rest_framework import viewsets
@@ -44,3 +44,9 @@ class BookmarkViewSet(viewsets.ModelViewSet):
     # Allow users to search for a comment by the commenter's name or the post's associated stock ticker
     filter_backends = [BookmarkSearchFilter] 
     search_fields = ['=name__username','=post__stockTicker']
+
+class ScrapingModelViewSet(viewsets.ModelViewSet):
+    serializer_class = ScrapingModelSerializer
+    queryset = ScrapingModel.objects.all()
+    http_method_names = ["GET"] #only allow for GET requests
+    authentication_classes = [TokenAuthentication]
