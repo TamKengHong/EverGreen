@@ -48,5 +48,6 @@ class BookmarkViewSet(viewsets.ModelViewSet):
 class ScrapingModelViewSet(viewsets.ModelViewSet):
     serializer_class = ScrapingModelSerializer
     queryset = ScrapingModel.objects.all()
-    http_method_names = ["GET"] #only allow for GET requests
-    authentication_classes = [TokenAuthentication]
+    http_method_names = ["get"] #only allow for GET requests
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsAuthenticated]

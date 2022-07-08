@@ -1,9 +1,10 @@
+import string
+from django.core.management.base import BaseCommand
+
 from decouple import config
 from django.conf import settings
-from backend.stockmarket.models import ScrapingModel
-import os
-import praw
-import pickle
+from stockmarket.models import ScrapingModel
+import os,praw,pickle
 
 def create_subreddit_instance(reddit,subname):
     return reddit.subreddit(subname)
@@ -54,7 +55,7 @@ def sort_by_mentions(stock_mentions,limit=10):
         lst.pop()
     return {key:value for key,value in lst}
 
-def run_script():
+def run_script(subreddit):
     CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("REDDIT_SECRET_KEY")
     #read in preloaded dictionary of active stocks from .pkl file
     file_path = os.path.join(settings.BASE_DIR,'stockmarket','activestocks.pkl')
@@ -63,17 +64,18 @@ def run_script():
     #create a reddit instance
     reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
     #perform the web scraping to keep track of number of mentions
-    stock_mentions = track_mentions_in_past_24_hours(reddit,subname="wallstreetbets",active_stocks=active_stocks)
-    sorted_stock_mentions = sort_by_mentions(stock_mentions,limit=10)
+    stock_mentions = track_mentions_in_past_24_hours(reddit,subname=subreddit,active_stocks=active_stocks)
+    sorted_stock_mentions = sort_by_mentions(stock_mentions)
     results = ScrapingModel(data=sorted_stock_mentions,subreddit="wallstreetbets")
     ScrapingModel.save(results)
 
-if __name__ == "__main__":
-    run_script()
 
+class Command(BaseCommand):
+    help = 'Scrapes subreddit and collates number of mentions for each stock'
+    #arguments are added by name by position
+    def add_arguments(self, parser):
+        parser.add_argument('subreddit',default="wallstreetbets",type=str)
 
-  
-
-
-
-
+    def handle(self, *args, **options):
+        sub = options["subreddit"]
+        run_script(sub)
