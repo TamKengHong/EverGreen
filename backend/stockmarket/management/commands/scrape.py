@@ -1,4 +1,3 @@
-import string
 from django.core.management.base import BaseCommand
 
 from decouple import config
@@ -47,8 +46,8 @@ def track_mentions_in_past_24_hours(reddit,subname,active_stocks,time_filter="da
     return active_stocks
 
 #function for sorting dictionary of active stocks by number of mentions and returning the top pairs
-#set default limit as 10; return top 10 stocks by number of mentions
-def sort_by_mentions(stock_mentions,limit=10):
+#set default limit as 20; return top 20 stocks by number of mentions
+def sort_by_mentions(stock_mentions,limit=20):
     lst = [(key,value) for key,value in stock_mentions.items() if value > 0]
     lst.sort(key = lambda x: x[1],reverse = True) #sort in descending order
     for i in range(len(lst)-limit):
