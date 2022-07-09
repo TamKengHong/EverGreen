@@ -78,3 +78,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         sub = options["subreddit"]
         run_script(sub)
+        #Include a return statement at the end of each logical flow of the handle() function so Heroku Scheduler knows when it can shut down. 
+        #This ensures I am only charged for dyno time that is needed to run the job.
+        return
