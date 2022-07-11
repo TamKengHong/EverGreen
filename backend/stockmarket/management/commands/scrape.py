@@ -30,7 +30,7 @@ def track_stock_mentions_in_past_24_hours(reddit,subname,stock,time_filter="day"
 #set default limit as None so that all posts are returned
 def track_mentions_in_past_24_hours(reddit,subname,active_stocks,time_filter="day",limit=None):
     subreddit = create_subreddit_instance(reddit,subname)
-    for post in subreddit.top(time_filter=time_filter,limit=1):
+    for post in subreddit.top(time_filter=time_filter,limit=limit):
         title = post.title.strip().split()
         for word in title:
             if word in active_stocks:
