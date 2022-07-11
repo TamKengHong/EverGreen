@@ -8,5 +8,5 @@ router.register("users",CustomUserViewSet)
 router.register("posts",PostViewSet)
 router.register("comments",CommentViewSet)
 router.register("bookmarks",BookmarkViewSet)
-router.register("scrapereddit",ScrapingModelViewSet)
+router.register("scrape",ScrapingModelViewSet)
 urlpatterns = [path('', include(router.urls))]

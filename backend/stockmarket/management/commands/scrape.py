@@ -1,9 +1,9 @@
+from django.core.management.base import BaseCommand
+
 from decouple import config
 from django.conf import settings
-from backend.stockmarket.models import ScrapingModel
-import os
-import praw
-import pickle
+from stockmarket.models import ScrapingModel
+import os,praw,pickle
 
 def create_subreddit_instance(reddit,subname):
     return reddit.subreddit(subname)
@@ -46,15 +46,18 @@ def track_mentions_in_past_24_hours(reddit,subname,active_stocks,time_filter="da
     return active_stocks
 
 #function for sorting dictionary of active stocks by number of mentions and returning the top pairs
-#set default limit as 10; return top 10 stocks by number of mentions
-def sort_by_mentions(stock_mentions,limit=10):
+#set default limit as None, return all stocks
+def sort_by_mentions(stock_mentions,limit=None):
     lst = [(key,value) for key,value in stock_mentions.items() if value > 0]
     lst.sort(key = lambda x: x[1],reverse = True) #sort in descending order
+    if limit == None:
+        limit = len(lst)
     for i in range(len(lst)-limit):
         lst.pop()
-    return {key:value for key,value in lst}
+    #return both dictionary and list
+    return {key:value for key,value in lst},[{"ticker":key,"mentions":value} for key,value in lst]
 
-def run_script():
+def run_script(sub):
     CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("REDDIT_SECRET_KEY")
     #read in preloaded dictionary of active stocks from .pkl file
     file_path = os.path.join(settings.BASE_DIR,'stockmarket','activestocks.pkl')
@@ -63,17 +66,24 @@ def run_script():
     #create a reddit instance
     reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
     #perform the web scraping to keep track of number of mentions
-    stock_mentions = track_mentions_in_past_24_hours(reddit,subname="wallstreetbets",active_stocks=active_stocks)
-    sorted_stock_mentions = sort_by_mentions(stock_mentions,limit=10)
-    results = ScrapingModel(data=sorted_stock_mentions,subreddit="wallstreetbets")
+    stock_mentions = track_mentions_in_past_24_hours(reddit,subname=sub,active_stocks=active_stocks)
+    rawdata,sorted_stock_mentions = sort_by_mentions(stock_mentions)
+    #delete old record
+    instance = ScrapingModel.objects.filter(subreddit=sub)
+    instance.delete()
+    results = ScrapingModel(packagedData=sorted_stock_mentions,data=rawdata,subreddit=sub)
     ScrapingModel.save(results)
 
-if __name__ == "__main__":
-    run_script()
 
+class Command(BaseCommand):
+    help = 'Scrapes subreddit and collates number of mentions for each stock'
+    #arguments are added by name by position
+    def add_arguments(self, parser):
+        parser.add_argument('subreddit',default="wallstreetbets",type=str)
 
-  
-
-
-
-
+    def handle(self, *args, **options):
+        sub = options["subreddit"]
+        run_script(sub)
+        #Include a return statement at the end of each logical flow of the handle() function so Heroku Scheduler knows when it can shut down. 
+        #This ensures I am only charged for dyno time that is needed to run the job.
+        return
