@@ -7,7 +7,6 @@ import { Link as RouterLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import woodBackground from '../assets/oak_wood_texture.jpg'
 
-
 const SearchBar = () => {
   const navigate = useNavigate()
   const [ticker, setTicker] = useState()

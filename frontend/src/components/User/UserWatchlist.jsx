@@ -18,6 +18,7 @@ const colors = {
 }
 
 const WatchlistElement = (props) => {
+  const ticker = props?.stockTicker
   const stocksData = props.stocksData
   const isLimitExceeded = stocksData?.message === 'Limit Exceeded'
   // prevents undefined errors when rate limit exceeded
@@ -54,20 +55,24 @@ const WatchlistElement = (props) => {
       <Td border="1px" borderColor="gray.400">
         {isLimitExceeded ? "API limit exceeded" : price}
       </Td>
-      <Td bg={priceBgColor} border="1px" borderColor="gray.400">
-        {isLimitExceeded ? "API limit exceeded" : null}
-        <Text textColor={priceChange > 0 ? "green.500" : colors.redText}>
-          {priceChange > 0 ? "+" : null}
-          {Math.round(priceChange * 100) / 100 + " ("}
-          {pricePercentChange > 0 ? "+" : null}
-          {Math.round(pricePercentChange * 100) / 100 + "%)"}
-        </Text>
+      <Td bg={isLimitExceeded ? woodenBg : priceBgColor} border="1px" borderColor="gray.400">
+        {isLimitExceeded ? "API limit exceeded" :
+          <Text textColor={priceChange > 0 ? "green.500" : colors.redText}>
+            {priceChange > 0 ? "+" : null}
+            {Math.round(priceChange * 100) / 100 + " ("}
+            {pricePercentChange > 0 ? "+" : null}
+            {Math.round(pricePercentChange * 100) / 100 + "%)"}
+          </Text>
+        }
       </Td>
       <Td bg={analystScore ? analystBgColor : woodenBg} border="1px" borderColor="gray.400" >
-        <Text
-          textColor={analystScore < 3 ? "green.500" : colors.redText}>
-          {averageAnalystRating ? averageAnalystRating : <Text textColor="black">No Rating</Text>}
-        </Text>
+        <Link href={"https://finance.yahoo.com/quote/" + ticker + "/analysis?p=" + ticker}
+          textColor={analystScore < 3 ? "green.500" : colors.redText}
+        >
+          {isLimitExceeded ? <Link textColor="black"> API limit exceeded </Link> :
+            averageAnalystRating ? averageAnalystRating : <Link textColor="black">No Rating</Link>
+          }
+        </Link>
       </Td>
     </Tr>
   )
@@ -77,18 +82,18 @@ const UserWatchlist = (props) => {
   const bookmarks = props.bookmarks
   const [stocksData, setStocksData] = useState()
 
-  //For now, the request only works for <= 10 tickers. Will add more functionality soon.
-  const tickerString = props.bookmarks ?
-    props.bookmarks.reduce((a, b) => a + "%2C" + b.stockTicker, "").substring(3) : null
+  const tickerString = props?.bookmarks?.reduce((a, b) => a + "%2C" + b.stockTicker, "").substring(3)
   useEffect(() => {
     const url = 'https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=' + tickerString
     const requestOptions = { // 100 reqs a day limit
       method: 'GET',
       headers: { 'x-api-key': 'Vuw1uVBtM73adi1nrJDTZjXETzt9YvU9f162gi6g' }
     }
-    fetch(url, requestOptions)
-      .then(response => response.json())
-      .then(data => setStocksData(data))
+    if (tickerString) { // wont fetch from a null ticker
+      fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(data => setStocksData(data))
+    }
   }, [tickerString])
 
   // we will work with this for now to prevent rate limit 
@@ -104,7 +109,7 @@ const UserWatchlist = (props) => {
           border="1px"
           borderColor="gray.400"
         >
-          <TableCaption>
+          <TableCaption fontSize="xl">
             {props.username + "'s watchlist"}
           </TableCaption>
           <Thead bg={colors.woodBgHeader}>

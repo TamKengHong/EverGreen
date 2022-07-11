@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
-import { Box, Text, Flex, Spacer, Link } from '@chakra-ui/react'
+import { Box, Text, Flex, Link, Spacer } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { TickerTape, Timeline } from 'react-tradingview-embed'
 import { Link as RouterLink } from 'react-router-dom'
@@ -9,6 +9,8 @@ import PostBar from './components/PostBar'
 import pineBackground from './assets/pine_tree_fog.jpg'
 import woodBackground from './assets/oak_wood_texture.jpg'
 import darkWoodBackground from './assets/dark_wood_texture.jpg'
+import SentimentAnalysis from './components/Home/SentimentAnalysis'
+import SelectSubreddit from './components/Home/SelectSubreddit'
 
 // The Home Page.
 const tickerList = [
@@ -48,7 +50,6 @@ function App() {
                 <RouterLink to='/login'>Login</RouterLink>  |{" "}
               </Box>
               <Box mr="2">
-
                 <RouterLink ml="2" mr="2" to='/signup'>Signup</RouterLink> |{" "}
               </Box>
               <RouterLink ml="2" to='/stock/AAPL'>Stocks</RouterLink>
@@ -56,9 +57,19 @@ function App() {
           </Flex>
         </Flex>
       </Box>
-
       <Box bgImage={woodBackground} bgSize="cover" >
-        <Text ml="3" mb="5" fontSize="30">Trending News:</Text>
+        <Flex mb="5">
+          <Text
+            p="2"
+            bg="green.600"
+            roundedRight="20"
+            fontSize="4xl"
+            color="white"
+            boxShadow="xl"
+            fontWeight="thin">
+            Trending News:
+          </Text>
+        </Flex>
         <Box margin="auto" w="90%" boxShadow="md">
           <Timeline widgetProps={{ colorTheme: "light", width: "100%", height: "500" }} />
         </Box>
@@ -69,11 +80,35 @@ function App() {
       </Box>
       <Box bgImage={darkWoodBackground} bgSize="cover" >
         <Flex mb="5">
-          <Text ml="3" fontSize="30" color="gray.50">Trending Stocks:</Text>
+          <Text
+            p="2"
+            bg="green.600"
+            roundedRight="20"
+            fontSize="4xl"
+            color="white"
+            boxShadow="xl"
+            fontWeight="thin">
+            Trending Stocks:
+          </Text>
           <Spacer />
-          <Text alignSelf="right" mr="20vw" color="gray.50" fontSize="30"> Filter by:</Text>
+          <SelectSubreddit />
         </Flex>
-        <PostBar />
+        <SentimentAnalysis />
+        <Box h="10"></Box>
+      </Box>
+      <Box bgImage={woodBackground} bgSize="cover" >
+        <Flex mb="5">
+          <Text
+            p="2"
+            bg="green.600"
+            roundedRight="20"
+            fontSize="4xl"
+            color="white"
+            boxShadow="xl"
+            fontWeight="thin">
+            Upcoming Earnings:
+          </Text>
+        </Flex>
         <Box h="10"></Box>
       </Box>
     </>

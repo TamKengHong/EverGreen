@@ -47,7 +47,9 @@ const StockTabs = () => {
           </Box>
         </TabPanel>
         <TabPanel>
-          <Timeline />
+          <Box boxShadow="lg">
+            <Timeline />
+          </Box>
           <Link href={`https://www.google.com/search?q=${ticker}&tbm=nws`} isExternal>
             More News <ExternalLinkIcon mx="2px" />
           </Link>
