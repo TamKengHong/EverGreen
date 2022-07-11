@@ -2,7 +2,7 @@ from .models import CustomUser,Post,Comment,Bookmark,ScrapingModel
 from .serializers import CustomUserSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,ScrapingModelSerializer
 from .permissions import CustomUserPermissions,PostPermissions,CommentPermissions,BookmarkPermissions
 from .filters import CustomUserSearchFilter, PostSearchFilter, CommentSearchFilter,BookmarkSearchFilter
-from rest_framework import viewsets
+from rest_framework import viewsets,filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
@@ -51,3 +51,6 @@ class ScrapingModelViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"] #only allow for GET requests
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated] #only authenticated users can access this endpoint
+    # Allow users to search for a scraping job by the subreddit
+    filter_backends = [filters.SearchFilter] 
+    search_fields = ['=subreddit']

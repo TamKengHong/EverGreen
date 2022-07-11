@@ -90,6 +90,7 @@ class Bookmark(models.Model):
         return "User: %s | Stock: %s" % (self.name,self.stockTicker)
 
 class ScrapingModel(models.Model):
+    packagedData = models.JSONField(default=list)
     data = models.JSONField(default=dict)
     subreddit = models.CharField(max_length=225,unique=True)
     datetime = models.DateTimeField(default=timezone.now)

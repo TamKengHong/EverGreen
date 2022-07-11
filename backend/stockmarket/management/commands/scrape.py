@@ -30,7 +30,7 @@ def track_stock_mentions_in_past_24_hours(reddit,subname,stock,time_filter="day"
 #set default limit as None so that all posts are returned
 def track_mentions_in_past_24_hours(reddit,subname,active_stocks,time_filter="day",limit=None):
     subreddit = create_subreddit_instance(reddit,subname)
-    for post in subreddit.top(time_filter=time_filter,limit=limit):
+    for post in subreddit.top(time_filter=time_filter,limit=1):
         title = post.title.strip().split()
         for word in title:
             if word in active_stocks:
@@ -54,7 +54,8 @@ def sort_by_mentions(stock_mentions,limit=20):
     lst.sort(key = lambda x: x[1],reverse = True) #sort in descending order
     for i in range(len(lst)-limit):
         lst.pop()
-    return {key:value for key,value in lst}
+    #return both dictionary and list
+    return {key:value for key,value in lst},[{"ticker":key,"mentions":value} for key,value in lst]
 
 def run_script(sub):
     CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("REDDIT_SECRET_KEY")
@@ -66,11 +67,11 @@ def run_script(sub):
     reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
     #perform the web scraping to keep track of number of mentions
     stock_mentions = track_mentions_in_past_24_hours(reddit,subname=sub,active_stocks=active_stocks)
-    sorted_stock_mentions = sort_by_mentions(stock_mentions)
+    rawdata,sorted_stock_mentions = sort_by_mentions(stock_mentions)
     #delete old record
     instance = ScrapingModel.objects.filter(subreddit=sub)
     instance.delete()
-    results = ScrapingModel(data=sorted_stock_mentions,subreddit=sub)
+    results = ScrapingModel(packagedData=sorted_stock_mentions,data=rawdata,subreddit=sub)
     ScrapingModel.save(results)
 
 
