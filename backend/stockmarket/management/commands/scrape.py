@@ -1,5 +1,3 @@
-from ast import Sub
-from re import sub
 from django.core.management.base import BaseCommand
 
 from decouple import config
