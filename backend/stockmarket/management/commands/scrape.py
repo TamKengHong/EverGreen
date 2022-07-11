@@ -1,3 +1,5 @@
+from ast import Sub
+from re import sub
 from django.core.management.base import BaseCommand
 
 from decouple import config
@@ -54,7 +56,7 @@ def sort_by_mentions(stock_mentions,limit=20):
         lst.pop()
     return {key:value for key,value in lst}
 
-def run_script(subreddit):
+def run_script(sub):
     CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("REDDIT_SECRET_KEY")
     #read in preloaded dictionary of active stocks from .pkl file
     file_path = os.path.join(settings.BASE_DIR,'stockmarket','activestocks.pkl')
@@ -63,9 +65,12 @@ def run_script(subreddit):
     #create a reddit instance
     reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
     #perform the web scraping to keep track of number of mentions
-    stock_mentions = track_mentions_in_past_24_hours(reddit,subname=subreddit,active_stocks=active_stocks)
+    stock_mentions = track_mentions_in_past_24_hours(reddit,subname=sub,active_stocks=active_stocks)
     sorted_stock_mentions = sort_by_mentions(stock_mentions)
-    results = ScrapingModel(data=sorted_stock_mentions,subreddit="wallstreetbets")
+    results = ScrapingModel(data=sorted_stock_mentions,subreddit=sub)
+    #delete old record
+    instance = ScrapingModel.objects.filter(subreddit=sub)
+    instance.delete()
     ScrapingModel.save(results)
 
 
