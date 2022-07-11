@@ -67,10 +67,10 @@ def run_script(sub):
     #perform the web scraping to keep track of number of mentions
     stock_mentions = track_mentions_in_past_24_hours(reddit,subname=sub,active_stocks=active_stocks)
     sorted_stock_mentions = sort_by_mentions(stock_mentions)
-    results = ScrapingModel(data=sorted_stock_mentions,subreddit=sub)
     #delete old record
     instance = ScrapingModel.objects.filter(subreddit=sub)
     instance.delete()
+    results = ScrapingModel(data=sorted_stock_mentions,subreddit=sub)
     ScrapingModel.save(results)
 
 
