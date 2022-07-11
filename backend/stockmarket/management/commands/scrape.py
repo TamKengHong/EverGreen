@@ -54,7 +54,7 @@ def sort_by_mentions(stock_mentions,limit=20):
     lst.sort(key = lambda x: x[1],reverse = True) #sort in descending order
     for i in range(len(lst)-limit):
         lst.pop()
-    return {key:value for key,value in lst}
+    return [{"ticker":key,"mentions":value} for key,value in lst]
 
 def run_script(sub):
     CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("REDDIT_SECRET_KEY")
