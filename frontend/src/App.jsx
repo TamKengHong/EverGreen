@@ -41,19 +41,32 @@ function App() {
         bgSize="cover">
         <Flex
           h="75vh"
+          direction="column"
           alignItems="center"
           justifyContent="center">
-          <Flex p="2" rounded={10} bg="whiteAlpha.500" direction="column">
+          <Flex mt="10" p="2" rounded={10} bg="whiteAlpha.700">
             <Text fontSize="70" alignSelf="center">EverGreen🚀</Text>
-            <Flex fontSize="25" alignItems="center" justifyContent="center">
-              <Box mr="2">
-                <RouterLink to='/login'>Login</RouterLink>  |{" "}
+          </Flex>
+          <Flex mt="10" p="4" rounded={10} bg="whiteAlpha.800" maxW="1000px">
+            <Text fontSize="xl" alignSelf="center">
+              <Box fontSize="2xl" textAlign="center">
+                A forest-themed Stock Aggregator website for all your needs.<br /> <br />
               </Box>
-              <Box mr="2">
-                <RouterLink ml="2" mr="2" to='/signup'>Signup</RouterLink> |{" "}
-              </Box>
-              <RouterLink ml="2" to='/stock/AAPL'>Stocks</RouterLink>
-            </Flex>
+              <Text as="u">
+                Includes:
+              </Text> <br />
+              1. <Link as={RouterLink} to='/stock/AAPL'>
+                Stock Page containing various information about the stock. (Chart, Indicators, News)
+              </Link> <br />
+              2. <Link as={RouterLink} to={localStorage.getItem('username') ?
+                '/user/' + localStorage.getItem('username') : '/login'}>
+                Customise your user page & view other peoples profiles.
+              </Link> <br />
+
+              3. Posts & Comments Section where people can discuss about the stock. <br />
+              4. Bookmarks, User watchlist & Earnings Calendar. <br />
+              5. Sentiment Analysis (scrape websites for number of mentions of a stock ticker).
+            </Text>
           </Flex>
         </Flex>
       </Box>
@@ -79,7 +92,7 @@ function App() {
         <Box h="10"></Box>
       </Box>
       <Box bgImage={darkWoodBackground} bgSize="cover" >
-        <Flex mb="5">
+        <Flex mb="5" wrap="wrap" justifyContent="space-between">
           <Text
             p="2"
             bg="green.600"
@@ -87,13 +100,22 @@ function App() {
             fontSize="4xl"
             color="white"
             boxShadow="xl"
-            fontWeight="thin">
+            fontWeight="thin"
+            h="70px"
+          >
             Trending Stocks:
           </Text>
-          <Spacer />
-          <SelectSubreddit />
+          {localStorage.getItem('key') ? <SelectSubreddit /> : null}
         </Flex>
-        <SentimentAnalysis />
+        {localStorage.getItem('key') ?
+          <SentimentAnalysis /> :
+          <Flex>
+            <Spacer />
+            <Text mb="10" bg="whiteAlpha.700" p="2" rounded="5" fontSize="4xl" color="red">
+              ***Please log in to view Sentiment Analysis.***
+            </Text>
+            <Spacer />
+          </Flex>}
         <Box h="10"></Box>
       </Box>
       <Box bgImage={woodBackground} bgSize="cover" >
