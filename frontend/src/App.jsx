@@ -5,7 +5,6 @@ import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { TickerTape, Timeline } from 'react-tradingview-embed'
 import { Link as RouterLink } from 'react-router-dom'
 import AppBar from './components/AppBar'
-import PostBar from './components/PostBar'
 import pineBackground from './assets/pine_tree_fog.jpg'
 import woodBackground from './assets/oak_wood_texture.jpg'
 import darkWoodBackground from './assets/dark_wood_texture.jpg'
@@ -44,7 +43,7 @@ function App() {
           direction="column"
           alignItems="center"
           justifyContent="center">
-          <Flex mt="10" p="2" rounded={10} bg="whiteAlpha.700">
+          <Flex mt="20" p="2" rounded={10} bg="whiteAlpha.700">
             <Text fontSize="70" alignSelf="center">EverGreen🚀</Text>
           </Flex>
           <Flex mt="10" p="4" rounded={10} bg="whiteAlpha.800" maxW="1000px">
