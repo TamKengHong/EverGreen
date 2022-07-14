@@ -70,7 +70,7 @@ def run_script(sub):
     stock_mentions = track_mentions_in_past_24_hours(reddit,subname=sub,active_stocks=active_stocks)
     rawdata = sort_by_mentions(stock_mentions)
     #retrieve old record
-    instance = ScrapingModel.objects.filter(subreddit=sub)
+    instance = ScrapingModel.objects.filter(subreddit=sub)[0] #there is only one item in queryset
     #keep track of change in number of mentions for each stock
     packaged_data = []
     for key,value in rawdata.items():
