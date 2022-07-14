@@ -1,8 +1,6 @@
-import { Box, Radio, RadioGroup, Stack, Flex, Text, Spacer } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
+import { Box, Radio, RadioGroup, Stack, Flex } from '@chakra-ui/react'
 
-const SelectSubreddit = () => {
-  const [value, setValue] = useState('1')
+const SelectSubreddit = (props) => {
   return (
     <Flex
       marginLeft="auto"
@@ -13,11 +11,11 @@ const SelectSubreddit = () => {
       color="white"
     >
       <Box mr="5" fontSize="xl">Filter:</Box>
-      <RadioGroup onChange={setValue} value={value}>
+      <RadioGroup onChange={props.onSelectionChange} value={props.selection}>
         <Stack >
-          <Radio value='1' colorScheme="red">r/wallstreetbets</Radio>
-          <Radio value='2' colorScheme="red">r/stocks</Radio>
-          <Radio value='3' colorScheme="red">r/pennystocks</Radio>
+          <Radio value='wallstreetbets' colorScheme="red">r/wallstreetbets</Radio>
+          <Radio value='stocks' colorScheme="red">r/stocks</Radio>
+          <Radio value='pennystocks' colorScheme="red">r/pennystocks</Radio>
         </Stack>
       </RadioGroup>
     </Flex>

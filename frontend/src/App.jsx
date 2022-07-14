@@ -9,7 +9,6 @@ import pineBackground from './assets/pine_tree_fog.jpg'
 import woodBackground from './assets/oak_wood_texture.jpg'
 import darkWoodBackground from './assets/dark_wood_texture.jpg'
 import SentimentAnalysis from './components/Home/SentimentAnalysis'
-import SelectSubreddit from './components/Home/SelectSubreddit'
 
 // The Home Page.
 const tickerList = [
@@ -90,31 +89,8 @@ function App() {
         </Link>
         <Box h="10"></Box>
       </Box>
-      <Box bgImage={darkWoodBackground} bgSize="cover" >
-        <Flex mb="5" wrap="wrap" justifyContent="space-between">
-          <Text
-            p="2"
-            bg="green.600"
-            roundedRight="20"
-            fontSize="4xl"
-            color="white"
-            boxShadow="xl"
-            fontWeight="thin"
-            h="70px"
-          >
-            Trending Stocks:
-          </Text>
-          {localStorage.getItem('key') ? <SelectSubreddit /> : null}
-        </Flex>
-        {localStorage.getItem('key') ?
-          <SentimentAnalysis /> :
-          <Flex>
-            <Spacer />
-            <Text mb="10" bg="whiteAlpha.700" p="2" rounded="5" fontSize="4xl" color="red">
-              ***Please log in to view Sentiment Analysis.***
-            </Text>
-            <Spacer />
-          </Flex>}
+      <Box bgImage={darkWoodBackground} bgSize="auto" >
+        <SentimentAnalysis />
         <Box h="10"></Box>
       </Box>
       <Box bgImage={woodBackground} bgSize="cover" >
