@@ -1,3 +1,4 @@
+from curses import raw
 from django.core.management.base import BaseCommand
 
 from decouple import config
@@ -54,8 +55,8 @@ def sort_by_mentions(stock_mentions,limit=None):
         limit = len(lst)
     for i in range(len(lst)-limit):
         lst.pop()
-    #return both dictionary and list
-    return {key:value for key,value in lst},[{"ticker":key,"mentions":value} for key,value in lst]
+    #return dictionary
+    return {key:value for key,value in lst}
 
 def run_script(sub):
     CLIENT_ID,REDDIT_SECRET_KEY = config("CLIENT_ID"),config("REDDIT_SECRET_KEY")
@@ -67,11 +68,21 @@ def run_script(sub):
     reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=REDDIT_SECRET_KEY,user_agent="MyBot")
     #perform the web scraping to keep track of number of mentions
     stock_mentions = track_mentions_in_past_24_hours(reddit,subname=sub,active_stocks=active_stocks)
-    rawdata,sorted_stock_mentions = sort_by_mentions(stock_mentions)
-    #delete old record
+    rawdata = sort_by_mentions(stock_mentions)
+    #retrieve old record
     instance = ScrapingModel.objects.filter(subreddit=sub)
+    #keep track of change in number of mentions for each stock
+    packaged_data = []
+    for key,value in rawdata:
+        dct = {"ticker":key,"mentions":value}
+        dct["change_in_number_of_mentions"] = value - instance.data[key] if key in instance.data else value
+        if key in instance.data:
+            dct["percentage_change_in_number_of_mentions"] = round(((value - instance.data[key])/value),2) if value > instance.data[key] else round(((instance.data[key]-value)/instance.data[key]),2)
+        else:
+            dct["percentage_change_in_number_of_mentions"] = "UNDEFINED"
+    #delete old record
     instance.delete()
-    results = ScrapingModel(packagedData=sorted_stock_mentions,data=rawdata,subreddit=sub)
+    results = ScrapingModel(packagedData=packaged_data,data=rawdata,subreddit=sub)
     ScrapingModel.save(results)
 
 
