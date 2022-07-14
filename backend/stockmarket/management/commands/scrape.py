@@ -73,7 +73,7 @@ def run_script(sub):
     instance = ScrapingModel.objects.filter(subreddit=sub)
     #keep track of change in number of mentions for each stock
     packaged_data = []
-    for key,value in rawdata:
+    for key,value in rawdata.items():
         dct = {"ticker":key,"mentions":value}
         dct["change_in_number_of_mentions"] = value - instance.data[key] if key in instance.data else value
         if key in instance.data:
