@@ -79,7 +79,7 @@ def run_script(sub):
         if key in instance.data:
             dct["percentage_change_in_number_of_mentions"] = round(((value - instance.data[key])/value),2) if value > instance.data[key] else -round(((instance.data[key]-value)/instance.data[key]),2)
         else:
-            dct["percentage_change_in_number_of_mentions"] = "UNDEFINED"
+            dct["percentage_change_in_number_of_mentions"] = "INF"
         packaged_data.append(dct)
     #delete old record
     instance.delete()
