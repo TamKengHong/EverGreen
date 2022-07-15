@@ -22,18 +22,24 @@ const UserPage = () => {
   }, [username])
 
   console.log(userObj)
-  if (userObj && (localStorage.getItem('email') === userObj.email)) {
-    // You are accessing your own userpage.
-    localStorage.setItem('username', userObj.username)
-    localStorage.setItem('bookmarks', JSON.stringify(userObj.bookmarks))
-    if (isOwnPage === false) setIsOwnPage(true)
-  }
+  useEffect(() => {
+    if (userObj && (localStorage.getItem('email') === userObj.email)) {
+      // You are accessing your own userpage.
+      localStorage.setItem('username', userObj.username)
+      localStorage.setItem('bookmarks', JSON.stringify(userObj.bookmarks))
+      if (userObj.profilePicture) localStorage.setItem('profilePicture', userObj.profilePicture)
+      setIsOwnPage(true)
+    } else {
+      setIsOwnPage(false)
+    }
+  }, [username, userObj])
+
 
   return (
     <Box bgImage={background} minH="100vh" bgSize="contain">
       <AppBar />
       <UserBar />
-      <UserTabs {...userObj} />
+      <UserTabs {...userObj} isOwnPage={isOwnPage} />
       <Box h="10" />
     </Box>
   )

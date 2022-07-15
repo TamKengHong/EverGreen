@@ -19,6 +19,15 @@ const colors = {
 
 const TableRow = (props) => {
   const woodenBg = props.no % 2 === 0 ? colors.woodBgLight : colors.woodBgDark
+  const change = props.change_in_number_of_mentions
+  const percentChange = props.percentage_change_in_number_of_mentions
+  const changeBgColor = change === 0 ? woodenBg
+    : change > 0 && props.no % 2 === 0 ? colors.greenBgLight
+      : change > 0 && props.no % 2 === 1 ? colors.greenBgDark
+        : change <= 0 && props.no % 2 === 0 ? colors.redBgLight
+          : colors.redBgDark
+  const changeTextColor = change === 0 ? "black" : change > 0 ? colors.greenText : colors.redText
+
   return (
     <Tr bg={woodenBg} border="1px" borderColor="gray.400">
       <Td textAlign="center">
@@ -36,10 +45,15 @@ const TableRow = (props) => {
       <Td border="1px" borderColor="gray.400" textAlign="center">
         {props.mentions}
       </Td>
-      <Td border="1px" borderColor="gray.400" textAlign="center">
-        -
+      <Td bg={changeBgColor} border="1px" borderColor="gray.400" textAlign="center">
+        <Text textColor={changeTextColor} >
+          {change > 0 ? "+" : null}
+          {change + " ("}
+          {percentChange > 0 ? "+" : null}
+          {percentChange + "%)"}
+        </Text>
       </Td>
-    </Tr>
+    </Tr >
   )
 }
 

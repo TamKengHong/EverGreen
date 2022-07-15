@@ -96,8 +96,6 @@ const UserWatchlist = (props) => {
     }
   }, [tickerString])
 
-  // we will work with this for now to prevent rate limit 
-  // useEffect(() => setStocksData(JSON.parse(localStorage.getItem('stocksData'))), [])
   console.log(stocksData)
 
   return (

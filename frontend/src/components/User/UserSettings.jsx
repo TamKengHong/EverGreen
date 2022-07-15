@@ -42,14 +42,12 @@ const UserSettings = (props) => {
   const userObj = props
   const [country, setCountry] = useState('')
   const [summary, setSummary] = useState('')
-  const [isOwnPage, setIsOwnPage] = useState(false)
   const [image, setImage] = useState('')
   const options = useMemo(() => countryList().getData(), [])
   const isEmpty = !(image || summary || country)
 
   function PatchRequest() {
     let formData = new FormData()
-    console.log(image)
     if (image) formData.append('profilePicture', image)
     if (country) formData.append('country', country.label)
     if (summary) formData.append('summary', summary)
@@ -65,18 +63,12 @@ const UserSettings = (props) => {
       .then(data => console.log(data))
       .then(window.location.reload(false)) //refresh the page to update 
   }
-
-  if (userObj && localStorage.getItem('email') === userObj.email) {
-    // You are accessing your own userpage.
-    localStorage.setItem('username', userObj.username)
-    if (userObj.profilePicture) localStorage.setItem('profilePicture', userObj.profilePicture)
-    if (isOwnPage === false) setIsOwnPage(true)
-  }
+  console.log(props.isOwnPage)
 
   return (
     <Box w="90%" margin="auto">
       <UserInfo {...userObj} />
-      {isOwnPage ?
+      {props.isOwnPage ?
         <>
           <Text mt="5" fontSize="xl">Edit Country:</Text>
           <Box bg="gray.100" border="1px" borderColor="gray.400" rounded="5">

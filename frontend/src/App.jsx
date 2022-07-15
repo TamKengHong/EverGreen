@@ -35,10 +35,12 @@ function App() {
       </Box>
       <Box
         h="88vh"
+        minH="700px"
         bgImage={pineBackground}
         bgSize="cover">
         <Flex
           h="75vh"
+          minH="550px"
           direction="column"
           alignItems="center"
           justifyContent="center">
@@ -68,6 +70,10 @@ function App() {
           </Flex>
         </Flex>
       </Box>
+      <Box bgImage={darkWoodBackground} bgSize="auto" >
+        <SentimentAnalysis />
+        <Box h="10"></Box>
+      </Box>
       <Box bgImage={woodBackground} bgSize="cover" >
         <Flex mb="5">
           <Text
@@ -89,11 +95,7 @@ function App() {
         </Link>
         <Box h="10"></Box>
       </Box>
-      <Box bgImage={darkWoodBackground} bgSize="auto" >
-        <SentimentAnalysis />
-        <Box h="10"></Box>
-      </Box>
-      <Box bgImage={woodBackground} bgSize="cover" >
+      <Box bgImage={darkWoodBackground} bgSize="cover" >
         <Flex mb="5">
           <Text
             p="2"
