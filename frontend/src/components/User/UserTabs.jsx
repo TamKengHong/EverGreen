@@ -23,7 +23,7 @@ const UserTabs = (props) => {
         <TabPanel>
           <UserWatchlist {...props} />
         </TabPanel>
-        <TabPanel>
+        <TabPanel >
           <UserCalendar />
         </TabPanel>
       </TabPanels>
