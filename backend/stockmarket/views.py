@@ -1,7 +1,7 @@
-from .models import CustomUser,Post,Comment,Bookmark,ScrapingModel
-from .serializers import CustomUserSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,ScrapingModelSerializer
+from .models import CustomUser,Post,Comment,Bookmark,ScrapingModel,UpcomingEarnings
+from .serializers import CustomUserSerializer,PostSerializer,CommentSerializer,BookmarkSerializer,ScrapingModelSerializer,UpcomingEarningsSerializer
 from .permissions import CustomUserPermissions,PostPermissions,CommentPermissions,BookmarkPermissions
-from .filters import CustomUserSearchFilter, PostSearchFilter, CommentSearchFilter,BookmarkSearchFilter
+from .filters import CustomUserSearchFilter, PostSearchFilter,CommentSearchFilter,BookmarkSearchFilter
 from rest_framework import viewsets,filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
@@ -54,3 +54,10 @@ class ScrapingModelViewSet(viewsets.ModelViewSet):
     # Allow users to search for a scraping job by the subreddit
     filter_backends = [filters.SearchFilter] 
     search_fields = ['=subreddit']
+
+class UpcomingEarningsViewSet(viewsets.ModelViewSet):
+    serializer_class = UpcomingEarningsSerializer
+    queryset = UpcomingEarnings.objects.all()
+    http_method_names = ["get"] #only allow for GET requests
+    authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsAuthenticated] #only authenticated users can access this endpoint

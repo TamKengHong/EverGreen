@@ -1,4 +1,4 @@
-from .models import CustomUser,Post,Comment,Bookmark,ScrapingModel
+from .models import CustomUser,Post,Comment,Bookmark,ScrapingModel,UpcomingEarnings
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.db import transaction
@@ -76,4 +76,9 @@ class CustomRegisterSerializer(RegisterSerializer):
 class ScrapingModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScrapingModel
+        fields = '__all__'
+
+class UpcomingEarningsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UpcomingEarnings
         fields = '__all__'
