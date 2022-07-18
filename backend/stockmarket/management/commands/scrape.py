@@ -1,4 +1,3 @@
-from curses import raw
 from django.core.management.base import BaseCommand
 
 from decouple import config
