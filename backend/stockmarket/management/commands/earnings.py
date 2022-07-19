@@ -3,11 +3,11 @@ from django.core.management.base import BaseCommand
 from decouple import config
 from django.conf import settings
 from stockmarket.models import UpcomingEarnings
-import requests,csv,datetime
+import requests,csv,datetime,pickle,os
 from dateutil.relativedelta import relativedelta
 
 #default period is 3 months
-def earningsCalendar(AV_KEY,PERIOD="3month",STOCK=None):
+def earnings_calendar(AV_KEY,PERIOD="3month",STOCK=None):
     FUNCTION = "EARNINGS_CALENDAR"
     if not STOCK: #no stock provided
         CSV_URL = f'https://www.alphavantage.co/query?function={FUNCTION}&horizon={PERIOD}&apikey={AV_KEY}'
@@ -30,6 +30,16 @@ def sort_by_date_within_next_month(lst):
     lst = filter(lambda x: datetime.datetime.strptime(x[2],"%Y-%m-%d") <= date_after_month,lst)
     return sort_by_date(lst)
 
+def filter_for_earnings_of_stocks_above_300M(earnings_list):
+    #read in preloaded set of stocks above 300 million in market cap from .pkl file
+    file_path = os.path.join(settings.BASE_DIR,'stockmarket','stocks_above_300M.pkl')
+    with open(file_path,"rb") as f:
+        stocks_above_300M = pickle.load(f)
+    return list(filter(lambda row: row[0] in stocks_above_300M,earnings_list))
+
+def process(sorted_earnings_list):
+    return [{"ticker": row[0],"date": row[2]} for row in sorted_earnings_list]
+    
 def run_script():    
     AV_KEY = config("AV_KEY")
     #retrieve and delete old record
@@ -37,7 +47,7 @@ def run_script():
     if len(qs) > 0:
         instance = qs[0] #there is only one item in queryset
         instance.delete()
-    earnings = UpcomingEarnings(data=sort_by_date_within_next_month(earningsCalendar(AV_KEY)))
+    earnings = UpcomingEarnings(data=process(sort_by_date_within_next_month(filter_for_earnings_of_stocks_above_300M(earnings_calendar(AV_KEY)))))
     UpcomingEarnings.save(earnings)
 
 class Command(BaseCommand):
