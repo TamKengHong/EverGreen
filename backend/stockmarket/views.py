@@ -60,4 +60,4 @@ class UpcomingEarningsViewSet(viewsets.ModelViewSet):
     queryset = UpcomingEarnings.objects.all()
     http_method_names = ["get"] #only allow for GET requests
     authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated] #only authenticated users can access this endpoint
+    permission_classes = [IsAuthenticated] #only authenticated users can access this endpoint
