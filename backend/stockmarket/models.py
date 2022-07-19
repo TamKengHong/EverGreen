@@ -97,5 +97,6 @@ class ScrapingModel(models.Model):
     
 #class UpcomingEarnings stores all earnings dates within the next month
 class UpcomingEarnings(models.Model):
-    data = models.JSONField(default=dict)
+    data = models.JSONField(default=list)
+    processedData = models.JSONField(default=dict)
     datetime = models.DateTimeField(default=timezone.now)

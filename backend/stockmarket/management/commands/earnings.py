@@ -36,8 +36,18 @@ def filter_for_earnings_of_stocks_above_300M(earnings_list):
     with open(file_path,"rb") as f:
         stocks_above_300M = pickle.load(f)
     return list(filter(lambda row: row[0] in stocks_above_300M,earnings_list))
-
+#consolidate earnings by dates
 def process(sorted_earnings_list):
+    dct = {}
+    for row in sorted_earnings_list:
+        ticker,date = row[0],row[2]
+        if date not in dct:
+            dct[date] = [ticker]
+        else:
+            dct[date].append(ticker)
+    return dct
+
+def transform(sorted_earnings_list):
     return [{"ticker": row[0],"date": row[2]} for row in sorted_earnings_list]
     
 def run_script():    
@@ -47,7 +57,8 @@ def run_script():
     if len(qs) > 0:
         instance = qs[0] #there is only one item in queryset
         instance.delete()
-    earnings = UpcomingEarnings(data=process(sort_by_date_within_next_month(filter_for_earnings_of_stocks_above_300M(earnings_calendar(AV_KEY)))))
+    sorted_earnings_list = sort_by_date_within_next_month(filter_for_earnings_of_stocks_above_300M(earnings_calendar(AV_KEY)))
+    earnings = UpcomingEarnings(data=transform(sorted_earnings_list),processedData = process(sorted_earnings_list))
     UpcomingEarnings.save(earnings)
 
 class Command(BaseCommand):
