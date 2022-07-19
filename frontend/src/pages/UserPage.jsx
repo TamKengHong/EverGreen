@@ -10,6 +10,22 @@ const UserPage = () => {
   const [userObj, setUserObj] = useState('')
   const [isOwnPage, setIsOwnPage] = useState(false)
   const { username } = useParams()
+  const [stocksData, setStocksData] = useState()
+  const tickerString = userObj?.bookmarks?.reduce((a, b) => a + "%2C" + b.stockTicker, "").substring(3)
+
+  useEffect(() => {
+    const url = 'https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=' + tickerString
+    const requestOptions = { // 100 reqs a day limit
+      method: 'GET',
+      headers: { 'x-api-key': 'Vuw1uVBtM73adi1nrJDTZjXETzt9YvU9f162gi6g' }
+    }
+    if (tickerString) { // wont fetch from a null ticker
+      fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(data => setStocksData(data))
+    }
+  }, [tickerString])
+
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
@@ -21,7 +37,6 @@ const UserPage = () => {
       .then(data => setUserObj(data[0]))
   }, [username])
 
-  console.log(userObj)
   useEffect(() => {
     if (userObj && (localStorage.getItem('email') === userObj.email)) {
       // You are accessing your own userpage.
@@ -39,7 +54,7 @@ const UserPage = () => {
     <Box bgImage={background} minH="100vh" bgSize="contain">
       <AppBar />
       <UserBar />
-      <UserTabs {...userObj} isOwnPage={isOwnPage} />
+      <UserTabs {...userObj} stocksData={stocksData} isOwnPage={isOwnPage} />
       <Box h="10" />
     </Box>
   )

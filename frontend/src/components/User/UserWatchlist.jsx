@@ -2,7 +2,6 @@ import {
   Box, Table, Thead, Tbody, Tr, Th, Td,
   TableCaption, TableContainer, Link, Text
 } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
 const colors = {
@@ -80,23 +79,6 @@ const WatchlistElement = (props) => {
 
 const UserWatchlist = (props) => {
   const bookmarks = props.bookmarks
-  const [stocksData, setStocksData] = useState()
-
-  const tickerString = props?.bookmarks?.reduce((a, b) => a + "%2C" + b.stockTicker, "").substring(3)
-  useEffect(() => {
-    const url = 'https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=' + tickerString
-    const requestOptions = { // 100 reqs a day limit
-      method: 'GET',
-      headers: { 'x-api-key': 'Vuw1uVBtM73adi1nrJDTZjXETzt9YvU9f162gi6g' }
-    }
-    if (tickerString) { // wont fetch from a null ticker
-      fetch(url, requestOptions)
-        .then(response => response.json())
-        .then(data => setStocksData(data))
-    }
-  }, [tickerString])
-
-  console.log(stocksData)
 
   return (
     <Box w="95%" margin="auto">
@@ -123,7 +105,7 @@ const UserWatchlist = (props) => {
               key={i}
               no={i}
               {...x}
-              stocksData={stocksData} />)
+              stocksData={props.stocksData} />)
               : null}
           </Tbody>
         </Table>

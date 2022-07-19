@@ -73,7 +73,6 @@ const SentimentAnalysisTable = (props) => {
       .then(data => setStocksData(data[0].packagedData))
     setCounter(1)
   }, [props.selection])
-  console.log(stocksData)
 
   useEffect(() => {
     setDisplayStocks(stocksData.slice(0, 10 * counter))

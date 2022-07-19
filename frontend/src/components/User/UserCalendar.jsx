@@ -9,11 +9,54 @@ import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import { Link as RouterLink, useNavigate } from "react-router-dom"
 
-const UserCalendar = () => {
+const UserCalendar = (props) => {
   const [currentEvents, setCurrentEvents] = useState([])
+  const [allEvents, setAllEvents] = useState([])
+  const [stocksData, setStocksData] = useState([])
   const navigate = useNavigate()
 
   let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+
+  useEffect(() => {
+    const url = 'https://ever-green-production.herokuapp.com/stockmarket/earnings/'
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Authorization': 'Token ' + localStorage.getItem('key') }
+    }
+    fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(data => setStocksData(data[0].processedData))
+  }, [])
+
+  useEffect(() => {
+    let arr = []
+    for (var key in stocksData) {
+      for (let i = 0; i < stocksData[key].length; i += 20) {
+        const obj = {
+          id: key + " " + i / 20,
+          title: "Earnings: " + stocksData[key].slice(i, i + 20).reduce((a, b) => a + ", " + b, "").substring(2),
+          start: key
+        }
+        arr.push(obj)
+      }
+    }
+    setAllEvents(arr)
+  }, [stocksData])
+
+  console.log(allEvents)
+
+
+  // useEffect(() => {
+  //   setAllEvents(stocksData.map((x, i) => {
+  //     return {
+  //       id: i,
+  //       title: x.ticker + " Earnings",
+  //       start: x.date
+  //     }
+  //   }))
+  // }, [stocksData])
+  // console.log(allEvents)
+
 
   function renderAllEvents(event) {
     return (
@@ -73,18 +116,19 @@ const UserCalendar = () => {
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         }}
         selectable={true}
-        selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
-        events={currentEvents}
-        eventClick={(e) => handleEventClick(e)}
+        events={allEvents}
+        eventClick={props.isUserCalendar ? e => handleEventClick(e) : null}
         contentHeight="700px"
       />
       <Box ml="5">
-        <Text fontSize="xl" as="b">
-          All Events ({currentEvents.length})
-        </Text>
-        {currentEvents.map(renderAllEvents)}
+        {props.isUserCalendar ?
+          <Text fontSize="xl" as="b">
+            All Events ({currentEvents.length})
+          </Text> : null
+        }
+        {props.isUserCalendar ? currentEvents.map(renderAllEvents) : null}
       </Box>
     </Box>
   )

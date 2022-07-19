@@ -6,7 +6,8 @@ import UserCalendar from './UserCalendar'
 
 const UserTabs = (props) => {
   return (
-    <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="rgba(237,242,247,0.9)" minH="500" >
+    <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="rgba(237,242,247,0.9)"
+      minH="500" isLazy="true" lazyBehavior="keepMounted">
       <TabList mb='1em' border="1px" borderColor="gray.400">
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Settings</Tab>
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Posts</Tab>
@@ -23,7 +24,7 @@ const UserTabs = (props) => {
         <TabPanel>
           <UserWatchlist {...props} />
         </TabPanel>
-        <TabPanel >
+        <TabPanel minH="700px">
           <UserCalendar />
         </TabPanel>
       </TabPanels>

@@ -108,6 +108,16 @@ function App() {
             Upcoming Earnings:
           </Text>
         </Flex>
+        {
+          localStorage.getItem('key') ? null :
+            <Flex>
+              <Spacer />
+              <Text mb="10" bg="whiteAlpha.700" p="2" rounded="5" fontSize="4xl" color="red">
+                ***Please log in to view Earnings Calendar***
+              </Text>
+              <Spacer />
+            </Flex>
+        }
         <Box h="10"></Box>
       </Box>
     </>
