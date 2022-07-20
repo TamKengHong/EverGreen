@@ -1,4 +1,3 @@
-from multiprocessing import allow_connection_pickling
 import yfinance as yf
 from django.http import QueryDict
 from rest_framework.decorators import api_view,permission_classes
