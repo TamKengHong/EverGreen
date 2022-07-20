@@ -4,7 +4,6 @@ from decouple import config
 from django.conf import settings
 from stockmarket.models import UpcomingEarnings
 import requests,csv,datetime,pickle,os
-import yfinance as yf
 from dateutil.relativedelta import relativedelta
 
 #default period is 3 months
@@ -37,6 +36,7 @@ def filter_for_earnings_of_stocks_above_300M(earnings_list):
     with open(file_path,"rb") as f:
         stocks_above_300M = pickle.load(f)
     return list(filter(lambda row: row[0] in stocks_above_300M,earnings_list))
+    
 #consolidate earnings by dates
 def process(sorted_earnings_list):
     dct = {}
