@@ -27,7 +27,7 @@ def calculate_implied_move(STOCK):
     implied_puts_move = calculate_implied_directional_move(current_stock_price,optchain.puts)
     return round((implied_calls_move + implied_puts_move),2)
 
-@api_view(['GET'])
+@api_view(['GET',"POST"])
 @permission_classes([IsAuthenticated])
 def script_runner(request):
     data = QueryDict(request.body)
