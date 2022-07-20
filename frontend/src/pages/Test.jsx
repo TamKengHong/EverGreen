@@ -1,5 +1,5 @@
 import { Text, Box } from '@chakra-ui/react'
-import UserCalendar from '../components/User/UserCalendar'
+import Calendar from '../components/Calendar'
 
 const Test = () => {
   return (
@@ -8,7 +8,7 @@ const Test = () => {
         Test
       </Text>
       <Box w="90%" margin="auto" bg="gray.50">
-        <UserCalendar />
+        <Calendar />
       </Box>
     </Box >
   )

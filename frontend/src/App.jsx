@@ -9,6 +9,7 @@ import pineBackground from './assets/pine_tree_fog.jpg'
 import woodBackground from './assets/oak_wood_texture.jpg'
 import darkWoodBackground from './assets/dark_wood_texture.jpg'
 import SentimentAnalysis from './components/Home/SentimentAnalysis'
+import Calendar from './components/Calendar'
 
 // The Home Page.
 const tickerList = [
@@ -84,15 +85,24 @@ function App() {
             color="white"
             boxShadow="xl"
             fontWeight="thin">
-            Trending News:
+            Upcoming Earnings:
           </Text>
         </Flex>
-        <Box margin="auto" w="90%" boxShadow="md">
-          <Timeline widgetProps={{ colorTheme: "light", width: "100%", height: "500" }} />
-        </Box>
-        <Link ml="5%" href={`https://www.tradingview.com/news/`} isExternal>
-          More News <ExternalLinkIcon mx="2px" />
-        </Link>
+        {
+          localStorage.getItem('key') ?
+            <Box bg="gray.50" w="90%" margin="auto" p="8" rounded="15" boxShadow="xl"
+              border="1px" borderColor="gray.500">
+              <Calendar />
+            </Box>
+            :
+            <Flex>
+              <Spacer />
+              <Text mb="10" bg="whiteAlpha.700" p="2" rounded="5" fontSize="4xl" color="red">
+                ***Please log in to view Earnings Calendar***
+              </Text>
+              <Spacer />
+            </Flex>
+        }
         <Box h="10"></Box>
       </Box>
       <Box bgImage={darkWoodBackground} bgSize="cover" >
@@ -105,19 +115,15 @@ function App() {
             color="white"
             boxShadow="xl"
             fontWeight="thin">
-            Upcoming Earnings:
+            Trending News:
           </Text>
         </Flex>
-        {
-          localStorage.getItem('key') ? null :
-            <Flex>
-              <Spacer />
-              <Text mb="10" bg="whiteAlpha.700" p="2" rounded="5" fontSize="4xl" color="red">
-                ***Please log in to view Earnings Calendar***
-              </Text>
-              <Spacer />
-            </Flex>
-        }
+        <Box margin="auto" w="90%" boxShadow="md">
+          <Timeline widgetProps={{ colorTheme: "light", width: "100%", height: "500" }} />
+        </Box>
+        <Link ml="5%" href={`https://www.tradingview.com/news/`} isExternal>
+          More News <ExternalLinkIcon mx="2px" />
+        </Link>
         <Box h="10"></Box>
       </Box>
     </>

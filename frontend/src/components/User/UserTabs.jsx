@@ -2,11 +2,12 @@ import { Tab, Tabs, TabList, TabPanels, TabPanel } from '@chakra-ui/react'
 import UserSettings from './UserSettings'
 import UserPosts from './UserPosts'
 import UserWatchlist from './UserWatchlist'
-import UserCalendar from './UserCalendar'
+import Calendar from '../Calendar'
 
 const UserTabs = (props) => {
+  console.log(props)
   return (
-    <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="rgba(237,242,247,0.9)"
+    <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="rgba(237,242,247,0.95)"
       minH="500" isLazy="true" lazyBehavior="keepMounted">
       <TabList mb='1em' border="1px" borderColor="gray.400">
         <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Settings</Tab>
@@ -25,7 +26,7 @@ const UserTabs = (props) => {
           <UserWatchlist {...props} />
         </TabPanel>
         <TabPanel minH="700px">
-          <UserCalendar />
+          <Calendar {...props} isUserCalendar={true} />
         </TabPanel>
       </TabPanels>
     </Tabs >
