@@ -11,25 +11,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom"
 
 const UserEventElement = (props) => {
   const event = props
-  const [impliedEarningsMove, setImpliedEarningsMove] = useState(0)
   const stock = event?.title.split(" ")[0]
-
-  useEffect(() => {
-    const url = 'https://ever-green-production.herokuapp.com/stockmarket/earningsmove/'
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Token ' + localStorage.getItem('key'),
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({ "stock": stock })
-    }
-    if (stock) {
-      fetch(url, requestOptions)
-        .then(response => response.json())
-        .then(data => setImpliedEarningsMove(data))
-    }
-  }, [stock])
 
   return (
     event ?
@@ -41,9 +23,6 @@ const UserEventElement = (props) => {
           <Link as={RouterLink} to={'/stock/' + stock}>
             {event.title}
           </Link>
-          {/* <Text bgColor={impliedEarningsMove > 15 ? "Yellow" : "None"}> */}
-          {impliedEarningsMove}
-          {/* </Text> */}
         </ListItem>
       </UnorderedList>
       : null
@@ -127,7 +106,7 @@ const Calendar = (props) => {
             All Events ({allEvents.length})
           </Text> : null
         }
-        {isUserCalendar && allEvents ? allEvents.map((x, i) => <UserEventElement {...x} key={i} />) : null}
+        {isUserCalendar ? allEvents.map((x, i) => <UserEventElement {...x} key={i} />) : null}
       </Box>
     </Box>
   )

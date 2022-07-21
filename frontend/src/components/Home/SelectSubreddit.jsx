@@ -15,7 +15,7 @@ const SelectSubreddit = (props) => {
         <Stack >
           <Radio value='wallstreetbets' colorScheme="red">r/wallstreetbets</Radio>
           <Radio value='stocks' colorScheme="red">r/stocks</Radio>
-          <Radio value='pennystocks' colorScheme="red">r/pennystocks</Radio>
+          <Radio value='Shortsqueeze' colorScheme="red">r/shortsqueeze</Radio>
         </Stack>
       </RadioGroup>
     </Flex>

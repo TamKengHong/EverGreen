@@ -10,6 +10,7 @@ import woodBackground from './assets/oak_wood_texture.jpg'
 import darkWoodBackground from './assets/dark_wood_texture.jpg'
 import SentimentAnalysis from './components/Home/SentimentAnalysis'
 import Calendar from './components/Calendar'
+import ImpliedEarningsMove from './components/ImpliedEarningsMove'
 
 // The Home Page.
 const tickerList = [
@@ -103,6 +104,7 @@ function App() {
               <Spacer />
             </Flex>
         }
+        <ImpliedEarningsMove />
         <Box h="10"></Box>
       </Box>
       <Box bgImage={darkWoodBackground} bgSize="cover" >
