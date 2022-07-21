@@ -69,19 +69,23 @@ def run_script(sub):
     stock_mentions = track_mentions_in_past_24_hours(reddit,subname=sub,active_stocks=active_stocks)
     rawdata = sort_by_mentions(stock_mentions)
     #retrieve old record
-    instance = ScrapingModel.objects.filter(subreddit=sub)[0] #there is only one item in queryset
-    #keep track of change in number of mentions for each stock
-    packaged_data = []
-    for key,value in rawdata.items():
-        dct = {"ticker":key,"mentions":value}
-        dct["change_in_number_of_mentions"] = value - instance.data[key] if key in instance.data else value
-        if key in instance.data:
-            dct["percentage_change_in_number_of_mentions"] = round(((value - instance.data[key])/value)*100,2) if value > instance.data[key] else round(((value-instance.data[key])/instance.data[key])*100,2)
-        else:
-            dct["percentage_change_in_number_of_mentions"] = "INF"
-        packaged_data.append(dct)
-    #delete old record
-    instance.delete()
+    qs = ScrapingModel.objects.filter(subreddit=sub)
+    if len(qs) > 0:
+        instance = qs[0] #there is only one item in queryset
+        #keep track of change in number of mentions for each stock
+        packaged_data = []
+        for key,value in rawdata.items():
+            dct = {"ticker":key,"mentions":value}
+            dct["change_in_number_of_mentions"] = value - instance.data[key] if key in instance.data else value
+            if key in instance.data:
+                dct["percentage_change_in_number_of_mentions"] = round(((value - instance.data[key])/value)*100,2) if value > instance.data[key] else round(((value-instance.data[key])/instance.data[key])*100,2)
+            else:
+                dct["percentage_change_in_number_of_mentions"] = "INF"
+            packaged_data.append(dct)
+        #delete old record
+        instance.delete()
+    else:
+        packaged_data = [{"ticker":key,"mentions":value} for key,value in rawdata.items()]
     results = ScrapingModel(packagedData=packaged_data,data=rawdata,subreddit=sub)
     ScrapingModel.save(results)
 
