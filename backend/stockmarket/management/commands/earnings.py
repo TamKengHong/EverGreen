@@ -30,12 +30,12 @@ def sort_by_date_within_next_month(lst):
     lst = filter(lambda x: datetime.datetime.strptime(x[2],"%Y-%m-%d") <= date_after_month,lst)
     return sort_by_date(lst)
 
-def filter_for_earnings_of_stocks_above_300M(earnings_list):
+def filter_for_earnings_of_stocks_above_2B(earnings_list):
     #read in preloaded set of stocks above 300 million in market cap from .pkl file
-    file_path = os.path.join(settings.BASE_DIR,'stockmarket','stocks_above_300M.pkl')
+    file_path = os.path.join(settings.BASE_DIR,'stockmarket','stocks_above_2B.pkl')
     with open(file_path,"rb") as f:
-        stocks_above_300M = pickle.load(f)
-    return list(filter(lambda row: row[0] in stocks_above_300M,earnings_list))
+        stocks_above_2B= pickle.load(f)
+    return list(filter(lambda row: row[0] in stocks_above_2B,earnings_list))
     
 #consolidate earnings by dates
 def process(sorted_earnings_list):
@@ -58,7 +58,7 @@ def run_script():
     if len(qs) > 0:
         instance = qs[0] #there is only one item in queryset
         instance.delete()
-    sorted_earnings_list = sort_by_date_within_next_month(filter_for_earnings_of_stocks_above_300M(earnings_calendar(AV_KEY)))
+    sorted_earnings_list = sort_by_date_within_next_month(filter_for_earnings_of_stocks_above_2B(earnings_calendar(AV_KEY)))
     earnings = UpcomingEarnings(data=transform(sorted_earnings_list),processedData = process(sorted_earnings_list))
     UpcomingEarnings.save(earnings)
 
