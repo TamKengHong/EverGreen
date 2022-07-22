@@ -1,5 +1,6 @@
 import { Text, Box } from '@chakra-ui/react'
 import ImpliedEarningsMove from '../components/ImpliedEarningsMove'
+import UserCalendarTheme from '../components/User/UserCalendarTheme'
 
 const Test = () => {
   return (
@@ -8,7 +9,7 @@ const Test = () => {
         Test
       </Text>
       <Box w="90%" margin="auto" bg="gray.50">
-        <ImpliedEarningsMove />
+        <UserCalendarTheme />
       </Box>
     </Box >
   )

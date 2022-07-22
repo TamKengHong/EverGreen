@@ -35,6 +35,8 @@ const Calendar = (props) => {
   const [allEvents, setAllEvents] = useState([])
   const [stocksData, setStocksData] = useState([])
   const navigate = useNavigate()
+  const eventColor = localStorage.getItem("eventColor")
+  const eventTextColor = localStorage.getItem("eventTextColor")
 
   useEffect(() => {
     const url = 'https://ever-green-production.herokuapp.com/stockmarket/earnings/'
@@ -97,8 +99,8 @@ const Calendar = (props) => {
         events={allEvents}
         eventClick={isUserCalendar ? e => handleEventClick(e) : null}
         contentHeight="700px"
-      // eventColor='green'
-      // eventTextColor='white'
+        eventColor={eventColor}
+        eventTextColor={eventTextColor}
       />
       <Box ml="5">
         {isUserCalendar ?

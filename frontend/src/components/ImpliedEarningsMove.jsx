@@ -57,6 +57,14 @@ const ImpliedEarningsMove = () => {
           </Text>
         }
       </Flex >
+      <Text border="1px" borderColor="gray.500" rounded="5" mt="5" p="2">
+        Description: The implied earnings move is calculated from the summed option premiums of a ATM
+        call and a ATM put divided by their respective strikes. The implied earnings move is important
+        because it provides a gauge of how much the market expects the stock to move in either direction.
+        If the implied earnings move is higher than the usual movement of the stock during earnings,
+        traders may want to consider selling options. On the other hand, if implied earnings move is
+        lower than usual movement of stock during earnings, buying strangles/straddles may be the way to go.
+      </Text>
     </Flex>
   )
 }

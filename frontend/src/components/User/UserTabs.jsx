@@ -3,6 +3,7 @@ import UserSettings from './UserSettings'
 import UserPosts from './UserPosts'
 import UserWatchlist from './UserWatchlist'
 import Calendar from '../Calendar'
+import UserCalendarTheme from './UserCalendarTheme'
 
 const UserTabs = (props) => {
   console.log(props)
@@ -26,6 +27,7 @@ const UserTabs = (props) => {
           <UserWatchlist {...props} />
         </TabPanel>
         <TabPanel minH="700px">
+          <UserCalendarTheme />
           <Calendar {...props} isUserCalendar={true} />
         </TabPanel>
       </TabPanels>

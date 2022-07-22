@@ -88,7 +88,7 @@ const SentimentAnalysisTable = (props) => {
           borderColor="gray.400"
         >
           <TableCaption fontSize="xl">
-            Sentiment Analysis
+            Trending Stocks
           </TableCaption>
           <Thead bg={colors.woodBgHeader}>
             <Tr>
