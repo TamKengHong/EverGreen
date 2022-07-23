@@ -78,7 +78,7 @@ const WatchlistElement = (props) => {
 }
 
 const UserWatchlist = (props) => {
-  const bookmarks = props.bookmarks
+  const bookmarks = props.bookmarks.sort((a, b) => a.id - b.id)
 
   return (
     <Box w="95%" margin="auto">

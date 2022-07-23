@@ -7,7 +7,6 @@ const AddReply = (props) => {
   // Different if we replying to posts (1st level comments), or replying to comments.
   const isComment = props.post
   let obj
-  console.log(props)
 
   if (isComment) {
     obj = {
@@ -48,7 +47,7 @@ const AddReply = (props) => {
           <Box ml="5px" mt="5px">
             <Image w="60px" h="60px" src={profileUrl}
               fallback={
-                <Identicon size="60" string={props.name} bg="#FFFFFF" />
+                <Identicon size="60" string={localStorage.getItem("username")} bg="#FFFFFF" />
               } />
           </Box>
         </Box>
