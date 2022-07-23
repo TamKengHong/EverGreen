@@ -104,7 +104,7 @@ function App() {
               <Spacer />
             </Flex>
         }
-        <ImpliedEarningsMove />
+        {localStorage.getItem('key') ? <ImpliedEarningsMove /> : null}
         <Box h="10"></Box>
       </Box>
       <Box bgImage={darkWoodBackground} bgSize="cover" >
