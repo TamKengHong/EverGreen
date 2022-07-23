@@ -67,7 +67,7 @@ function App() {
 
               3. Posts & Comments Section where people can discuss about the stock. <br />
               4. Bookmarks, User watchlist & Earnings Calendar. <br />
-              5. Sentiment Analysis (scrape websites for number of mentions of a stock ticker).
+              5. Trending Stocks (scrape websites for number of mentions) & Implied Earnings Move.
             </Text>
           </Flex>
         </Flex>
@@ -104,7 +104,7 @@ function App() {
               <Spacer />
             </Flex>
         }
-        <ImpliedEarningsMove />
+        {localStorage.getItem('key') ? <ImpliedEarningsMove /> : null}
         <Box h="10"></Box>
       </Box>
       <Box bgImage={darkWoodBackground} bgSize="cover" >

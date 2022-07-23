@@ -10,6 +10,7 @@ const StockBookmark = () => {
   let stock = bookmarks.find(x => x.stockTicker === ticker)
   let stockId = stock ? stock.id : null // fixes undefined error.
   const [isBookmarked, setIsBookmarked] = useState(stockId)
+  console.log(bookmarks)
 
   useEffect(() => {
     bookmarks = JSON.parse(localStorage.getItem('bookmarks'))
@@ -47,7 +48,9 @@ const StockBookmark = () => {
       fetch(bookmarkUrl + stockId + '/', requestOptions2)
         .then(response => response.json())
         .then(data => console.log(data))
-        .then(() => localStorage.setItem('bookmarks', JSON.stringify(bookmarks.filter(x => x.id !== stockId))))
+        .then(() => {
+          localStorage.setItem('bookmarks', JSON.stringify(bookmarks.filter(x => x.id !== stockId)))
+        })
     }
   }
 
