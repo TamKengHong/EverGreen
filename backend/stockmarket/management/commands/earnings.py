@@ -45,12 +45,12 @@ def get_upcoming_earnings_date(STOCK):
         upcoming_earnings_date = stock.calendar.loc["Earnings Date"]["Value"]
         #converts the Pandas Timestamp object into a native Python datetime object
         return upcoming_earnings_date.to_pydatetime()
-    except: #earnings date is not present, return datetime object representing 0
-        return datetime.datetime(0,0,0,0,0)
+    except: #earnings date is not present, return None
+        return None
 
 #checks if upcoming_earnings_date is premarket or afterhours
 def classify_upcoming_earnings_date(upcoming_earnings_date):
-    if upcoming_earnings_date == datetime.datetime(0,0,0,0,0):
+    if upcoming_earnings_date is None:
         return "Earnings call time not available"
     #convert UTC to eastern time by subtracting four hours, since the given time is in UTC
     eastern_time = (upcoming_earnings_date - datetime.timedelta(hours=4)).time()
