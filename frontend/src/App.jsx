@@ -47,7 +47,7 @@ function App() {
           alignItems="center"
           justifyContent="center">
           <Flex mt="20" p="2" rounded={10} bg="whiteAlpha.700">
-            <Text fontSize="70" alignSelf="center">EverGreen🚀</Text>
+            <Text fontSize="6xl" alignSelf="center">EverGreen🚀</Text>
           </Flex>
           <Flex mt="10" p="4" rounded={10} bg="whiteAlpha.800" maxW="1000px">
             <Text fontSize="xl" alignSelf="center">
