@@ -6,7 +6,6 @@ import Calendar from '../Calendar'
 import UserCalendarTheme from './UserCalendarTheme'
 
 const UserTabs = (props) => {
-  console.log(props)
   return (
     <Tabs margin="auto" w="95%" isFitted variant='enclosed' bg="rgba(237,242,247,0.95)"
       minH="500" isLazy="true" lazyBehavior="keepMounted">
@@ -27,7 +26,7 @@ const UserTabs = (props) => {
           <UserWatchlist {...props} />
         </TabPanel>
         <TabPanel minH="700px">
-          <UserCalendarTheme />
+          {props.isOwnPage ? <UserCalendarTheme /> : null}
           <Calendar {...props} isUserCalendar={true} />
         </TabPanel>
       </TabPanels>

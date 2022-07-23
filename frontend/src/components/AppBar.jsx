@@ -31,7 +31,7 @@ const AppBar = () => {
         EverGreen
       </Link>
       <Spacer />
-      <Box w="80%" bg="#f4efe7" rounded="lg" border="1px" borderColor="gray.500">
+      <Box ml="5" mr="5" w="80%" bg="#f4efe7" rounded="lg" border="1px" borderColor="gray.500">
         <SearchBar />
       </Box>
       <Spacer />

@@ -11,6 +11,7 @@ const UserSearchBar = () => {
   function handleKeyPress(e) {
     if (e.key === "Enter") {
       navigate(`/user/${user}`)
+      window.location.reload(false)
     }
   }
   return (
