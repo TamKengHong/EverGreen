@@ -21,8 +21,8 @@ const UserBar = () => {
     <>
       <Flex mt="75px" alignItems="center" justifyContent="center" flex="wrap">
         <Flex direction="column" alignItems="center" justifyContent="center"
-          bg="rgba(237,242,247,0.8)" p="10" rounded="10" boxShadow="2xl">
-          <Text fontSize="6xl" >{message}</Text>
+          bg="rgba(237,242,247,0.8)" p="10" rounded="10" boxShadow="2xl" maxW="95%">
+          <Text fontSize="6xl" overflow="auto" maxW="100%" >{message}</Text>
           {isOwnPage ?
             <Button
               mt="3"

@@ -10,6 +10,8 @@ const ImpliedEarningsMove = () => {
   const [loading, setLoading] = useState(false)
   const [impliedEarningsMove, setImpliedEarningsMove] = useState(0)
 
+  if (impliedEarningsMove === 0) setImpliedEarningsMove("INVALID")
+
   function handleKeyPress(e) {
     if (e.key === "Enter") {
       const url = 'https://ever-green-production.herokuapp.com/stockmarket/earningsmove/'
