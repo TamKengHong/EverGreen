@@ -25,8 +25,6 @@ const tickerList = [
 function App() {
   useEffect(() => { // pings the server once to stop heroku from being slow at startup.  
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/', { method: 'GET' })
-      .then(res => res.json)
-      .then(data => console.log(data))
   }, [])
 
   return (
@@ -67,7 +65,7 @@ function App() {
 
               3. Posts & Comments Section where people can discuss about the stock. <br />
               4. Bookmarks, User watchlist & Earnings Calendar. <br />
-              5. Trending Stocks (scrape websites for number of mentions) & Implied Earnings Move.
+              5. Trending Stocks & Implied Earnings Move.
             </Text>
           </Flex>
         </Flex>

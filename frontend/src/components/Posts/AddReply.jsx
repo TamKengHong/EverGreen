@@ -34,7 +34,6 @@ const AddReply = (props) => {
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/comments/', requestOptions)
       .then(response => response.json())
-      .then(data => console.log(data))
       .then(() => window.location.reload(false))
   }
 

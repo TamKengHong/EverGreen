@@ -60,10 +60,8 @@ const UserSettings = (props) => {
     }
     fetch('https://ever-green-production.herokuapp.com/stockmarket/users/' + userObj.id + "/", requestOptions)
       .then(response => response.json())
-      .then(data => console.log(data))
-      .then(window.location.reload(false)) //refresh the page to update 
+      .then(() => window.location.reload(false)) //refresh the page to update 
   }
-  console.log(props.isOwnPage)
 
   return (
     <Box w="90%" margin="auto">

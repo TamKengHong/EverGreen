@@ -81,7 +81,7 @@ const Card = (props) => {
         "dislikes": props.dislikes
       })
     }
-    fetch(url, requestOptions).then(response => response.json()).then(data => console.log(data))
+    fetch(url, requestOptions)
 
     const requestOptions2 = {
       method: 'PATCH',
@@ -94,7 +94,7 @@ const Card = (props) => {
         "totalDisLikes": userObj.totalDisLikes
       })
     }
-    fetch(userIdUrl, requestOptions2).then(response => response.json()).then(data => console.log(data))
+    fetch(userIdUrl, requestOptions2)
   }
 
   function handleDislikeClick() {
@@ -111,7 +111,7 @@ const Card = (props) => {
         "dislikes": isDislikeActive ? props.dislikes : props.dislikes + 1
       })
     }
-    fetch(url, requestOptions).then(response => response.json()).then(data => console.log(data))
+    fetch(url, requestOptions)
 
     const requestOptions2 = {
       method: 'PATCH',
@@ -124,7 +124,7 @@ const Card = (props) => {
         "totalDisLikes": isDislikeActive ? userObj.totalDisLikes : userObj.totalDisLikes + 1
       })
     }
-    fetch(userIdUrl, requestOptions2).then(response => response.json()).then(data => console.log(data))
+    fetch(userIdUrl, requestOptions2)
   }
 
   const profileUrl = userObj.profilePicture

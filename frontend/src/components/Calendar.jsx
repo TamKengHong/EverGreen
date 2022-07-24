@@ -91,7 +91,7 @@ const Calendar = (props) => {
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          right: 'dayGridMonth timeGridWeek timeGridDay listWeek'
         }}
         selectable={!isUserCalendar} // resize issue with selection + user tabs switching
         dayMaxEvents={true}
