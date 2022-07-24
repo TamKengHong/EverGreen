@@ -121,7 +121,7 @@ function App() {
         <Box margin="auto" w="90%" boxShadow="md">
           <Timeline widgetProps={{ colorTheme: "light", width: "100%", height: "500" }} />
         </Box>
-        <Link ml="5%" href={`https://www.tradingview.com/news/`} isExternal>
+        <Link color="white" ml="5%" href={`https://www.tradingview.com/news/`} isExternal>
           More News <ExternalLinkIcon mx="2px" />
         </Link>
         <Box h="10"></Box>
