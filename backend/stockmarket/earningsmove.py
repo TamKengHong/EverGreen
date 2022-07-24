@@ -43,6 +43,7 @@ def classify_upcoming_earnings_date(upcoming_earnings_date):
     if upcoming_earnings_date is None:
         return "Earnings call time not available"
     #convert UTC to eastern time by subtracting four hours, since the given time is in UTC
+    #note: this is not necessarily always the case due to daylights saving time, but this code will suffice for now
     eastern_time = (upcoming_earnings_date - datetime.timedelta(hours=4)).time()
     #the US stock market opens at 9:30am and closes at 4pm
     OPENING_TIME,CLOSING_TIME = datetime.time(9,30),datetime.time(16,0)
