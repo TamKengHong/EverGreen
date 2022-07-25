@@ -9,7 +9,7 @@ const SearchBar = () => {
   const [options, setOptions] = useState([])
 
   useEffect(() => {
-    setOptions(stocks.filter((stock) => stock.label.toLowerCase().includes(query)).slice(0, 100))
+    setOptions(stocks.filter((stock) => stock.label.toLowerCase().includes(query.toLowerCase)).slice(0, 100))
   }, [query])
 
   return (
