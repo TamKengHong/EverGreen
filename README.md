@@ -8,6 +8,8 @@ Includes:
 - Bookmarks, User watchlist & Earnings Calendar.
 - Trending Stocks & Implied Earnings Move.
 
+This is our Year 1 Summer Project for NUS Orbital 2022.
+
 ## Team Members:
 Tam Keng Hong (Frontend)
 
