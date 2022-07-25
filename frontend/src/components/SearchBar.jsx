@@ -9,7 +9,7 @@ const SearchBar = () => {
   const [options, setOptions] = useState([])
 
   useEffect(() => {
-    setOptions(stocks.filter((stock) => stock.label.toLowerCase().includes(query.toLowerCase)).slice(0, 100))
+    setOptions(stocks.filter((stock) => stock.label.toLowerCase().includes(query)).slice(0, 100))
   }, [query])
 
   return (
@@ -20,7 +20,7 @@ const SearchBar = () => {
       size='lg'
       placeholder='Search Ticker'
       options={options}
-      onInputChange={input => setQuery(input)}
+      onInputChange={input => setQuery(input.toLowerCase())}
       onChange={e => navigate('/stock/' + e.value)}
     />
   )
